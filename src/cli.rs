@@ -26,7 +26,7 @@ pub fn parse(mut args: env::Args) -> Args {
     };
     let target = match target_str.as_str() {
         "file" => Target::File,
-        other => unknown_target(other),
+        _ => unknown_target(&target_str),
     };
     let name = args.next().unwrap_or_else(|| missing_name());
     if args.next().is_some() {
