@@ -46,7 +46,7 @@ async fn when_running(world: &mut HasWorld, command: String) {
 }
 
 #[then("it succeeds")]
-async fn it_returns(world: &mut HasWorld) {
+fn it_returns(world: &mut HasWorld) {
     match world.exit_code {
         Some(have) => assert!(have.success()),
         None => panic!("no exit code registered"),
