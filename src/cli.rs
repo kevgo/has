@@ -19,12 +19,11 @@ pub enum Target {
 
 pub fn parse(mut args: env::Args) -> Args {
     let _binary_name = args.next(); // skip the binary name
-    let mut negate: bool = false;
-    let mut target_str = args.next().unwrap_or_else(|| missing_target());
-    if target_str == "no" {
-        negate = true;
-        target_str = args.next().unwrap_or_else(|| missing_target());
-    }
+    let next = args.next().unwrap_or_else(|| missing_target());
+    let (negate, target_str) = match next.as_str() {
+        "no" => (true, args.next().unwrap_or_else(|| missing_target())),
+        _ => (false, next),
+    };
     let target = match target_str.as_str() {
         "file" => Target::File,
         other => unknown_target(other),
