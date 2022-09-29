@@ -4,7 +4,7 @@ use std::process;
 /// the CLI arguments
 pub struct Args {
     /// whether to look for presence or absence of the target
-    pub negate: bool,
+    pub should_exist: bool,
     /// the target to look for
     pub target: Target,
     /// name of the target (file or branch name)
@@ -20,9 +20,9 @@ pub enum Target {
 pub fn parse(mut args: env::Args) -> Args {
     let _binary_name = args.next(); // skip the binary name
     let next = args.next().unwrap_or_else(|| missing_target());
-    let (negate, target_str) = match next.as_str() {
-        "no" => (true, args.next().unwrap_or_else(|| missing_target())),
-        _ => (false, next),
+    let (should_exist, target_str) = match next.as_str() {
+        "no" => (false, args.next().unwrap_or_else(|| missing_target())),
+        _ => (true, next),
     };
     let target = match target_str.as_str() {
         "file" => Target::File,
@@ -33,7 +33,7 @@ pub fn parse(mut args: env::Args) -> Args {
         too_many_arguments();
     }
     Args {
-        negate,
+        should_exist,
         target,
         name,
     }

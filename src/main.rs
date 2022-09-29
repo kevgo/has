@@ -9,7 +9,7 @@ fn main() {
     let found = match args.target {
         Target::File => checks::file(&args.name),
     };
-    if found == args.negate {
+    if found != args.should_exist {
         process::exit(1);
     }
 }
