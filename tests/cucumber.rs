@@ -33,16 +33,12 @@ async fn a_file(world: &mut HasWorld, filename: String) -> io::Result<File> {
 
 #[given(expr = "a Git branch {string}")]
 async fn a_git_branch(world: &mut HasWorld, name: String) -> io::Result<()> {
-    run(&world.dir, "git", vec!["init"]).await?;
-    run(&world.dir, "git", vec!["config", "user.email", "a@b.com"]).await?;
-    run(&world.dir, "git", vec!["config", "user.name", "Your Name"]).await?;
-    run(
-        &world.dir,
-        "git",
-        vec!["commit", "--allow-empty", "-m", "i"],
-    )
-    .await?;
-    run(&world.dir, "git", vec!["checkout", "-b", &name]).await?;
+    let dir = &world.dir;
+    run(dir, "git", vec!["init"]).await?;
+    run(dir, "git", vec!["config", "user.email", "a@b.com"]).await?;
+    run(dir, "git", vec!["config", "user.name", "Your Name"]).await?;
+    run(dir, "git", vec!["commit", "--allow-empty", "-m", "i"]).await?;
+    run(dir, "git", vec!["checkout", "-b", &name]).await?;
     Ok(())
 }
 
