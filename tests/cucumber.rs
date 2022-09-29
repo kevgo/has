@@ -38,8 +38,7 @@ async fn a_git_branch(world: &mut HasWorld, name: String) -> io::Result<()> {
     run(dir, "git", vec!["config", "user.email", "a@b.com"]).await?;
     run(dir, "git", vec!["config", "user.name", "Your Name"]).await?;
     run(dir, "git", vec!["commit", "--allow-empty", "-m", "i"]).await?;
-    run(dir, "git", vec!["checkout", "-b", &name]).await?;
-    Ok(())
+    run(dir, "git", vec!["checkout", "-b", &name]).await
 }
 
 #[when(expr = "running {string}")]
