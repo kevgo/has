@@ -9,6 +9,9 @@ fix:  # auto-corrects issues
 help:  # prints all make targets
 	cat Makefile | grep '^[^ ]*:' | grep -v '.SILENT' | grep -v help | sed 's/:.*#/#/' | column -s "#" -t
 
+install:  # installs the binary on the current machine
+	cargo install --path .
+
 lint: tools/actionlint  # checks formatting
 	dprint check
 	cargo clippy --all-targets --all-features -- -W clippy::pedantic
