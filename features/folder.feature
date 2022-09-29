@@ -7,12 +7,12 @@ Feature: detect folders
 
   Scenario: wants folder, folder does not exist
     When running "has folder node_modules"
-    Then it does not succeed
+    Then it fails
 
   Scenario: wants no folder, folder does exist
     Given a folder "node_modules"
     When running "has no folder node_modules"
-    Then it does not succeed
+    Then it fails
 
   Scenario: wants no folder, folder does not exist
     When running "has no folder node_modules"

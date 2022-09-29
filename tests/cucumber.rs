@@ -77,8 +77,8 @@ async fn it_succeeds(world: &mut HasWorld) {
     }
 }
 
-#[then("it does not succeed")]
-async fn it_does_not_succeed(world: &mut HasWorld) {
+#[then("it failse")]
+async fn it_fails(world: &mut HasWorld) {
     match world.exit_code {
         Some(have) => assert!(!have.success()),
         None => panic!("no exit code registered"),
