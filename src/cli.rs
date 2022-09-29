@@ -17,6 +17,8 @@ pub enum Target {
     Branch,
     /// check for the existence of a file
     File,
+    /// check for the existence of a folder
+    Folder,
 }
 
 pub fn parse(mut args: env::Args) -> Args {
@@ -27,8 +29,9 @@ pub fn parse(mut args: env::Args) -> Args {
         _ => (true, next),
     };
     let target = match target_str.as_str() {
-        "file" => Target::File,
         "branch" => Target::Branch,
+        "file" => Target::File,
+        "folder" => Target::Folder,
         _ => unknown_target(&target_str),
     };
     let name = args.next().unwrap_or_else(|| missing_name());
