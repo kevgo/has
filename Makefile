@@ -1,6 +1,11 @@
 cuke:  # runs the feature tests
 	cargo test --test cucumber
 
+fix:  # auto-corrects issues
+	dprint fmt
+	cargo fmt
+	cargo fix
+
 help:  # prints all make targets
 	cat Makefile | grep '^[^ ]*:' | grep -v '.SILENT' | grep -v help | sed 's/:.*#/#/' | column -s "#" -t
 
@@ -11,7 +16,9 @@ lint: tools/actionlint  # checks formatting
 	git diff --check
 	tools/actionlint
 
-test: cuke  # runs all tests
+ps: fix test
+
+test: lint cuke  # runs all tests
 
 tools/actionlint:
 	curl -s https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash | bash
