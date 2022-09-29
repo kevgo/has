@@ -33,61 +33,16 @@ async fn a_file(world: &mut HasWorld, filename: String) -> io::Result<File> {
 
 #[given(expr = "a Git branch {string}")]
 async fn a_git_branch(world: &mut HasWorld, name: String) -> io::Result<()> {
-    let output = Command::new("git")
-        .arg("init")
-        .current_dir(&world.dir)
-        .output()
-        .await?;
-    assert!(
-        output.status.success(),
-        "{}{}",
-        String::from_utf8_lossy(&output.stdout),
-        String::from_utf8_lossy(&output.stderr)
-    );
-    let output = Command::new("git")
-        .args(vec!["config", "user.email", "you@example.com"])
-        .current_dir(&world.dir)
-        .output()
-        .await?;
-    assert!(
-        output.status.success(),
-        "{}{}",
-        String::from_utf8_lossy(&output.stdout),
-        String::from_utf8_lossy(&output.stderr)
-    );
-    let output = Command::new("git")
-        .args(vec!["config", "user.name", "Your Name"])
-        .current_dir(&world.dir)
-        .output()
-        .await?;
-    assert!(
-        output.status.success(),
-        "{}{}",
-        String::from_utf8_lossy(&output.stdout),
-        String::from_utf8_lossy(&output.stderr)
-    );
-    let output = Command::new("git")
-        .args(vec!["commit", "--allow-empty", "-m", "initial"])
-        .current_dir(&world.dir)
-        .output()
-        .await?;
-    assert!(
-        output.status.success(),
-        "{}{}",
-        String::from_utf8_lossy(&output.stdout),
-        String::from_utf8_lossy(&output.stderr)
-    );
-    let output = Command::new("git")
-        .args(vec!["checkout", "-b", &name])
-        .current_dir(&world.dir)
-        .output()
-        .await?;
-    assert!(
-        output.status.success(),
-        "{}{}",
-        String::from_utf8_lossy(&output.stdout),
-        String::from_utf8_lossy(&output.stderr)
-    );
+    run(&world.dir, "git", vec!["init"]).await?;
+    run(&world.dir, "git", vec!["config", "user.email", "a@b.com"]).await?;
+    run(&world.dir, "git", vec!["config", "user.name", "Your Name"]).await?;
+    run(
+        &world.dir,
+        "git",
+        vec!["commit", "--allow-empty", "-m", "i"],
+    )
+    .await?;
+    run(&world.dir, "git", vec!["checkout", "-b", &name]).await?;
     Ok(())
 }
 
@@ -141,4 +96,19 @@ async fn it_prints(world: &mut HasWorld, step: &Step) {
 #[tokio::main(flavor = "current_thread")]
 async fn main() {
     HasWorld::run("features").await;
+}
+
+async fn run(dir: &TempDir, cmd: &str, args: Vec<&str>) -> io::Result<()> {
+    let output = Command::new(cmd)
+        .args(args)
+        .current_dir(dir)
+        .output()
+        .await?;
+    assert!(
+        output.status.success(),
+        "{}{}",
+        String::from_utf8_lossy(&output.stdout),
+        String::from_utf8_lossy(&output.stderr)
+    );
+    Ok(())
 }
