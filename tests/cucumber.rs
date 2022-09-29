@@ -34,6 +34,28 @@ async fn a_file(world: &mut HasWorld, filename: String) -> io::Result<File> {
 #[given(expr = "a Git branch {string}")]
 async fn a_git_branch(world: &mut HasWorld, name: String) -> io::Result<()> {
     let output = Command::new("git")
+        .args(vec!["config", "user.email", "you@example.com"])
+        .current_dir(&world.dir)
+        .output()
+        .await?;
+    assert!(
+        output.status.success(),
+        "{}{}",
+        String::from_utf8_lossy(&output.stdout),
+        String::from_utf8_lossy(&output.stderr)
+    );
+    let output = Command::new("git")
+        .args(vec!["config", "user.name", "Your Name"])
+        .current_dir(&world.dir)
+        .output()
+        .await?;
+    assert!(
+        output.status.success(),
+        "{}{}",
+        String::from_utf8_lossy(&output.stdout),
+        String::from_utf8_lossy(&output.stderr)
+    );
+    let output = Command::new("git")
         .arg("init")
         .current_dir(&world.dir)
         .output()

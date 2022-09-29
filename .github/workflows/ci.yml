@@ -21,6 +21,4 @@ jobs:
           components: rustfmt, clippy
       - uses: Swatinem/rust-cache@v1.2.0
       - uses: dprint/check@v2.1
-      - run: git config user.email "you@example.com"
-      - run: git config user.name "Your Name"
       - run: make test
