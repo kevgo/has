@@ -38,13 +38,23 @@ async fn a_git_branch(world: &mut HasWorld, name: String) -> io::Result<()> {
         .current_dir(&world.dir)
         .output()
         .await?;
-    assert!(output.status.success());
+    assert!(
+        output.status.success(),
+        "{}{}",
+        String::from_utf8_lossy(&output.stdout),
+        String::from_utf8_lossy(&output.stderr)
+    );
     let output = Command::new("git")
         .args(vec!["commit", "--allow-empty", "-m", "initial"])
         .current_dir(&world.dir)
         .output()
         .await?;
-    assert!(output.status.success());
+    assert!(
+        output.status.success(),
+        "{}{}",
+        String::from_utf8_lossy(&output.stdout),
+        String::from_utf8_lossy(&output.stderr)
+    );
     let output = Command::new("git")
         .args(vec!["checkout", "-b", &name])
         .current_dir(&world.dir)
@@ -52,8 +62,9 @@ async fn a_git_branch(world: &mut HasWorld, name: String) -> io::Result<()> {
         .await?;
     assert!(
         output.status.success(),
-        "{}",
-        String::from_utf8_lossy(&output.stdout)
+        "{}{}",
+        String::from_utf8_lossy(&output.stdout),
+        String::from_utf8_lossy(&output.stderr)
     );
     Ok(())
 }
