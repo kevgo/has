@@ -18,7 +18,7 @@ pub enum Target {
 }
 
 pub fn parse(mut args: env::Args) -> Args {
-    let _skip = args.next(); // skip the binary name
+    let _binary_name = args.next(); // skip the binary name
     let mut negate: bool = false;
     let mut target_str = args.next().unwrap_or_else(|| missing_target());
     if target_str == "no" {
