@@ -3,6 +3,14 @@ name = "has"
 version = "0.0.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
+
+[dev-dependencies]
+cucumber = "0.14"
+futures = "0.3"
+tempfile = "3"
+tokio = { version = "1.19.2", features = [ "fs", "io-util", "macros", "process", "rt"]}
+
+[[test]]
+name = "cucumber" # this should be the same as the filename of your test target
+harness = false  # allows Cucumber to print output instead of libtest
