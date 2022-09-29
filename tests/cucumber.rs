@@ -77,7 +77,7 @@ async fn it_succeeds(world: &mut HasWorld) {
     }
 }
 
-#[then("it failse")]
+#[then("it fails")]
 async fn it_fails(world: &mut HasWorld) {
     match world.exit_code {
         Some(have) => assert!(!have.success()),
