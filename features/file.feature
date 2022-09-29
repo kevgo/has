@@ -5,7 +5,7 @@ Feature: detect files
     When running "has file package.json"
     Then it succeeds
 
-  Scenario: wants file, file doesn't exist
+  Scenario: wants file, file does not exist
     When running "has file package.json"
     Then it does not succeed
 

@@ -1,4 +1,4 @@
-cuke:  # runs the feature tests
+cuke: target/debug/has  # runs the feature tests
 	cargo test --test cucumber
 
 fix:  # auto-corrects issues
@@ -24,6 +24,9 @@ tools/actionlint:
 	curl -s https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash | bash
 	mkdir -p tools
 	mv actionlint tools
+
+target/debug/has:
+	cargo build
 
 
 .SILENT:

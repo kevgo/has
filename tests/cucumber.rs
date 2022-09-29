@@ -31,6 +31,16 @@ async fn a_file(world: &mut HasWorld, filename: String) -> io::Result<File> {
     File::create(filepath).await
 }
 
+#[given(expr = "a Git branch {string}")]
+async fn a_git_branch(world: &mut HasWorld, name: String) -> io::Result<()> {
+    let dir = &world.dir;
+    run(dir, "git", vec!["init"]).await?;
+    run(dir, "git", vec!["config", "user.email", "a@b.com"]).await?;
+    run(dir, "git", vec!["config", "user.name", "Your Name"]).await?;
+    run(dir, "git", vec!["commit", "--allow-empty", "-m", "i"]).await?;
+    run(dir, "git", vec!["checkout", "-b", &name]).await
+}
+
 #[when(expr = "running {string}")]
 async fn when_running(world: &mut HasWorld, command: String) {
     let mut argv = command.split_ascii_whitespace();
@@ -81,4 +91,19 @@ async fn it_prints(world: &mut HasWorld, step: &Step) {
 #[tokio::main(flavor = "current_thread")]
 async fn main() {
     HasWorld::run("features").await;
+}
+
+async fn run(dir: &TempDir, cmd: &str, args: Vec<&str>) -> io::Result<()> {
+    let output = Command::new(cmd)
+        .args(args)
+        .current_dir(dir)
+        .output()
+        .await?;
+    assert!(
+        output.status.success(),
+        "{}{}",
+        String::from_utf8_lossy(&output.stdout),
+        String::from_utf8_lossy(&output.stderr)
+    );
+    Ok(())
 }
