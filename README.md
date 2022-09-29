@@ -13,5 +13,5 @@ has file package.json
 #### query Git branches
 
 ```
-has local-git-branch main
+has branch main
 ```
