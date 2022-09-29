@@ -6,10 +6,10 @@ use std::{env, process};
 
 fn main() {
     let args = cli::parse(env::args());
-    let found = match args.target {
+    let exists = match args.target {
         Target::File => checks::file(&args.name),
     };
-    if found != args.should_exist {
+    if exists != args.should_exist {
         process::exit(1);
     }
 }
