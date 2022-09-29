@@ -3,8 +3,11 @@ use std::process;
 
 /// the CLI arguments
 pub struct Args {
+    /// whether to look for presence or absence of the target
     pub negate: bool,
+    /// the target to look for
     pub target: Target,
+    /// name of the target (file or branch name)
     pub name: String,
 }
 
