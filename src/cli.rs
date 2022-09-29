@@ -13,6 +13,8 @@ pub struct Args {
 
 /// things to check for
 pub enum Target {
+    /// check for the existence of a branch
+    Branch,
     /// check for the existence of a file
     File,
 }
@@ -26,6 +28,7 @@ pub fn parse(mut args: env::Args) -> Args {
     };
     let target = match target_str.as_str() {
         "file" => Target::File,
+        "local-git-branch" => Target::Branch,
         _ => unknown_target(&target_str),
     };
     let name = args.next().unwrap_or_else(|| missing_name());

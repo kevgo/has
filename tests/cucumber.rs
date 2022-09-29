@@ -31,6 +31,29 @@ async fn a_file(world: &mut HasWorld, filename: String) -> io::Result<File> {
     File::create(filepath).await
 }
 
+#[given(expr = "a Git branch {string}")]
+async fn a_git_branch(world: &mut HasWorld, name: String) -> io::Result<()> {
+    let output = Command::new("git")
+        .arg("init")
+        .current_dir(&world.dir)
+        .output()
+        .await?;
+    assert!(output.status.success());
+    let output = Command::new("git")
+        .args(vec!["commit", "--allow-empty", "-m", "initial"])
+        .current_dir(&world.dir)
+        .output()
+        .await?;
+    assert!(output.status.success());
+    let output = Command::new("git")
+        .args(vec!["checkout", "-b", &name])
+        .current_dir(&world.dir)
+        .output()
+        .await?;
+    assert!(output.status.success());
+    Ok(())
+}
+
 #[when(expr = "running {string}")]
 async fn when_running(world: &mut HasWorld, command: String) {
     let mut argv = command.split_ascii_whitespace();
