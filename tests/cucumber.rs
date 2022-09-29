@@ -4,6 +4,7 @@ use std::env;
 use std::process::ExitStatus;
 use std::str;
 use tempfile::TempDir;
+use tokio::fs;
 use tokio::fs::File;
 use tokio::io;
 use tokio::process::Command;
@@ -29,6 +30,12 @@ impl Default for HasWorld {
 async fn a_file(world: &mut HasWorld, filename: String) -> io::Result<File> {
     let filepath = world.dir.path().join(filename);
     File::create(filepath).await
+}
+
+#[given(expr = "a folder {string}")]
+async fn a_folder(world: &mut HasWorld, name: String) -> io::Result<()> {
+    let folderpath = world.dir.path().join(name);
+    fs::create_dir(folderpath).await
 }
 
 #[given(expr = "a Git branch {string}")]
@@ -70,8 +77,8 @@ async fn it_succeeds(world: &mut HasWorld) {
     }
 }
 
-#[then("it does not succeed")]
-async fn it_does_not_succeed(world: &mut HasWorld) {
+#[then("it fails")]
+async fn it_fails(world: &mut HasWorld) {
     match world.exit_code {
         Some(have) => assert!(!have.success()),
         None => panic!("no exit code registered"),

@@ -1,6 +1,8 @@
 {
   "json": {},
-  "markdown": {},
+  "markdown": {
+    "textWrap": "always"
+  },
   "toml": {},
   "includes": ["**/*.{json,md,toml}"],
   "excludes": ["target"],

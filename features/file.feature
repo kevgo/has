@@ -7,12 +7,12 @@ Feature: detect files
 
   Scenario: wants file, file does not exist
     When running "has file package.json"
-    Then it does not succeed
+    Then it fails
 
   Scenario: wants no file, file does exist
     Given a file "package.json"
     When running "has no file package.json"
-    Then it does not succeed
+    Then it fails
 
   Scenario: wants no file, file does not exist
     When running "has no file package.json"
