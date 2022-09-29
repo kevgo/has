@@ -1,6 +1,8 @@
+use cucumber::gherkin::Step;
 use cucumber::{given, then, when, World};
 use std::env;
 use std::process::ExitStatus;
+use std::str;
 use tempfile::TempDir;
 use tokio::fs::File;
 use tokio::io;
@@ -10,6 +12,7 @@ use tokio::process::Command;
 pub struct HasWorld {
     dir: TempDir,
     exit_code: Option<ExitStatus>,
+    output: Option<String>,
 }
 
 impl Default for HasWorld {
@@ -17,6 +20,7 @@ impl Default for HasWorld {
         Self {
             dir: TempDir::new().expect("cannot create temp dir"),
             exit_code: None,
+            output: None,
         }
     }
 }
@@ -43,14 +47,35 @@ async fn when_running(world: &mut HasWorld, command: String) {
         .await
         .expect("cannot find the 'has' executable");
     world.exit_code = Some(output.status);
+    world.output = Some(String::from_utf8_lossy(&output.stdout).to_string());
 }
 
 #[then("it succeeds")]
-async fn it_returns(world: &mut HasWorld) {
+async fn it_succeeds(world: &mut HasWorld) {
+    let output = world.output.take().expect("no run recorded");
+    assert_eq!(output, "");
     match world.exit_code {
         Some(have) => assert!(have.success()),
         None => panic!("no exit code registered"),
     }
+}
+
+#[then("it does not succeed")]
+async fn it_does_not_succeed(world: &mut HasWorld) {
+    match world.exit_code {
+        Some(have) => assert!(!have.success()),
+        None => panic!("no exit code registered"),
+    }
+}
+
+#[then("it prints:")]
+async fn it_prints(world: &mut HasWorld, step: &Step) {
+    let want = step
+        .docstring()
+        .expect("step has no docstring")
+        .trim_start();
+    let have = world.output.take().expect("run has first");
+    assert_eq!(&have, want);
 }
 
 #[tokio::main(flavor = "current_thread")]

@@ -1,6 +1,19 @@
 Feature: detect files
 
-  Scenario: the given file exists
+  Scenario: wants file, file exists
     Given a file "package.json"
     When running "has file package.json"
+    Then it succeeds
+
+  Scenario: wants file, file doesn't exist
+    When running "has file package.json"
+    Then it does not succeed
+
+  Scenario: wants no file, file does exist
+    Given a file "package.json"
+    When running "has no file package.json"
+    Then it does not succeed
+
+  Scenario: wants no file, file does not exist
+    When running "has no file package.json"
     Then it succeeds
