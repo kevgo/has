@@ -9,7 +9,7 @@ edition = "2021"
 cucumber = "0.14"
 futures = "0.3"
 tempfile = "3"
-tokio = { version = "1.19.2", features = ["fs", "io-util", "macros", "process", "rt"] }
+tokio = { version = "1.21.2", features = ["fs", "io-util", "macros", "process", "rt"] }
 
 [[test]]
 name = "cucumber" # this should be the same as the filename of your test target
