@@ -12,6 +12,7 @@ Feature: Check CLI arguments
       - branch (a local Git branch)
       - file
       - folder
+      - help (print help)
 
       Name is the name of the object to check for.
 
@@ -30,6 +31,7 @@ Feature: Check CLI arguments
       - branch (a local Git branch)
       - file
       - folder
+      - help (print help)
 
       Name is the name of the object to check for.
 
@@ -48,6 +50,7 @@ Feature: Check CLI arguments
       - branch (a local Git branch)
       - file
       - folder
+      - help (print help)
 
       Name is the name of the object to check for.
 

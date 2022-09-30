@@ -13,12 +13,10 @@ pub struct Args {
 
 /// things to check for
 pub enum Target {
-    /// check for the existence of a branch
     Branch,
-    /// check for the existence of a file
     File,
-    /// check for the existence of a folder
     Folder,
+    Help,
 }
 
 pub fn parse(mut args: env::Args) -> Args {
@@ -26,6 +24,13 @@ pub fn parse(mut args: env::Args) -> Args {
     let next = args.next().unwrap_or_else(|| missing_target());
     let (should_exist, target_str) = match next.as_str() {
         "no" => (false, args.next().unwrap_or_else(|| missing_target())),
+        "help" => {
+            return Args {
+                target: Target::Help,
+                should_exist: false,
+                name: "".into(),
+            }
+        }
         _ => (true, next),
     };
     let target = match target_str.as_str() {
@@ -69,7 +74,7 @@ fn unknown_target(target: &str) -> ! {
     process::exit(1);
 }
 
-fn help() {
+pub fn help() {
     println!(
         r#"
 Usage: has [no] <target> <name>
@@ -78,6 +83,7 @@ Targets define which type of object to check for:
 - branch (a local Git branch)
 - file
 - folder
+- help (print help)
 
 Name is the name of the object to check for.
 

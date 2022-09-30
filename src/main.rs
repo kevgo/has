@@ -10,6 +10,10 @@ fn main() {
         Target::Branch => checks::git_branch::local(&args.name),
         Target::File => checks::file(&args.name),
         Target::Folder => checks::folder(&args.name),
+        Target::Help => {
+            cli::help();
+            process::exit(0);
+        }
     };
     if exists != args.should_exist {
         process::exit(1);
