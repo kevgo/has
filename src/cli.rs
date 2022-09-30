@@ -47,20 +47,41 @@ pub fn parse(mut args: env::Args) -> Args {
 
 fn missing_name() -> ! {
     println!("No name provided");
+    help();
     process::exit(1);
 }
 
 fn missing_target() -> ! {
     println!("No target provided");
+    help();
     process::exit(1);
 }
 
 fn too_many_arguments() -> ! {
     println!("Too many arguments");
+    help();
     process::exit(1);
 }
 
 fn unknown_target(target: &str) -> ! {
     println!("Unknown target: {}", target);
+    help();
     process::exit(1);
+}
+
+fn help() {
+    println!(
+        r#"
+Usage: has [no] <target> <name>
+
+Targets define which type of object to check for:
+- branch (a local Git branch)
+- file
+- folder
+
+Name is the name of the object to check for.
+
+The "no" argument checks for absence of the given object.
+"#
+    );
 }

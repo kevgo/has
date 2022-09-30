@@ -87,12 +87,9 @@ async fn it_fails(world: &mut HasWorld) {
 
 #[then("it prints:")]
 async fn it_prints(world: &mut HasWorld, step: &Step) {
-    let want = step
-        .docstring()
-        .expect("step has no docstring")
-        .trim_start();
+    let want = step.docstring().expect("step has no docstring");
     let have = world.output.take().expect("run has first");
-    assert_eq!(&have, want);
+    assert_eq!(have.trim(), want.trim());
 }
 
 #[tokio::main(flavor = "current_thread")]
