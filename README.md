@@ -13,13 +13,6 @@ has [no] file <file name>
 has [no] folder <folder name>
 ```
 
-### query files and folders
-
-```
-has [no] file package.json
-has [no] folder node_modules
-```
-
 ### query Git branches
 
 ```
