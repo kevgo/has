@@ -2,7 +2,8 @@
 
 [![CI](https://github.com/kevgo/has/actions/workflows/ci.yml/badge.svg)](https://github.com/kevgo/has/actions/workflows/ci.yml)
 
-Easily query properties of Git repositories. Indicates success through the exit
+`has` is a modern replacement for the traditional `test` tool. It allows
+querying properties of Git repositories and indicates success through the exit
 code.
 
 ### query files and folders
@@ -12,7 +13,14 @@ has [no] file <file name>
 has [no] folder <folder name>
 ```
 
-#### query Git branches
+### query files and folders
+
+```
+has [no] file package.json
+has [no] folder node_modules
+```
+
+### query Git branches
 
 ```
 has [no] branch <branch name>
