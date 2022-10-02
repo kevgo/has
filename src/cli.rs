@@ -35,12 +35,7 @@ pub fn parse(mut args: env::Args) -> Args {
         "folder" => Target::Folder {
             name: args.next().unwrap_or_else(|| missing_name()),
         },
-        "help" => {
-            return Args {
-                target: Target::Help,
-                should_exist: false,
-            }
-        }
+        "help" => Target::Help,
         "uncommitted-changes" => Target::UncommittedChanges,
         _ => unknown_target(&target_str),
     };
