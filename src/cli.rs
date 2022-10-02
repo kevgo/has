@@ -24,6 +24,12 @@ pub fn parse(mut args: env::Args) -> Args {
     let next = args.next().unwrap_or_else(|| missing_target());
     let (should_exist, target_str) = match next.as_str() {
         "no" => (false, args.next().unwrap_or_else(|| missing_target())),
+        _ => (true, next),
+    };
+    let target = match target_str.as_str() {
+        "branch" => Target::Branch,
+        "file" => Target::File,
+        "folder" => Target::Folder,
         "help" => {
             return Args {
                 target: Target::Help,
@@ -31,12 +37,6 @@ pub fn parse(mut args: env::Args) -> Args {
                 name: "".into(),
             }
         }
-        _ => (true, next),
-    };
-    let target = match target_str.as_str() {
-        "branch" => Target::Branch,
-        "file" => Target::File,
-        "folder" => Target::Folder,
         _ => unknown_target(&target_str),
     };
     let name = args.next().unwrap_or_else(|| missing_name());
