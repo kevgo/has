@@ -7,13 +7,14 @@ use std::{env, process};
 fn main() {
     let args = cli::parse(env::args());
     let exists = match args.target {
-        Target::Branch => checks::git_branch::local(&args.name),
-        Target::File => checks::file(&args.name),
-        Target::Folder => checks::folder(&args.name),
+        Target::Branch { name } => checks::git_branch::local(&name),
+        Target::File { name } => checks::file(&name),
+        Target::Folder { name } => checks::folder(&name),
         Target::Help => {
             cli::help();
             process::exit(0);
         }
+        Target::UncommittedChanges => checks::uncommitted_changes(),
     };
     if exists != args.should_exist {
         process::exit(1);

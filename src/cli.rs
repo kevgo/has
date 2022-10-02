@@ -7,16 +7,15 @@ pub struct Args {
     pub should_exist: bool,
     /// the target to look for
     pub target: Target,
-    /// name of the target (file or branch name)
-    pub name: String,
 }
 
 /// things to check for
 pub enum Target {
-    Branch,
-    File,
-    Folder,
+    Branch { name: String },
+    File { name: String },
+    Folder { name: String },
     Help,
+    UncommittedChanges,
 }
 
 pub fn parse(mut args: env::Args) -> Args {
@@ -27,26 +26,30 @@ pub fn parse(mut args: env::Args) -> Args {
         _ => (true, next),
     };
     let target = match target_str.as_str() {
-        "branch" => Target::Branch,
-        "file" => Target::File,
-        "folder" => Target::Folder,
+        "branch" => Target::Branch {
+            name: args.next().unwrap_or_else(|| missing_name()),
+        },
+        "file" => Target::File {
+            name: args.next().unwrap_or_else(|| missing_name()),
+        },
+        "folder" => Target::Folder {
+            name: args.next().unwrap_or_else(|| missing_name()),
+        },
         "help" => {
             return Args {
                 target: Target::Help,
                 should_exist: false,
-                name: "".into(),
             }
         }
+        "uncommitted-changes" => Target::UncommittedChanges,
         _ => unknown_target(&target_str),
     };
-    let name = args.next().unwrap_or_else(|| missing_name());
     if args.next().is_some() {
         too_many_arguments();
     }
     Args {
         should_exist,
         target,
-        name,
     }
 }
 
