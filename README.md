@@ -3,8 +3,8 @@
 [![CI](https://github.com/kevgo/has/actions/workflows/ci.yml/badge.svg)](https://github.com/kevgo/has/actions/workflows/ci.yml)
 
 `has` is a modern replacement for the traditional `test` tool. It allows
-querying properties of Git repositories and indicates success through the exit
-code.
+querying properties of the local filesystem and Git repositories and indicates
+success through its exit code.
 
 ### query files and folders
 
