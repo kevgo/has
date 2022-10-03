@@ -12,6 +12,7 @@ pub struct Args {
 /// things to check for
 pub enum Target {
     Branch { name: String },
+    EmptyOutput { cmd: String, args: Vec<String> },
     File { name: String },
     Folder { name: String },
     Help,
@@ -29,6 +30,10 @@ pub fn parse(mut args: env::Args) -> Result<Args, UserError> {
     let target = match target_str.as_str() {
         "branch" => Target::Branch {
             name: args.next().ok_or(UserError::MissingName)?,
+        },
+        "empty-output" => Target::EmptyOutput {
+            cmd: args.next().ok_or(UserError::MissingCommand)?,
+            args: args.by_ref().collect(),
         },
         "file" => Target::File {
             name: args.next().ok_or(UserError::MissingName)?,

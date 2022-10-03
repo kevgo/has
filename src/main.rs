@@ -23,6 +23,7 @@ fn inner() -> Result<ExitCode, UserError> {
     let args = cli::parse(env::args())?;
     let exists = match args.target {
         Target::Branch { name } => checks::git_branch::local(&name),
+        Target::EmptyOutput { cmd, args } => checks::empty_output(cmd, args)?,
         Target::File { name } => checks::file(&name),
         Target::Folder { name } => checks::folder(&name),
         Target::Help => {
