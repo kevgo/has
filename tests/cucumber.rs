@@ -11,7 +11,8 @@ use tokio::process::Command;
 
 #[derive(Debug, World)]
 pub struct HasWorld {
-    dir: TempDir,
+    code_dir: TempDir,
+    remote_dir: Option<TempDir>,
     exit_code: Option<ExitStatus>,
     output: Option<String>,
 }
@@ -19,7 +20,8 @@ pub struct HasWorld {
 impl Default for HasWorld {
     fn default() -> Self {
         Self {
-            dir: TempDir::new().expect("cannot create temp dir"),
+            code_dir: TempDir::new().expect("cannot create temp dir"),
+            remote_dir: None,
             exit_code: None,
             output: None,
         }
@@ -28,25 +30,52 @@ impl Default for HasWorld {
 
 #[given(expr = "a file {string}")]
 async fn a_file(world: &mut HasWorld, filename: String) -> io::Result<File> {
-    let filepath = world.dir.path().join(filename);
+    let filepath = world.code_dir.path().join(filename);
     File::create(filepath).await
 }
 
 #[given(expr = "a folder {string}")]
 async fn a_folder(world: &mut HasWorld, name: String) -> io::Result<()> {
-    let folderpath = world.dir.path().join(name);
+    let folderpath = world.code_dir.path().join(name);
     fs::create_dir(folderpath).await
+}
+
+#[given("my code is managed by Git")]
+async fn git_repo(world: &mut HasWorld) {
+    let dir = &world.code_dir;
+    run_chk(dir, "git", vec!["init"]).await;
+    run_chk(dir, "git", vec!["config", "user.email", "a@b.com"]).await;
+    run_chk(dir, "git", vec!["config", "user.name", "Your Name"]).await;
+    run_chk(dir, "git", vec!["commit", "--allow-empty", "-m", "i"]).await;
+}
+
+#[given("my Git repo has a remote")]
+async fn repo_has_git_remote(world: &mut HasWorld) {
+    let remote_dir = TempDir::new().expect("cannot create temp dir");
+    run_chk(&remote_dir, "git", vec!["init"]).await;
+    run_chk(
+        &world.code_dir,
+        "git",
+        vec![
+            "remote",
+            "add",
+            "origin",
+            &remote_dir.path().to_string_lossy(),
+        ],
+    )
+    .await;
+    world.remote_dir = Some(remote_dir);
 }
 
 #[given(expr = "my Git workspace has a branch {string}")]
 async fn has_git_branch(world: &mut HasWorld, name: String) {
-    run_chk(&world.dir, "git", vec!["branch", &name]).await
+    run_chk(&world.code_dir, "git", vec!["branch", &name]).await
 }
 
-#[given(expr = "my Git workspace is on the branch {string}")]
+#[given(expr = "my Git workspace is on the {string} branch")]
 async fn is_on_git_branch(world: &mut HasWorld, name: String) {
     let has_branch = run_status(
-        &world.dir,
+        &world.code_dir,
         "git",
         vec![
             "show-ref",
@@ -57,19 +86,10 @@ async fn is_on_git_branch(world: &mut HasWorld, name: String) {
     )
     .await;
     if has_branch {
-        run_chk(&world.dir, "git", vec!["checkout", &name]).await
+        run_chk(&world.code_dir, "git", vec!["checkout", &name]).await
     } else {
-        run_chk(&world.dir, "git", vec!["checkout", "-b", &name]).await
+        run_chk(&world.code_dir, "git", vec!["checkout", "-b", &name]).await
     }
-}
-
-#[given("my code is managed by Git")]
-async fn git_repo(world: &mut HasWorld) {
-    let dir = &world.dir;
-    run_chk(dir, "git", vec!["init"]).await;
-    run_chk(dir, "git", vec!["config", "user.email", "a@b.com"]).await;
-    run_chk(dir, "git", vec!["config", "user.name", "Your Name"]).await;
-    run_chk(dir, "git", vec!["commit", "--allow-empty", "-m", "i"]).await;
 }
 
 #[when(expr = "running {string}")]
@@ -83,7 +103,7 @@ async fn when_running(world: &mut HasWorld, command: String) {
     let has_path = cwd.join("target").join("debug").join("has");
     let output = Command::new(has_path)
         .args(argv)
-        .current_dir(&world.dir)
+        .current_dir(&world.code_dir)
         .output()
         .await
         .expect("cannot find the 'has' executable");

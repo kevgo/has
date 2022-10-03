@@ -2,7 +2,7 @@ Feature: detect uncommitted changes
 
   Background:
     Given my code is managed by Git
-    And my Git workspace is on the branch "feature"
+    And my Git workspace is on the "feature" branch
 
   Scenario: wants uncommitted changes, has them
     Given a file "uncommitted.txt"

@@ -4,14 +4,14 @@ Feature: detect Git branches
     Given my code is managed by Git
 
   Scenario: is on branch
-    Given my Git workspace is on the branch "feature"
+    Given my Git workspace is on the "feature" branch
     When running "has branch feature"
     Then it succeeds
 
   @this
   Scenario: wants branch, branch exists
     Given my Git workspace has a branch "feature"
-    And my Git workspace is on the branch "main"
+    And my Git workspace is on the "main" branch
     When running "has branch feature"
     Then it succeeds
 
@@ -26,7 +26,7 @@ Feature: detect Git branches
 
   Scenario: wants no branch, branch does exist
     Given my Git workspace has a branch "feature"
-    And my Git workspace is on the branch "main"
+    And my Git workspace is on the "main" branch
     When running "has no branch feature"
     Then it fails
 
