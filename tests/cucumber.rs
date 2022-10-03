@@ -145,6 +145,7 @@ async fn it_prints(world: &mut HasWorld, step: &Step) {
     assert_eq!(have.trim(), want.trim());
 }
 
+/// runs the given command in the given directory and returns whether it succeeded
 async fn run_status(dir: &Path, cmd: &str, args: Vec<&str>) -> bool {
     match Command::new(cmd).args(args).current_dir(dir).output().await {
         io::Result::Ok(output) => output.status.success(),
@@ -152,6 +153,7 @@ async fn run_status(dir: &Path, cmd: &str, args: Vec<&str>) -> bool {
     }
 }
 
+/// runs the given command in the given directory and returns the STDOUT
 async fn run_stdout(dir: &Path, cmd: &str, args: Vec<&str>) -> String {
     let output = Command::new(cmd)
         .args(args)
@@ -162,6 +164,8 @@ async fn run_stdout(dir: &Path, cmd: &str, args: Vec<&str>) -> String {
     String::from_utf8(output.stdout).unwrap()
 }
 
+/// runs the given command in the given directory and verifies it succeeds,
+/// printing the output on error
 async fn run_chk(dir: &Path, cmd: &str, args: Vec<&str>) {
     let output = Command::new(cmd)
         .args(args)
