@@ -13,8 +13,10 @@ has [no] file <file name>
 has [no] folder <folder name>
 ```
 
-### query Git branches
+### query Git repositories
 
 ```
 has [no] branch <branch name>
+has [no] uncommitted-changes
+has [no] unpushed-changes
 ```
