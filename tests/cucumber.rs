@@ -40,6 +40,15 @@ async fn a_folder(world: &mut HasWorld, name: String) -> io::Result<()> {
     fs::create_dir(folderpath).await
 }
 
+#[given("a local commit")]
+async fn a_local_commit(world: &mut HasWorld) -> io::Result<()> {
+    let filepath = &world.code_dir.path().join("committed_file");
+    fs::write(filepath, b"content").await?;
+    run_chk(&world.code_dir, "git", vec!["add", "-A"]).await;
+    run_chk(&world.code_dir, "git", vec!["commit", "-m", "message"]).await;
+    io::Result::Ok(())
+}
+
 #[given("my code is managed by Git")]
 async fn git_repo(world: &mut HasWorld) {
     let dir = &world.code_dir;
@@ -138,8 +147,8 @@ async fn it_prints(world: &mut HasWorld, step: &Step) {
 
 async fn run_status(dir: &TempDir, cmd: &str, args: Vec<&str>) -> bool {
     match Command::new(cmd).args(args).current_dir(dir).output().await {
-        Ok(output) => output.status.success(),
-        Err(_) => false,
+        io::Result::Ok(output) => output.status.success(),
+        io::Result::Err(_) => false,
     }
 }
 

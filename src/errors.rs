@@ -4,16 +4,18 @@ pub enum UserError {
     MissingName,
     MissingTarget,
     TooManyArguments,
-    UnknownTarget,
+    UnknownTarget(String),
 }
 
 impl Display for UserError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str(match self {
-            UserError::MissingName => "no name provided",
-            UserError::MissingTarget => "no target provided",
-            UserError::TooManyArguments => "too many arguments",
-            UserError::UnknownTarget => "unknown target",
-        })
+        match self {
+            UserError::MissingName => f.write_str("no name provided"),
+            UserError::MissingTarget => f.write_str("no target provided"),
+            UserError::TooManyArguments => f.write_str("too many arguments"),
+            UserError::UnknownTarget(target) => {
+                f.write_fmt(format_args!("unknown target: {}", target))
+            }
+        }
     }
 }
