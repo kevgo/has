@@ -182,22 +182,27 @@ async fn run_chk(dir: &Path, cmd: &str, args: Vec<&str>) {
     }
 }
 
+/// converts the given directory into a Git repo
 async fn git_init<AP: AsRef<Path>>(dir: AP) {
     run_chk(dir.as_ref(), "git", vec!["init"]).await
 }
 
+/// adds the given remote to the Git repo in the given dir
 async fn git_add_remote<AP: AsRef<Path>>(dir: AP, target: &str) {
     run_chk(dir.as_ref(), "git", vec!["remote", "add", "origin", target]).await
 }
 
+/// creates and checks out the given branch in the Git repo in the given dir
 async fn git_create_and_checkout_branch<AP: AsRef<Path>>(dir: AP, branch: &str) {
     run_chk(&dir.as_ref(), "git", vec!["checkout", "-b", branch]).await
 }
 
+/// checks out the given branch in the Git repo in the given dir
 async fn git_checkout_branch<AP: AsRef<Path>>(dir: AP, branch: &str) {
     run_chk(&dir.as_ref(), "git", vec!["checkout", branch]).await
 }
 
+/// provides the currently checked out branch name in the Git repo in the given dir
 async fn git_current_branch<AP: AsRef<Path>>(dir: AP) -> String {
     run_stdout(
         dir.as_ref(),
@@ -209,6 +214,7 @@ async fn git_current_branch<AP: AsRef<Path>>(dir: AP) -> String {
     .to_string()
 }
 
+/// indicates whether the Git repo in the given dir contains a branch with the given name
 async fn git_has_branch<AP: AsRef<Path>>(dir: AP, branch: &str) -> bool {
     let branch_ref = &format!("refs/heads/{}", branch);
     run_status(
@@ -219,6 +225,7 @@ async fn git_has_branch<AP: AsRef<Path>>(dir: AP, branch: &str) -> bool {
     .await
 }
 
+/// pushes the branch with the given name in the Git repo in the given dir to the "origin" remote
 async fn git_push_branch<AP: AsRef<Path>>(dir: AP, branch: &str) {
     run_chk(dir.as_ref(), "git", vec!["push", "-u", "origin", &branch]).await
 }
