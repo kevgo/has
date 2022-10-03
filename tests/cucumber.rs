@@ -88,12 +88,12 @@ async fn repo_has_git_remote(world: &mut HasWorld) {
 }
 
 #[given(expr = "my Git workspace has a branch {string}")]
-async fn has_git_branch(world: &mut HasWorld, name: String) {
+async fn create_branch(world: &mut HasWorld, name: String) {
     run_chk(&world.code_dir.path(), "git", vec!["branch", &name]).await
 }
 
 #[given(expr = "my Git workspace is on the {string} branch")]
-async fn is_on_git_branch(world: &mut HasWorld, name: String) {
+async fn checkout_branch(world: &mut HasWorld, name: String) {
     if git_has_branch(&world.code_dir, &name).await {
         git_checkout_branch(&world.code_dir, &name).await
     } else {
