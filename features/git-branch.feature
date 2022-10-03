@@ -8,7 +8,6 @@ Feature: detect Git branches
     When running "has branch feature"
     Then it succeeds
 
-  @this
   Scenario: wants branch, branch exists
     Given my Git workspace has a branch "feature"
     And my Git workspace is on the "main" branch
