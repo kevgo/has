@@ -11,7 +11,7 @@ pub fn unpushed_changes() -> bool {
     let current_branch = str::from_utf8(&current_branch).unwrap().trim();
     let output = Command::new("git")
         .arg("log")
-        .arg("oneline")
+        .arg("--oneline")
         .arg(format!("origin/{}..HEAD", current_branch))
         .output()
         .expect("git not installed")

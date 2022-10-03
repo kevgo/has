@@ -5,6 +5,7 @@ Feature: detect unpushed changes
     And my Git workspace is on the "feature" branch
     And my Git repo has a remote
 
+  @this
   Scenario: wants unpushed changes, has them
     Given a local commit
     And debug
