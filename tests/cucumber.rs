@@ -66,7 +66,7 @@ async fn debug(world: &mut HasWorld) {
 #[given("my code is managed by Git")]
 async fn git_repo(world: &mut HasWorld) {
     let dir = &world.code_dir;
-    git_init(&world.code_dir).await;
+    git_init(dir).await;
     run_chk(dir.path(), "git", vec!["config", "user.email", "a@b.com"]).await;
     run_chk(dir.path(), "git", vec!["config", "user.name", "Your Name"]).await;
     run_chk(
