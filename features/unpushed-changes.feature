@@ -5,10 +5,8 @@ Feature: detect unpushed changes
     And my Git workspace is on the "feature" branch
     And my Git repo has a remote
 
-  @this
   Scenario: wants unpushed changes, has them
     Given a local commit
-    And debug
     When running "has unpushed-changes"
     Then it succeeds
 
@@ -17,7 +15,7 @@ Feature: detect unpushed changes
     Then it fails
 
   Scenario: wants no unpushed changes, has some
-    Given a file "uncommitted.txt"
+    Given a local commit
     When running "has no unpushed-changes"
     Then it fails
 
