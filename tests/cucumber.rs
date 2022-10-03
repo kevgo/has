@@ -1,6 +1,7 @@
 use cucumber::gherkin::Step;
 use cucumber::{given, then, when, World};
 use std::env;
+use std::path::Path;
 use std::process::ExitStatus;
 use std::str;
 use tempfile::TempDir;
@@ -44,60 +45,59 @@ async fn a_folder(world: &mut HasWorld, name: String) -> io::Result<()> {
 async fn a_local_commit(world: &mut HasWorld) -> io::Result<()> {
     let filepath = &world.code_dir.path().join("committed_file");
     fs::write(filepath, b"content").await?;
-    run_chk(&world.code_dir, "git", vec!["add", "-A"]).await;
-    run_chk(&world.code_dir, "git", vec!["commit", "-m", "message"]).await;
+    run_chk(&world.code_dir.path(), "git", vec!["add", "-A"]).await;
+    run_chk(
+        &world.code_dir.path(),
+        "git",
+        vec!["commit", "-m", "message"],
+    )
+    .await;
     io::Result::Ok(())
+}
+
+#[given("debug")]
+async fn debug(world: &mut HasWorld) {
+    println!("CODE DIR: {}", world.code_dir.path().to_string_lossy());
+    println!("CODE DIR: {}", world.code_dir.path().to_string_lossy());
+    let mut line = String::new();
+    std::io::stdin().read_line(&mut line).unwrap();
 }
 
 #[given("my code is managed by Git")]
 async fn git_repo(world: &mut HasWorld) {
     let dir = &world.code_dir;
-    run_chk(dir, "git", vec!["init"]).await;
-    run_chk(dir, "git", vec!["config", "user.email", "a@b.com"]).await;
-    run_chk(dir, "git", vec!["config", "user.name", "Your Name"]).await;
-    run_chk(dir, "git", vec!["commit", "--allow-empty", "-m", "i"]).await;
+    git_init(&world.code_dir).await;
+    run_chk(dir.path(), "git", vec!["config", "user.email", "a@b.com"]).await;
+    run_chk(dir.path(), "git", vec!["config", "user.name", "Your Name"]).await;
+    run_chk(
+        dir.path(),
+        "git",
+        vec!["commit", "--allow-empty", "-m", "i"],
+    )
+    .await;
 }
 
 #[given("my Git repo has a remote")]
 async fn repo_has_git_remote(world: &mut HasWorld) {
     let remote_dir = TempDir::new().expect("cannot create temp dir");
-    run_chk(&remote_dir, "git", vec!["init"]).await;
-    run_chk(
-        &world.code_dir,
-        "git",
-        vec![
-            "remote",
-            "add",
-            "origin",
-            &remote_dir.path().to_string_lossy(),
-        ],
-    )
-    .await;
+    git_init(&remote_dir).await;
+    git_add_remote(&world.code_dir, &remote_dir.path().to_string_lossy()).await;
+    let current_branch = git_current_branch(&world.code_dir).await;
+    git_push_branch(&world.code_dir, &current_branch).await;
     world.remote_dir = Some(remote_dir);
 }
 
 #[given(expr = "my Git workspace has a branch {string}")]
 async fn has_git_branch(world: &mut HasWorld, name: String) {
-    run_chk(&world.code_dir, "git", vec!["branch", &name]).await
+    run_chk(&world.code_dir.path(), "git", vec!["branch", &name]).await
 }
 
 #[given(expr = "my Git workspace is on the {string} branch")]
 async fn is_on_git_branch(world: &mut HasWorld, name: String) {
-    let has_branch = run_status(
-        &world.code_dir,
-        "git",
-        vec![
-            "show-ref",
-            "--verify",
-            "--quiet",
-            &format!("refs/heads/{}", name),
-        ],
-    )
-    .await;
-    if has_branch {
-        run_chk(&world.code_dir, "git", vec!["checkout", &name]).await
+    if git_has_branch(&world.code_dir, &name).await {
+        git_checkout_branch(&world.code_dir, &name).await
     } else {
-        run_chk(&world.code_dir, "git", vec!["checkout", "-b", &name]).await
+        git_create_and_checkout_branch(&world.code_dir, &name).await
     }
 }
 
@@ -145,14 +145,24 @@ async fn it_prints(world: &mut HasWorld, step: &Step) {
     assert_eq!(have.trim(), want.trim());
 }
 
-async fn run_status(dir: &TempDir, cmd: &str, args: Vec<&str>) -> bool {
+async fn run_status(dir: &Path, cmd: &str, args: Vec<&str>) -> bool {
     match Command::new(cmd).args(args).current_dir(dir).output().await {
         io::Result::Ok(output) => output.status.success(),
         io::Result::Err(_) => false,
     }
 }
 
-async fn run_chk(dir: &TempDir, cmd: &str, args: Vec<&str>) {
+async fn run_stdout(dir: &Path, cmd: &str, args: Vec<&str>) -> String {
+    let output = Command::new(cmd)
+        .args(args)
+        .current_dir(dir)
+        .output()
+        .await
+        .unwrap();
+    String::from_utf8(output.stdout).unwrap()
+}
+
+async fn run_chk(dir: &Path, cmd: &str, args: Vec<&str>) {
     let output = Command::new(cmd)
         .args(args)
         .current_dir(dir)
@@ -162,10 +172,51 @@ async fn run_chk(dir: &TempDir, cmd: &str, args: Vec<&str>) {
     if !output.status.success() {
         panic!(
             "{}{}",
-            String::from_utf8_lossy(&output.stdout),
-            String::from_utf8_lossy(&output.stderr)
+            str::from_utf8(&output.stdout).unwrap(),
+            str::from_utf8(&output.stderr).unwrap()
         );
     }
+}
+
+async fn git_init<AP: AsRef<Path>>(dir: AP) {
+    run_chk(dir.as_ref(), "git", vec!["init"]).await
+}
+
+async fn git_add_remote<AP: AsRef<Path>>(dir: AP, target: &str) {
+    run_chk(dir.as_ref(), "git", vec!["remote", "add", "origin", target]).await
+}
+
+async fn git_create_and_checkout_branch<AP: AsRef<Path>>(dir: AP, branch: &str) {
+    run_chk(&dir.as_ref(), "git", vec!["checkout", "-b", branch]).await
+}
+
+async fn git_checkout_branch<AP: AsRef<Path>>(dir: AP, branch: &str) {
+    run_chk(&dir.as_ref(), "git", vec!["checkout", branch]).await
+}
+
+async fn git_current_branch<AP: AsRef<Path>>(dir: AP) -> String {
+    run_stdout(
+        dir.as_ref(),
+        "git",
+        vec!["rev-parse", "--abbrev-ref", "HEAD"],
+    )
+    .await
+    .trim()
+    .to_string()
+}
+
+async fn git_has_branch<AP: AsRef<Path>>(dir: AP, branch: &str) -> bool {
+    let branch_ref = &format!("refs/heads/{}", branch);
+    run_status(
+        dir.as_ref(),
+        "git",
+        vec!["show-ref", "--verify", "--quiet", branch_ref],
+    )
+    .await
+}
+
+async fn git_push_branch<AP: AsRef<Path>>(dir: AP, branch: &str) {
+    run_chk(dir.as_ref(), "git", vec!["push", "-u", "origin", &branch]).await
 }
 
 #[tokio::main(flavor = "current_thread")]

@@ -4,8 +4,8 @@ mod errors;
 
 use cli::Target;
 use errors::UserError;
+use std::env;
 use std::process::ExitCode;
-use std::{env, process};
 
 fn main() -> ExitCode {
     match inner() {
@@ -26,7 +26,7 @@ fn inner() -> Result<ExitCode, UserError> {
         Target::Folder { name } => checks::folder(&name),
         Target::Help => {
             help();
-            process::exit(0);
+            return Ok(ExitCode::SUCCESS);
         }
         Target::UncommittedChanges => checks::uncommitted_changes(),
         Target::UnpushedChanges => checks::unpushed_changes(),

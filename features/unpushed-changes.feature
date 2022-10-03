@@ -2,11 +2,12 @@ Feature: detect unpushed changes
 
   Background:
     Given my code is managed by Git
-    And my Git repo has a remote
     And my Git workspace is on the "feature" branch
+    And my Git repo has a remote
 
   Scenario: wants unpushed changes, has them
     Given a local commit
+    And debug
     When running "has unpushed-changes"
     Then it succeeds
 
