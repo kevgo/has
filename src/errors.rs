@@ -9,13 +9,12 @@ pub enum UserError {
 
 impl Display for UserError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let text = match self {
+        f.write_str(match self {
             UserError::MissingName => "no name provided",
             UserError::MissingTarget => "no target provided",
             UserError::TooManyArguments => "too many arguments",
             UserError::UnknownTarget => "unknown target",
-        };
-        f.write_str(text)
+        })
     }
 }
 
