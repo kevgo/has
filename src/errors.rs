@@ -1,6 +1,7 @@
 use std::fmt::Display;
 
 pub enum UserError {
+    BranchNameInvalidUnicode,
     MissingName,
     MissingTarget,
     TooManyArguments,
@@ -10,6 +11,9 @@ pub enum UserError {
 impl Display for UserError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
+            UserError::BranchNameInvalidUnicode => {
+                f.write_str("the name of the current Git branch contains invalid unicode")
+            }
             UserError::MissingName => f.write_str("no name provided"),
             UserError::MissingTarget => f.write_str("no target provided"),
             UserError::TooManyArguments => f.write_str("too many arguments"),
