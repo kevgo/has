@@ -1,6 +1,7 @@
 mod checks;
 mod cli;
 mod errors;
+mod git;
 
 use cli::Target;
 use errors::UserError;
