@@ -1,4 +1,3 @@
-@this
 Feature: detect empty command output
 
   Scenario: empty output
