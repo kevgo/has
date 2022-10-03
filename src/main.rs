@@ -12,7 +12,7 @@ fn main() -> ExitCode {
         Ok(exit_code) => exit_code,
         Err(err) => {
             println!("ERROR: {}", err);
-            errors::help();
+            help();
             ExitCode::FAILURE
         }
     }
@@ -25,7 +25,7 @@ fn inner() -> Result<ExitCode, UserError> {
         Target::File { name } => checks::file(&name),
         Target::Folder { name } => checks::folder(&name),
         Target::Help => {
-            errors::help();
+            help();
             process::exit(0);
         }
         Target::UncommittedChanges => checks::uncommitted_changes(),
@@ -35,4 +35,22 @@ fn inner() -> Result<ExitCode, UserError> {
     } else {
         Ok(ExitCode::FAILURE)
     }
+}
+
+fn help() {
+    println!(
+        r#"
+Usage: has [no] <target> <name>
+
+Targets define which type of object to check for:
+- branch (a local Git branch)
+- file
+- folder
+- help (print help)
+
+Name is the name of the object to check for.
+
+The "no" argument checks for absence of the given object.
+"#
+    );
 }
