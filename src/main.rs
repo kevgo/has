@@ -29,6 +29,7 @@ fn inner() -> Result<ExitCode, UserError> {
             process::exit(0);
         }
         Target::UncommittedChanges => checks::uncommitted_changes(),
+        Target::UnpushedChanges => checks::unpushed_changes(),
     };
     if exists == args.should_exist {
         Ok(ExitCode::SUCCESS)

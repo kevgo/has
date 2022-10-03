@@ -16,6 +16,7 @@ pub enum Target {
     Folder { name: String },
     Help,
     UncommittedChanges,
+    UnpushedChanges,
 }
 
 pub fn parse(mut args: env::Args) -> Result<Args, UserError> {
@@ -37,6 +38,7 @@ pub fn parse(mut args: env::Args) -> Result<Args, UserError> {
         },
         "help" => Target::Help,
         "uncommitted-changes" => Target::UncommittedChanges,
+        "unpushed-changes" => Target::UnpushedChanges,
         unknown => return Err(UserError::UnknownTarget(unknown.into())),
     };
     if args.next().is_some() {
