@@ -8,6 +8,7 @@ pub fn local(name: &str) -> bool {
             "--verify",
             &format!("refs/heads/{}", name),
         ])
-        .output();
-    output.expect("git not installed").status.success()
+        .output()
+        .expect("git not installed");
+    output.status.success()
 }

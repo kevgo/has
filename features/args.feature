@@ -4,7 +4,7 @@ Feature: Check CLI arguments
     When running "has"
     Then it prints:
       """
-      No target provided
+      ERROR: no target provided
 
       Usage: has [no] <target> <name>
 
@@ -23,7 +23,7 @@ Feature: Check CLI arguments
     When running "has file"
     Then it prints:
       """
-      No name provided
+      ERROR: no name provided
 
       Usage: has [no] <target> <name>
 
@@ -42,7 +42,7 @@ Feature: Check CLI arguments
     When running "has file foo bar"
     Then it prints:
       """
-      Too many arguments
+      ERROR: too many arguments
 
       Usage: has [no] <target> <name>
 
