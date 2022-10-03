@@ -1,11 +1,12 @@
 mod checks;
 mod cli;
 mod errors;
+mod git;
 
 use cli::Target;
 use errors::UserError;
+use std::env;
 use std::process::ExitCode;
-use std::{env, process};
 
 fn main() -> ExitCode {
     match inner() {
@@ -26,9 +27,10 @@ fn inner() -> Result<ExitCode, UserError> {
         Target::Folder { name } => checks::folder(&name),
         Target::Help => {
             help();
-            process::exit(0);
+            return Ok(ExitCode::SUCCESS);
         }
         Target::UncommittedChanges => checks::uncommitted_changes(),
+        Target::UnpushedChanges => checks::unpushed_changes()?,
     };
     if exists == args.should_exist {
         Ok(ExitCode::SUCCESS)

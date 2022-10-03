@@ -1,6 +1,10 @@
 cuke: target/debug/has  # runs the feature tests
 	cargo test --test cucumber
 
+cukethis: target/debug/has  # runs only end-to-end tests with a @this tag
+	rm -rf tmp
+	cargo test --test cucumber -- -t @this
+
 fix:  # auto-corrects issues
 	dprint fmt
 	cargo fmt
