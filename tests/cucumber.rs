@@ -38,14 +38,38 @@ async fn a_folder(world: &mut HasWorld, name: String) -> io::Result<()> {
     fs::create_dir(folderpath).await
 }
 
-#[given(expr = "a Git branch {string}")]
-async fn a_git_branch(world: &mut HasWorld, name: String) -> io::Result<()> {
+#[given(expr = "my Git workspace has a branch {string}")]
+async fn has_git_branch(world: &mut HasWorld, name: String) {
+    run_chk(&world.dir, "git", vec!["branch", &name]).await
+}
+
+#[given(expr = "my Git workspace is on the branch {string}")]
+async fn is_on_git_branch(world: &mut HasWorld, name: String) {
+    let has_branch = run_status(
+        &world.dir,
+        "git",
+        vec![
+            "show-ref",
+            "--verify",
+            "--quiet",
+            &format!("refs/heads/{}", name),
+        ],
+    )
+    .await;
+    if has_branch {
+        run_chk(&world.dir, "git", vec!["checkout", &name]).await
+    } else {
+        run_chk(&world.dir, "git", vec!["checkout", "-b", &name]).await
+    }
+}
+
+#[given("my code is managed by Git")]
+async fn git_repo(world: &mut HasWorld) {
     let dir = &world.dir;
-    run(dir, "git", vec!["init"]).await?;
-    run(dir, "git", vec!["config", "user.email", "a@b.com"]).await?;
-    run(dir, "git", vec!["config", "user.name", "Your Name"]).await?;
-    run(dir, "git", vec!["commit", "--allow-empty", "-m", "i"]).await?;
-    run(dir, "git", vec!["checkout", "-b", &name]).await
+    run_chk(dir, "git", vec!["init"]).await;
+    run_chk(dir, "git", vec!["config", "user.email", "a@b.com"]).await;
+    run_chk(dir, "git", vec!["config", "user.name", "Your Name"]).await;
+    run_chk(dir, "git", vec!["commit", "--allow-empty", "-m", "i"]).await;
 }
 
 #[when(expr = "running {string}")]
@@ -92,22 +116,30 @@ async fn it_prints(world: &mut HasWorld, step: &Step) {
     assert_eq!(have.trim(), want.trim());
 }
 
-#[tokio::main(flavor = "current_thread")]
-async fn main() {
-    HasWorld::run("features").await;
+async fn run_status(dir: &TempDir, cmd: &str, args: Vec<&str>) -> bool {
+    match Command::new(cmd).args(args).current_dir(dir).output().await {
+        Ok(output) => output.status.success(),
+        Err(_) => false,
+    }
 }
 
-async fn run(dir: &TempDir, cmd: &str, args: Vec<&str>) -> io::Result<()> {
+async fn run_chk(dir: &TempDir, cmd: &str, args: Vec<&str>) {
     let output = Command::new(cmd)
         .args(args)
         .current_dir(dir)
         .output()
-        .await?;
-    assert!(
-        output.status.success(),
-        "{}{}",
-        String::from_utf8_lossy(&output.stdout),
-        String::from_utf8_lossy(&output.stderr)
-    );
-    Ok(())
+        .await
+        .unwrap();
+    if !output.status.success() {
+        panic!(
+            "{}{}",
+            String::from_utf8_lossy(&output.stdout),
+            String::from_utf8_lossy(&output.stderr)
+        );
+    }
+}
+
+#[tokio::main(flavor = "current_thread")]
+async fn main() {
+    HasWorld::run("features").await;
 }

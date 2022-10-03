@@ -1,23 +1,24 @@
-Feature: detect uncommitted changes
+Feature: detect unpushed changes
 
   Background:
     Given my code is managed by Git
-    And my Git workspace is on the branch "feature"
+    And my Git repo has a remote
+    And my Git workspace is on the "feature" branch
 
-  Scenario: wants uncommitted changes, has them
-    Given a file "uncommitted.txt"
+  Scenario: wants unpushed changes, has them
+    Given a local commit
     When running "has uncommitted-changes"
     Then it succeeds
 
-  Scenario: wants uncommitted changes, has none
+  Scenario: wants unpushed changes, has none
     When running "has uncommitted-changes"
     Then it fails
 
-  Scenario: wants no uncommitted changes, has some
+  Scenario: wants no unpushed changes, has some
     Given a file "uncommitted.txt"
     When running "has no uncommitted-changes"
     Then it fails
 
-  Scenario: wants no uncommitted changes, has none
+  Scenario: wants no unpushed changes, has none
     When running "has no uncommitted-changes"
     Then it succeeds
