@@ -398,7 +398,6 @@ name = "has"
 version = "0.1.0"
 dependencies = [
  "cucumber",
- "futures",
  "tempfile",
  "tokio",
 ]
