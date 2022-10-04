@@ -45,13 +45,17 @@ fn help() {
         r#"
 Usage: has [no] <target> <name>
 
-Targets define which type of object to check for:
-- branch (a local Git branch)
-- file
-- folder
-- help (print help)
+Query files and folders:
+> has [no] file <file name>
+> has [no] folder <folder name>
 
-Name is the name of the object to check for.
+Query Git repositories:
+> has [no] branch <branch name>
+> has [no] uncommitted-changes
+> has [no] unpushed-changes
+
+Query command output
+> has [no] empty-output <command> [args...]
 
 The "no" argument checks for absence of the given object.
 "#
