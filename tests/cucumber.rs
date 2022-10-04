@@ -2,7 +2,7 @@ use cucumber::gherkin::Step;
 use cucumber::{given, then, when, World};
 use std::env;
 use std::path::Path;
-use std::process::ExitStatus;
+use std::process::Output;
 use std::str;
 use tempfile::TempDir;
 use tokio::fs;
@@ -14,8 +14,7 @@ use tokio::process::Command;
 pub struct HasWorld {
     code_dir: TempDir,
     remote_dir: Option<TempDir>,
-    exit_code: Option<ExitStatus>,
-    output: Option<String>,
+    output: Option<Output>,
 }
 
 impl Default for HasWorld {
@@ -23,7 +22,6 @@ impl Default for HasWorld {
         Self {
             code_dir: TempDir::new().expect("cannot create temp dir"),
             remote_dir: None,
-            exit_code: None,
             output: None,
         }
     }
@@ -116,33 +114,27 @@ async fn when_running(world: &mut HasWorld, command: String) {
         .output()
         .await
         .expect("cannot find the 'has' executable");
-    world.exit_code = Some(output.status);
-    world.output = Some(String::from_utf8_lossy(&output.stdout).to_string());
+    world.output = Some(output);
 }
 
 #[then("it succeeds")]
 async fn it_succeeds(world: &mut HasWorld) {
     let output = world.output.take().expect("no run recorded");
-    assert_eq!(output, "");
-    match world.exit_code {
-        Some(have) => assert!(have.success()),
-        None => panic!("no exit code registered"),
-    }
+    assert!(output.stdout.is_empty());
+    assert!(output.status.success());
 }
 
 #[then("it fails")]
 async fn it_fails(world: &mut HasWorld) {
-    match world.exit_code {
-        Some(have) => assert!(!have.success()),
-        None => panic!("no exit code registered"),
-    }
+    let output = world.output.take().expect("no run recorded");
+    assert!(!output.status.success());
 }
 
 #[then("it prints:")]
 async fn it_prints(world: &mut HasWorld, step: &Step) {
     let want = step.docstring().expect("step has no docstring");
-    let have = world.output.take().expect("run has first");
-    assert_eq!(have.trim(), want.trim());
+    let output = world.output.take().expect("run has first");
+    assert_eq!(str::from_utf8(&output.stdout).unwrap().trim(), want.trim());
 }
 
 /// runs the given command in the given directory and returns whether it succeeded
