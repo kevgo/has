@@ -133,7 +133,7 @@ async fn it_fails(world: &mut HasWorld) {
 #[then("it prints:")]
 async fn it_prints(world: &mut HasWorld, step: &Step) {
     let want = step.docstring().expect("step has no docstring");
-    let output = world.output.take().expect("run has first");
+    let output = world.output.take().expect("no run recorded");
     assert_eq!(str::from_utf8(&output.stdout).unwrap().trim(), want.trim());
 }
 
