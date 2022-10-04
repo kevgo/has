@@ -104,7 +104,7 @@ async fn when_running(world: &mut HasWorld, command: String) {
     let mut argv = command.split_ascii_whitespace();
     match argv.next() {
         Some("has") => {}
-        _ => panic!("The end-to-end tests can only run the 'has' command for now"),
+        _ => panic!("The end-to-end tests can only run the 'has' command"),
     }
     let cwd = env::current_dir().expect("cannot determine current dir");
     let has_path = cwd.join("target").join("debug").join("has");
