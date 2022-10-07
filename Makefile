@@ -35,6 +35,9 @@ tools/actionlint:
 target/debug/has:
 	cargo build
 
+update:  # updates dependencies
+	cargo upgrade
+
 
 .SILENT:
 .DEFAULT_GOAL := help
