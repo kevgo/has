@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+strip-ansi-escapes = "0.1.1"
 
 [dev-dependencies]
 cucumber = "0.14"
