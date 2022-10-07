@@ -5,7 +5,7 @@ Feature: detect empty command output
     Then it succeeds
 
   Scenario: output containing newlines
-    When running "has empty-output printf \n"
+    When running "has empty-output printf \n\n"
     Then it succeeds
 
   Scenario: non-empty output
