@@ -1,6 +1,6 @@
 Feature: detect files
 
-  Rule: finds files by name
+  Rule: searching by filename finds the given files
 
     Scenario: wants file, file exists
       Given a file "package.json"
@@ -20,7 +20,7 @@ Feature: detect files
       When running "has no file package.json"
       Then it succeeds
 
-  Rule: finds files by glob
+  Rule: searching by simple glob
 
     Scenario: wants file, file exists
       Given a file "package.json"
@@ -40,7 +40,7 @@ Feature: detect files
       When running "has no file *.json"
       Then it succeeds
 
-  Rule: finds files in subdirectories via subdirectory glob
+  Rule: searching by subdirectory glob finds files in subdirectories
 
     Scenario: wants file, file exists
       Given a file "sub/dir/package.json"
@@ -60,7 +60,7 @@ Feature: detect files
       When running "has no file **/*.json"
       Then it succeeds
 
-  Rule: finds files in root dir via subdirectory glob
+  Rule: searching by subdirectory glob finds files in the root directory
 
     Scenario: wants file, file exists
       Given a file "package.json"
