@@ -102,8 +102,9 @@ async fn checkout_branch(world: &mut HasWorld, name: String) {
     }
 }
 
-#[when(expr = "running {string}")]
-async fn when_running(world: &mut HasWorld, command: String) {
+#[when("running:")]
+async fn when_running(world: &mut HasWorld, step: &Step) {
+    let command = step.docstring().expect("no docstring");
     let mut argv = command.split_ascii_whitespace();
     match argv.next() {
         Some("has") => {}

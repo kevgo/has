@@ -7,18 +7,30 @@ Feature: detect unpushed changes
 
   Scenario: wants unpushed changes, has them
     Given a local commit
-    When running "has unpushed-changes"
+    When running:
+      """
+      has unpushed-changes
+      """
     Then it succeeds
 
   Scenario: wants unpushed changes, has none
-    When running "has unpushed-changes"
+    When running:
+      """
+      has unpushed-changes
+      """
     Then it fails
 
   Scenario: wants no unpushed changes, has some
     Given a local commit
-    When running "has no unpushed-changes"
+    When running:
+      """
+      has no unpushed-changes
+      """
     Then it fails
 
   Scenario: wants no unpushed changes, has none
-    When running "has no unpushed-changes"
+    When running:
+      """
+      has no unpushed-changes
+      """
     Then it succeeds
