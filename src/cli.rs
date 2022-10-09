@@ -11,10 +11,20 @@ pub struct Args {
 
 /// things to check for
 pub enum Target {
-    Branch { name: String },
-    EmptyOutput { cmd: String, args: Vec<String> },
-    File { name: String },
-    Folder { name: String },
+    Branch {
+        name: String,
+    },
+    EmptyOutput {
+        cmd: String,
+        args: Vec<String>,
+    },
+    File {
+        name: String,
+        contains: Option<String>,
+    },
+    Folder {
+        name: String,
+    },
     Help,
     UncommittedChanges,
     UnpushedChanges,
@@ -35,9 +45,25 @@ pub fn parse(mut args: env::Args) -> Result<Args, UserError> {
             cmd: args.next().ok_or(UserError::MissingCommand)?,
             args: args.by_ref().collect(),
         },
-        "file" => Target::File {
-            name: args.next().ok_or(UserError::MissingName)?,
-        },
+        "file" => {
+            let name = args.next().ok_or(UserError::MissingName)?;
+            let contains = match args.next() {
+                Some(switch) => {
+                    if switch.starts_with("--") {
+                        match switch.as_str() {
+                            "--contains" => {
+                                Some(args.next().ok_or(UserError::MissingValueForFileContent)?)
+                            }
+                            _ => return Err(UserError::UnknownSwitchForFile { switch }),
+                        }
+                    } else {
+                        return Err(UserError::TooManyArguments);
+                    }
+                }
+                None => None,
+            };
+            Target::File { name, contains }
+        }
         "folder" => Target::Folder {
             name: args.next().ok_or(UserError::MissingName)?,
         },

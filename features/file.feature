@@ -181,3 +181,21 @@ Feature: detect files
         has no file **/*.json
         """
       Then it succeeds
+
+  Rule: searching for content
+
+    @this
+    Scenario: wants file with content, file with content exists
+      Given a file "package.json" with content:
+        """
+        {
+          "dependencies": {
+            "prettier": "1.2.3"
+          }
+        }
+        """
+      When running:
+        """
+        has file package.json --contains '"prettier":'"
+        """
+      Then it succeeds

@@ -411,6 +411,7 @@ version = "0.1.0"
 dependencies = [
  "cucumber",
  "glob",
+ "regex",
  "strip-ansi-escapes",
  "tempfile",
  "tokio",

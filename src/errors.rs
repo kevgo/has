@@ -5,12 +5,15 @@ pub enum UserError {
     CannotReadPath { path: PathBuf, guidance: String },
     GitBranchNameInvalidUnicode,
     InvalidGlob { pattern: String, guidance: String },
+    InvalidRegex { pattern: String, guidance: String },
     MissingCommand,
     MissingName,
     MissingTarget,
+    MissingValueForFileContent,
     NonUnicodeAppOutput,
     TooManyArguments,
     UnknownCommand(String),
+    UnknownSwitchForFile { switch: String },
     UnknownTarget(String),
 }
 
@@ -29,14 +32,23 @@ impl Display for UserError {
             UserError::InvalidGlob { pattern, guidance } => {
                 write!(f, "invalid glob \"{}\": {}", pattern, guidance)
             }
+            UserError::InvalidRegex { pattern, guidance } => {
+                write!(f, "invalid regex /{}/: {}", pattern, guidance)
+            }
             UserError::UnknownCommand(cmd) => {
                 write!(f, "the \"{}\" executable is not in the path", cmd)
             }
             UserError::MissingCommand => f.write_str("missing command to run"),
             UserError::MissingName => f.write_str("no name provided"),
+            UserError::MissingValueForFileContent => {
+                f.write_str("missing value for expected file content")
+            }
             UserError::MissingTarget => f.write_str("no target provided"),
             UserError::NonUnicodeAppOutput => f.write_str("non-unicode application output"),
             UserError::TooManyArguments => f.write_str("too many arguments"),
+            UserError::UnknownSwitchForFile { switch } => {
+                write!(f, "unknown switch for file check: {}", switch)
+            }
             UserError::UnknownTarget(target) => write!(f, "unknown target: {}", target),
         }
     }

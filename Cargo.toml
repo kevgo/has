@@ -5,6 +5,7 @@ edition = "2021"
 
 [dependencies]
 glob = "0.3.0"
+regex = { version = "1.6.0", default-features = false, features = ["std"] }
 strip-ansi-escapes = "0.1.1"
 
 [dev-dependencies]
