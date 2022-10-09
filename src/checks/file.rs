@@ -1,7 +1,6 @@
+use crate::errors::UserError;
 use glob::glob;
 use std::fs;
-
-use crate::errors::UserError;
 
 /// indicates whether a file with the given name exists
 pub fn file(pattern: String) -> Result<bool, UserError> {
