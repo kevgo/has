@@ -30,6 +30,9 @@ impl Default for HasWorld {
 #[given(expr = "a file {string}")]
 async fn a_file(world: &mut HasWorld, filename: String) -> io::Result<File> {
     let filepath = world.code_dir.path().join(filename);
+    if let Some(parent) = filepath.parent() {
+        fs::create_dir_all(parent).await?;
+    }
     File::create(filepath).await
 }
 
