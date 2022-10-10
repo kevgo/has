@@ -35,7 +35,7 @@ fn inner() -> Result<ExitCode, UserError> {
             return Ok(ExitCode::SUCCESS);
         }
         Target::UncommittedChanges => checks::uncommitted_changes(),
-        Target::UnpushedChanges => checks::unpushed_changes()?,
+        Target::UnpushedChanges => checks::unpushed_commits()?,
     };
     if exists == args.should_exist {
         Ok(ExitCode::SUCCESS)
@@ -56,7 +56,7 @@ Query files and folders:
 Query Git repositories:
 > has [no] branch <branch name>
 > has [no] uncommitted-changes
-> has [no] unpushed-changes
+> has [no] unpushed-commits
 
 Query command output
 > has [no] empty-output <command> [args...]

@@ -16,9 +16,11 @@ has [no] folder <folder name>
 ### query Git repositories
 
 ```
-has [no] branch <branch name>
+has [no] branch <branch name>           # matches if the given branch exists
+has [no] active-branch <branch name>    # matches if the given branch is checked out
+has [no] inactive-branch <branch name>  # matches if the given branch exists but is not checked out
 has [no] uncommitted-changes
-has [no] unpushed-changes
+has [no] unpushed-commits
 ```
 
 ### query command output

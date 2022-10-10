@@ -9,14 +9,14 @@ Feature: detect unpushed changes
     Given a local commit
     When running:
       """
-      has unpushed-changes
+      has unpushed-commits
       """
     Then it succeeds
 
   Scenario: wants unpushed changes, has none
     When running:
       """
-      has unpushed-changes
+      has unpushed-commits
       """
     Then it fails
 
@@ -24,13 +24,13 @@ Feature: detect unpushed changes
     Given a local commit
     When running:
       """
-      has no unpushed-changes
+      has no unpushed-commits
       """
     Then it fails
 
   Scenario: wants no unpushed changes, has none
     When running:
       """
-      has no unpushed-changes
+      has no unpushed-commits
       """
     Then it succeeds

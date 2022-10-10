@@ -72,7 +72,7 @@ pub fn parse(mut args: env::Args) -> Result<Args, UserError> {
         },
         "help" => Target::Help,
         "uncommitted-changes" => Target::UncommittedChanges,
-        "unpushed-changes" => Target::UnpushedChanges,
+        "unpushed-commits" => Target::UnpushedChanges,
         unknown => return Err(UserError::UnknownTarget(unknown.into())),
     };
     if args.next().is_some() {
