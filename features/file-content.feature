@@ -1,4 +1,3 @@
-@this
 Feature: detect files by name and content
 
   Background:
