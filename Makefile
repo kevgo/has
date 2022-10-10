@@ -32,7 +32,7 @@ tools/actionlint:
 	mkdir -p tools
 	mv actionlint tools
 
-target/debug/has:
+target/debug/has: $(shell find src)  Cargo.toml Cargo.lock
 	cargo build
 
 update:  # updates dependencies
