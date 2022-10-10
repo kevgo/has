@@ -15,18 +15,13 @@ pub enum Target {
     ActiveBranch { name: String },
     InactiveBranch { name: String },
     EmptyOutput { cmd: String, args: Vec<String> },
-    File { name: String, content: ContentMatch },
+    File { name: String },
+    FileWithText { name: String, content: String },
+    FileWithRegex { name: String, content: String },
     Folder { name: String },
     Help,
     UncommittedChanges,
     UnpushedChanges,
-}
-
-#[derive(Eq, PartialEq)]
-pub enum ContentMatch {
-    None,
-    Text(String),
-    Regex(String),
 }
 
 pub fn parse(mut args: env::Args) -> Result<Args, UserError> {
@@ -52,25 +47,25 @@ pub fn parse(mut args: env::Args) -> Result<Args, UserError> {
         },
         "file" => {
             let name = args.next().ok_or(UserError::MissingName)?;
-            let content = match args.next() {
+            match args.next() {
                 Some(switch) => {
-                    if switch.starts_with("--") {
-                        match switch.as_str() {
-                            "--containing" => ContentMatch::Text(
-                                args.next().ok_or(UserError::MissingValueForFileContent)?,
-                            ),
-                            "--matching" => ContentMatch::Regex(
-                                args.next().ok_or(UserError::MissingValueForFileContent)?,
-                            ),
-                            _ => return Err(UserError::UnknownSwitchForFileContent { switch }),
-                        }
-                    } else {
+                    if !switch.starts_with("--") {
                         return Err(UserError::TooManyArguments);
                     }
+                    match switch.as_str() {
+                        "--containing" => Target::FileWithText {
+                            name,
+                            content: args.next().ok_or(UserError::MissingValueForFileContent)?,
+                        },
+                        "--matching" => Target::FileWithRegex {
+                            name,
+                            content: args.next().ok_or(UserError::MissingValueForFileContent)?,
+                        },
+                        _ => return Err(UserError::UnknownSwitchForFileContent { switch }),
+                    }
                 }
-                None => ContentMatch::None,
-            };
-            Target::File { name, content }
+                None => Target::File { name },
+            }
         }
         "folder" => Target::Folder {
             name: args.next().ok_or(UserError::MissingName)?,

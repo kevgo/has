@@ -26,7 +26,9 @@ fn inner() -> Result<ExitCode, UserError> {
         Target::ActiveBranch { name } => checks::git_branch::local_active(&name)?,
         Target::InactiveBranch { name } => checks::git_branch::local_inactive(&name)?,
         Target::EmptyOutput { cmd, args } => checks::empty_output(cmd, args)?,
-        Target::File { name, content } => checks::file(name, &content)?,
+        Target::File { name } => checks::file::exists(name)?,
+        Target::FileWithText { name, content } => checks::file::containing_text(name, &content)?,
+        Target::FileWithRegex { name, content } => checks::file::matching_regex(name, content)?,
         Target::Folder { name } => checks::folder(&name),
         Target::Help => {
             help();
