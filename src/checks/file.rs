@@ -11,8 +11,7 @@ pub fn exists(glob: String) -> Result<bool, UserError> {
 
 pub fn containing_text(glob: String, text: &str) -> Result<bool, UserError> {
     for entry in files_in(glob)? {
-        let content = file_content(&entry?)?;
-        if content.contains(text) {
+        if file_content(&entry?)?.contains(text) {
             return Ok(true);
         }
     }
