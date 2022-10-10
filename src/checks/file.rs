@@ -6,7 +6,7 @@ use std::fs;
 use std::path::Path;
 
 /// indicates whether a file with the given name exists
-pub fn file(pattern: String, content_match: ContentMatch) -> Result<bool, UserError> {
+pub fn file(pattern: String, content_match: &ContentMatch) -> Result<bool, UserError> {
     let entries = glob(&pattern).map_err(|err| UserError::InvalidGlob {
         pattern,
         guidance: err.to_string(),
@@ -26,7 +26,7 @@ pub fn file(pattern: String, content_match: ContentMatch) -> Result<bool, UserEr
         match &content_match {
             ContentMatch::Regex(pattern) => {
                 // TODO: buffer using once-cell
-                let regex = Regex::new(&pattern).map_err(|err| UserError::InvalidRegex {
+                let regex = Regex::new(pattern).map_err(|err| UserError::InvalidRegex {
                     pattern: pattern.into(),
                     guidance: err.to_string(),
                 })?;

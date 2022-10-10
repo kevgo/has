@@ -24,7 +24,7 @@ fn inner() -> Result<ExitCode, UserError> {
     let exists = match args.target {
         Target::Branch { name } => checks::git_branch::local(&name),
         Target::EmptyOutput { cmd, args } => checks::empty_output(cmd, args)?,
-        Target::File { name, content } => checks::file(name, content)?,
+        Target::File { name, content } => checks::file(name, &content)?,
         Target::Folder { name } => checks::folder(&name),
         Target::Help => {
             help();
