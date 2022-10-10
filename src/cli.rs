@@ -13,11 +13,18 @@ pub struct Args {
 pub enum Target {
     Branch { name: String },
     EmptyOutput { cmd: String, args: Vec<String> },
-    File { name: String },
+    File { name: String, content: ContentMatch },
     Folder { name: String },
     Help,
     UncommittedChanges,
     UnpushedChanges,
+}
+
+#[derive(Eq, PartialEq)]
+pub enum ContentMatch {
+    None,
+    Text(String),
+    Regex(String),
 }
 
 pub fn parse(mut args: env::Args) -> Result<Args, UserError> {
@@ -35,9 +42,28 @@ pub fn parse(mut args: env::Args) -> Result<Args, UserError> {
             cmd: args.next().ok_or(UserError::MissingCommand)?,
             args: args.by_ref().collect(),
         },
-        "file" => Target::File {
-            name: args.next().ok_or(UserError::MissingName)?,
-        },
+        "file" => {
+            let name = args.next().ok_or(UserError::MissingName)?;
+            let content = match args.next() {
+                Some(switch) => {
+                    if switch.starts_with("--") {
+                        match switch.as_str() {
+                            "--containing" => ContentMatch::Text(
+                                args.next().ok_or(UserError::MissingValueForFileContent)?,
+                            ),
+                            "--matching" => ContentMatch::Regex(
+                                args.next().ok_or(UserError::MissingValueForFileContent)?,
+                            ),
+                            _ => return Err(UserError::UnknownSwitchForFileContent { switch }),
+                        }
+                    } else {
+                        return Err(UserError::TooManyArguments);
+                    }
+                }
+                None => ContentMatch::None,
+            };
+            Target::File { name, content }
+        }
         "folder" => Target::Folder {
             name: args.next().ok_or(UserError::MissingName)?,
         },

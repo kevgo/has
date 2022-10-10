@@ -36,6 +36,19 @@ async fn a_file(world: &mut HasWorld, filename: String) -> io::Result<File> {
     File::create(filepath).await
 }
 
+#[given(expr = "a file {string} with content:")]
+async fn a_file_with_content(
+    world: &mut HasWorld,
+    filename: String,
+    step: &Step,
+) -> io::Result<()> {
+    let filepath = world.code_dir.path().join(filename);
+    if let Some(parent) = filepath.parent() {
+        fs::create_dir_all(parent).await?;
+    }
+    fs::write(filepath, step.docstring().expect("no docstring")).await
+}
+
 #[given(expr = "a folder {string}")]
 async fn a_folder(world: &mut HasWorld, name: String) -> io::Result<()> {
     let folderpath = world.code_dir.path().join(name);
