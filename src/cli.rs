@@ -11,13 +11,21 @@ pub struct Args {
 
 /// things to check for
 pub enum Target {
-    Branch { name: String },
+    Branch { name: String, state: BranchState },
     EmptyOutput { cmd: String, args: Vec<String> },
     File { name: String, content: ContentMatch },
     Folder { name: String },
     Help,
     UncommittedChanges,
     UnpushedChanges,
+}
+
+pub enum BranchState {
+    Any,
+    /// branch must be checked out
+    Active,
+    /// branch must not be checked out
+    Inactive,
 }
 
 #[derive(Eq, PartialEq)]
@@ -35,8 +43,17 @@ pub fn parse(mut args: env::Args) -> Result<Args, UserError> {
         _ => (true, next),
     };
     let target = match target_str.as_str() {
+        "active-branch" => Target::Branch {
+            name: args.next().ok_or(UserError::MissingName)?,
+            state: BranchState::Active,
+        },
         "branch" => Target::Branch {
             name: args.next().ok_or(UserError::MissingName)?,
+            state: BranchState::Any,
+        },
+        "inactive-branch" => Target::Branch {
+            name: args.next().ok_or(UserError::MissingName)?,
+            state: BranchState::Inactive,
         },
         "empty-output" => Target::EmptyOutput {
             cmd: args.next().ok_or(UserError::MissingCommand)?,
