@@ -11,7 +11,8 @@ success through its exit code.
 ```
 has [no] file <glob>                       # matches if a file matching the given glob exists
 has [no] file <glob> --containing <text>   # matches if a file matching the given glob contains the given text
-has [no] folder <glob> --matching <regex>  # matches if a file matching the given glob contains text matching the given regex
+has [no] file <glob> --matching <regex>    # matches if a file matching the given glob contains the given text
+has [no] folder <glob>                     # matches if a directory matching the given glob exists
 ```
 
 ### query Git repositories
