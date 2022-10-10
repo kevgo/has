@@ -411,6 +411,7 @@ version = "0.1.0"
 dependencies = [
  "cucumber",
  "glob",
+ "once_cell",
  "regex",
  "strip-ansi-escapes",
  "tempfile",

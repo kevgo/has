@@ -53,3 +53,9 @@ impl Display for UserError {
         }
     }
 }
+
+impl From<&UserError> for UserError {
+    fn from(err: &UserError) -> Self {
+        err.into()
+    }
+}

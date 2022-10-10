@@ -1,9 +1,12 @@
 use crate::cli::ContentMatch;
 use crate::errors::UserError;
 use glob::glob;
+use once_cell::sync::OnceCell;
 use regex::Regex;
 use std::fs;
 use std::path::Path;
+
+static RE: OnceCell<Result<Regex, UserError>> = OnceCell::new();
 
 /// indicates whether a file with the given name exists
 pub fn file(pattern: String, content_match: &ContentMatch) -> Result<bool, UserError> {
@@ -26,10 +29,14 @@ pub fn file(pattern: String, content_match: &ContentMatch) -> Result<bool, UserE
         match &content_match {
             ContentMatch::Regex(pattern) => {
                 // TODO: buffer using once-cell
-                let regex = Regex::new(pattern).map_err(|err| UserError::InvalidRegex {
-                    pattern: pattern.into(),
-                    guidance: err.to_string(),
-                })?;
+                let regex = RE
+                    .get_or_init(|| {
+                        Regex::new(pattern).map_err(|err| UserError::InvalidRegex {
+                            pattern: pattern.into(),
+                            guidance: err.to_string(),
+                        })
+                    })
+                    .as_ref()?;
                 let content = load_content(&entry)?;
                 if regex.is_match(&content) {
                     return Ok(true);
