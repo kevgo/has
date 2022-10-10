@@ -20,7 +20,7 @@ Feature: help screen
         Query Git repositories:
         > has [no] branch <branch name>
         > has [no] uncommitted-changes
-        > has [no] unpushed-changes
+        > has [no] unpushed-commits
 
         Query command output
         > has [no] empty-output <command> [args...]
@@ -47,7 +47,7 @@ Feature: help screen
         Query Git repositories:
         > has [no] branch <branch name>
         > has [no] uncommitted-changes
-        > has [no] unpushed-changes
+        > has [no] unpushed-commits
 
         Query command output
         > has [no] empty-output <command> [args...]
