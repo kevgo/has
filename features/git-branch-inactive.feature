@@ -1,4 +1,3 @@
-@this
 Feature: detect inactive Git branches
 
   Background:
