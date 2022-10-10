@@ -9,8 +9,9 @@ success through its exit code.
 ### query files and folders
 
 ```
-has [no] file <file name>
-has [no] folder <folder name>
+has [no] file <glob>                       # matches if a file matching the given glob exists
+has [no] file <glob> --containing <text>   # matches if a file matching the given glob contains the given text
+has [no] folder <glob> --matching <regex>  # matches if a file matching the given glob contains text matching the given regex
 ```
 
 ### query Git repositories
@@ -26,5 +27,5 @@ has [no] unpushed-commits
 ### query command output
 
 ```
-has [no] empty-output <command> [args...]
+has [no] empty-output <command> [args...]  # runs the given command and matches if it produces no output
 ```
