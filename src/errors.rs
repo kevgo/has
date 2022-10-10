@@ -13,7 +13,7 @@ pub enum UserError {
     NonUnicodeAppOutput,
     TooManyArguments,
     UnknownCommand(String),
-    UnknownSwitchForFile { switch: String },
+    UnknownSwitchForFileContent { switch: String },
     UnknownTarget(String),
 }
 
@@ -46,7 +46,7 @@ impl Display for UserError {
             UserError::MissingTarget => f.write_str("no target provided"),
             UserError::NonUnicodeAppOutput => f.write_str("non-unicode application output"),
             UserError::TooManyArguments => f.write_str("too many arguments"),
-            UserError::UnknownSwitchForFile { switch } => {
+            UserError::UnknownSwitchForFileContent { switch } => {
                 write!(f, "unknown switch for file check: {}", switch)
             }
             UserError::UnknownTarget(target) => write!(f, "unknown target: {}", target),

@@ -1,5 +1,4 @@
-@this
-Feature: searching for content via regex
+Feature: detect files by name and content
 
   Background:
     Given a file "package.json" with content:
@@ -14,13 +13,13 @@ Feature: searching for content via regex
   Scenario: wants file with content, file with content exists
     When running:
       """
-      has file package.json --matching 'prettier.*1.2.3'"
+      has file package.json --containing '"prettier":'
       """
     Then it succeeds
 
   Scenario: wants file with content, file exists but content mismatch
     When running:
       """
-      has file package.json --matching 'prettier.*1.2.4'"
+      has file package.json --containing '"zonk":'"
       """
     Then it fails

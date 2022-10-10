@@ -11,23 +11,20 @@ pub struct Args {
 
 /// things to check for
 pub enum Target {
-    Branch {
-        name: String,
-    },
-    EmptyOutput {
-        cmd: String,
-        args: Vec<String>,
-    },
-    File {
-        name: String,
-        contains: Option<String>,
-    },
-    Folder {
-        name: String,
-    },
+    Branch { name: String },
+    EmptyOutput { cmd: String, args: Vec<String> },
+    File { name: String, content: ContentMatch },
+    Folder { name: String },
     Help,
     UncommittedChanges,
     UnpushedChanges,
+}
+
+#[derive(Eq, PartialEq)]
+pub enum ContentMatch {
+    None,
+    Text(String),
+    Regex(String),
 }
 
 pub fn parse(mut args: env::Args) -> Result<Args, UserError> {
@@ -47,22 +44,25 @@ pub fn parse(mut args: env::Args) -> Result<Args, UserError> {
         },
         "file" => {
             let name = args.next().ok_or(UserError::MissingName)?;
-            let contains = match args.next() {
+            let content = match args.next() {
                 Some(switch) => {
                     if switch.starts_with("--") {
                         match switch.as_str() {
-                            "--contains" => {
-                                Some(args.next().ok_or(UserError::MissingValueForFileContent)?)
-                            }
-                            _ => return Err(UserError::UnknownSwitchForFile { switch }),
+                            "--containing" => ContentMatch::Text(
+                                args.next().ok_or(UserError::MissingValueForFileContent)?,
+                            ),
+                            "--matching" => ContentMatch::Regex(
+                                args.next().ok_or(UserError::MissingValueForFileContent)?,
+                            ),
+                            _ => return Err(UserError::UnknownSwitchForFileContent { switch }),
                         }
                     } else {
                         return Err(UserError::TooManyArguments);
                     }
                 }
-                None => None,
+                None => ContentMatch::None,
             };
-            Target::File { name, contains }
+            Target::File { name, content }
         }
         "folder" => Target::Folder {
             name: args.next().ok_or(UserError::MissingName)?,
