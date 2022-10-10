@@ -3,7 +3,6 @@ Feature: detect active Git branches
   Background:
     Given my code is managed by Git
 
-  @this
   Scenario: wants active branch, branch is active
     Given my Git workspace is on the "feature" branch
     When running:
