@@ -3,7 +3,7 @@ mod cli;
 mod errors;
 mod git;
 
-use cli::{BranchState, Target};
+use cli::Target;
 use errors::UserError;
 use std::env;
 use std::process::ExitCode;
@@ -22,18 +22,9 @@ fn main() -> ExitCode {
 fn inner() -> Result<ExitCode, UserError> {
     let args = cli::parse(env::args())?;
     let exists = match args.target {
-        Target::Branch {
-            name,
-            state: BranchState::Any,
-        } => checks::git_branch::local(&name),
-        Target::Branch {
-            name,
-            state: BranchState::Active,
-        } => checks::git_branch::local_active(&name)?,
-        Target::Branch {
-            name,
-            state: BranchState::Inactive,
-        } => checks::git_branch::local_inactive(&name)?,
+        Target::Branch { name } => checks::git_branch::local(&name),
+        Target::ActiveBranch { name } => checks::git_branch::local_active(&name)?,
+        Target::InactiveBranch { name } => checks::git_branch::local_inactive(&name)?,
         Target::EmptyOutput { cmd, args } => checks::empty_output(cmd, args)?,
         Target::File { name, content } => checks::file(name, &content)?,
         Target::Folder { name } => checks::folder(&name),
