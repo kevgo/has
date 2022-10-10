@@ -34,12 +34,11 @@ pub fn matching_regex(glob: String, regex: String) -> Result<bool, UserError> {
 
 /// provides an Iterator over all files matching the given glob
 fn files_in(pattern: String) -> Result<FilesMatchingGlob, UserError> {
-    Ok(FilesMatchingGlob {
-        entries: glob(&pattern).map_err(|err| UserError::InvalidGlob {
-            pattern,
-            guidance: err.to_string(),
-        })?,
-    })
+    let entries = glob(&pattern).map_err(|err| UserError::InvalidGlob {
+        pattern,
+        guidance: err.to_string(),
+    })?;
+    Ok(FilesMatchingGlob { entries })
 }
 
 /// Iterator providing all files that match the given glob
