@@ -28,7 +28,6 @@ pub fn file(pattern: String, content_match: &ContentMatch) -> Result<bool, UserE
         }
         match &content_match {
             ContentMatch::Regex(pattern) => {
-                // TODO: buffer using once-cell
                 let regex = RE
                     .get_or_init(|| {
                         Regex::new(pattern).map_err(|err| UserError::InvalidRegex {
