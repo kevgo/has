@@ -4,7 +4,7 @@
 
 `has` is a modern replacement for the traditional `test` tool. It allows
 querying properties of the local filesystem and Git repositories. One of its
-intended use cases is in [mrt](https://github.com/kevgo/mrt).
+intended use cases is within [mrt](https://github.com/kevgo/mrt).
 
 The general usage is:
 
