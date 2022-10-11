@@ -77,7 +77,7 @@ Check whether a Git repo contains uncommitted changes
 has [no] uncommitted-changes
 ```
 
-Check whether a Git branch contains commits that its remote branch doesn't have
+Check for Git commits not on the remote branch
 ([examples](features/unpushed-commits.feature)):
 
 ```
