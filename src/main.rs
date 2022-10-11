@@ -49,21 +49,27 @@ fn help() {
         r#"
 Usage: has [no] <condition>
 
-Query files and folders:
+Check for the existence of files by name and contents:
 > has [no] file <glob>
 > has [no] file <glob> --containing <text>
 > has [no] file <glob> --matching <regex>
+
+Check for the existence of folders:
 > has [no] folder <glob>
 
-Query Git repositories:
+Check for the existence and condition of Git branches:
 > has [no] branch <branch name>
 > has [no] active-branch <branch name>
 > has [no] inactive-branch <branch name>
+
+Check for the existence of changes that haven't been committed yet:
 > has [no] uncommitted-changes
+
+Check for the existence of commits that don't exist on the tracking branch:
 > has [no] unpushed-commits
 
-Query command output
-> has [no] empty-output <command> [args...]  # runs the given command and matches if it produces no output
+Check whether the given command produces no output:
+> has [no] command-output <command> [args...]  # runs the given command and matches if it produces no output
 
 The optional "no" argument inverts the given condition.
 "#

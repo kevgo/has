@@ -49,7 +49,7 @@ Feature: help screen
         QUERY COMMAND OUTPUT
 
         # runs the given command and matches if it produces no output
-        has [no] empty-output <command> [args...]
+        has [no] command-output <command> [args...]
         """
 
   Rule: the "help" command displays usage instructions
@@ -78,7 +78,7 @@ Feature: help screen
         > has [no] unpushed-commits               # matches if the current branch contains commits that it's remote branch has not
 
         Query command output
-        > has [no] empty-output <command> [args...]  # runs the given command and matches if it produces no output
+        > has [no] command-output <command> [args...]  # runs the given command and matches if it produces no output
 
         The optional "no" argument inverts the given condition.
         """

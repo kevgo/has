@@ -18,19 +18,21 @@ condition.
 
 ### files
 
-Check whether a file exists ([example](features/file-name.feature)):
+Check whether a file exists ([examples](features/file-name.feature)):
 
 ```
 has [no] file <glob>
 ```
 
-Check whether a file includes the given text:
+Check whether a file includes the given text
+([examples](features/file-content.feature)):
 
 ```
 has [no] file <glob> --containing <text>
 ```
 
-Check whether file content matches the given regex:
+Check whether file content matches the given regex
+([examples](features/file-content-regex.feature)):
 
 ```
 has [no] file <glob> --matching <regex>
@@ -38,7 +40,7 @@ has [no] file <glob> --matching <regex>
 
 ### folders
 
-Check whether a folder exists ([example](features/folder.feature)):
+Check whether a folder exists ([examples](features/folder.feature)):
 
 ```
 has [no] folder <glob>
@@ -46,19 +48,21 @@ has [no] folder <glob>
 
 ### Git branches
 
-Check whether a Git branch exists:
+Check whether a Git branch exists ([examples](features/git-branch.feature)):
 
 ```
 has [no] branch <branch name>
 ```
 
-Check the currently checked out Git branch:
+Check the currently checked out Git branch
+([examples](features/git-branch-active.feature)):
 
 ```
 has [no] active-branch <branch name>
 ```
 
-Check that a branch exists but is not checked out:
+Check that a branch exists but is not checked out
+([examples](features/git-branch-inactive.feature)):
 
 ```
 has [no] inactive-branch <branch name>
@@ -66,13 +70,15 @@ has [no] inactive-branch <branch name>
 
 ### Git commits
 
-Check whether a Git repo contains uncommitted changes:
+Check whether a Git repo contains uncommitted changes
+([examples](features/uncommitted-changes.feature)):
 
 ```
 has [no] uncommitted-changes
 ```
 
-Check whether a Git branch contains commits that its remote branch doesn't have:
+Check whether a Git branch contains commits that its remote branch doesn't have
+([examples](features/unpushed-commits.feature)):
 
 ```
 has [no] unpushed-commits
@@ -80,8 +86,9 @@ has [no] unpushed-commits
 
 ### shell commands
 
-Runs the given command and checks that it doesn't output anything:
+Runs the given command and checks that it doesn't output anything
+([examples](features/command-output.feature)):
 
 ```
-has [no] empty-output <command> [args...]
+has [no] command-output <command> [args...]
 ```

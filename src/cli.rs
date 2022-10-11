@@ -41,7 +41,7 @@ pub fn parse(mut args: env::Args) -> Result<Args, UserError> {
         "inactive-branch" => Target::InactiveBranch {
             name: args.next().ok_or(UserError::MissingName)?,
         },
-        "empty-output" => Target::EmptyOutput {
+        "command-output" => Target::EmptyOutput {
             cmd: args.next().ok_or(UserError::MissingCommand)?,
             args: args.by_ref().collect(),
         },
