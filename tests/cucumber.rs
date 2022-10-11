@@ -158,7 +158,7 @@ async fn it_prints(world: &mut HasWorld, step: &Step) {
 async fn it_prints_nothing(world: &mut HasWorld) {
     let output = world.output.as_ref().expect("no run recorded");
     let have = str::from_utf8(&output.stdout).unwrap();
-    assert!(have.is_empty(), "{}", have);
+    pretty::assert_eq!(have.trim(), "");
 }
 
 #[then("the output starts with:")]
