@@ -3,9 +3,8 @@
 [![CI](https://github.com/kevgo/has/actions/workflows/ci.yml/badge.svg)](https://github.com/kevgo/has/actions/workflows/ci.yml)
 
 `has` is a modern replacement for the traditional `test` tool. It allows
-querying properties of the local filesystem and Git repositories and indicates
-success through its exit code. Has is supposed to be used to filter folders in
-[mrt](https://github.com/kevgo/mrt).
+querying properties of the local filesystem and Git repositories. One of its
+intended use cases is in [mrt](https://github.com/kevgo/mrt).
 
 The general usage is:
 
@@ -13,8 +12,9 @@ The general usage is:
 has [no] <condition>
 ```
 
-The optional `no` argument inverts the condition, i.e. checks for absence of the
-condition.
+`has` indicates the result of the check through its exit code, `0` meaning
+success. The optional `no` argument inverts the condition, i.e. checks for
+absence of the condition.
 
 ### files
 
