@@ -10,7 +10,6 @@ Feature: help screen
       Then it succeeds
       And it prints:
         """
-
         Usage: has [no] <condition>
 
         The optional "no" argument inverts the given condition.
