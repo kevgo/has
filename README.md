@@ -21,8 +21,8 @@ has [no] folder <glob>                     # matches if a directory matching the
 has [no] branch <branch name>           # matches if the given branch exists
 has [no] active-branch <branch name>    # matches if the given branch is checked out
 has [no] inactive-branch <branch name>  # matches if the given branch exists but is not checked out
-has [no] uncommitted-changes
-has [no] unpushed-commits
+has [no] uncommitted-changes            # matches if the workspace contains uncommitted changes
+has [no] unpushed-commits               # matches if the current branch contains commits that it's remote branch has not
 ```
 
 ### query command output
