@@ -8,7 +8,7 @@ success through its exit code.
 
 ### files and folders
 
-Check file existenc
+Check file existence:
 
 ```
 has [no] file <glob>
