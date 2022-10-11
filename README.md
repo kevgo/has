@@ -86,7 +86,7 @@ has [no] unpushed-commits
 
 ### shell commands
 
-Runs the given command and checks that it doesn't output anything
+Runs the given command and checks that it outputs anything
 ([examples](features/command-output.feature)):
 
 ```
