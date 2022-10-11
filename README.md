@@ -17,25 +17,25 @@ condition.
 
 ### files and folders
 
-Check existence of file using globs ([example](features/file-name.feature)):
+Check that a file exists ([example](features/file-name.feature)):
 
 ```
 has [no] file <glob>
 ```
 
-Check existence of folder using glob ([example](features/folder.feature)):
+Check that a folder exists ([example](features/folder.feature)):
 
 ```
 has [no] folder <glob>
 ```
 
-Check that a file contains (amongst other things) a piece of text:
+Check that a file includes the given text:
 
 ```
 has [no] file <glob> --containing <text>
 ```
 
-Check that a file contains (amongst other things) a regex:
+Check that file content matches the given regex:
 
 ```
 has [no] file <glob> --matching <regex>
