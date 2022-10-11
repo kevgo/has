@@ -8,7 +8,7 @@ success through its exit code.
 
 ### files and folders
 
-Check existence of file using globs:
+Check existence of file using globs ([example](features/file-name.feature)):
 
 ```
 has [no] file <glob>
