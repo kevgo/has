@@ -14,19 +14,19 @@ Check existence of file using globs ([example](features/file-name.feature)):
 has [no] file <glob>
 ```
 
-Check existence of folder using glob:
+Check existence of folder using glob ([example](features/folder.feature)):
 
 ```
 has [no] folder <glob>
 ```
 
-Check for part of file content:
+Check that a file contains (amongst other things) a piece of text:
 
 ```
 has [no] file <glob> --containing <text>
 ```
 
-Check for part of file content using regex:
+Check that a file contains (amongst other things) a regex:
 
 ```
 has [no] file <glob> --matching <regex>
