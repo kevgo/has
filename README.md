@@ -15,54 +15,65 @@ has [no] <condition>
 The optional `no` argument inverts the condition, i.e. checks for absence of the
 condition.
 
-### files and folders
+### files
 
-Check that a file exists ([example](features/file-name.feature)):
+Check whether a file exists ([example](features/file-name.feature)):
 
 ```
 has [no] file <glob>
 ```
 
-Check that a folder exists ([example](features/folder.feature)):
-
-```
-has [no] folder <glob>
-```
-
-Check that a file includes the given text:
+Check whether a file includes the given text:
 
 ```
 has [no] file <glob> --containing <text>
 ```
 
-Check that file content matches the given regex:
+Check whether file content matches the given regex:
 
 ```
 has [no] file <glob> --matching <regex>
 ```
 
-### Git repositories
+### folders
+
+Check whether a folder exists ([example](features/folder.feature)):
+
+```
+has [no] folder <glob>
+```
+
+### Git branches
 
 Check whether a Git branch exists:
 
 ```
-has [no] branch <branch name>           # matches if the given branch exists
+has [no] branch <branch name>
 ```
 
 Check the currently checked out Git branch:
 
 ```
-has [no] active-branch <branch name>    # matches if the given branch is checked out
+has [no] active-branch <branch name>
 ```
 
+Check that a branch exists but is not checked out:
+
 ```
-has [no] inactive-branch <branch name>  # matches if the given branch exists but is not checked out
+has [no] inactive-branch <branch name>
 ```
 
-Check Git commits:
+### Git commits
+
+Check whether a Git repo contains uncommitted changes:
 
 ```
 has [no] uncommitted-changes
+```
+
+Check whether a Git branch contains commits that its remote branch doesn't have:
+
+```
 has [no] unpushed-commits
 ```
 
