@@ -12,6 +12,7 @@ Feature: detect unpushed changes
       has unpushed-commits
       """
     Then it succeeds
+    And it prints nothing
 
   Scenario: wants unpushed changes, has none
     When running:
@@ -19,6 +20,7 @@ Feature: detect unpushed changes
       has unpushed-commits
       """
     Then it fails
+    And it prints nothing
 
   Scenario: wants no unpushed changes, has some
     Given a local commit
@@ -27,6 +29,7 @@ Feature: detect unpushed changes
       has no unpushed-commits
       """
     Then it fails
+    And it prints nothing
 
   Scenario: wants no unpushed changes, has none
     When running:
@@ -34,3 +37,4 @@ Feature: detect unpushed changes
       has no unpushed-commits
       """
     Then it succeeds
+    And it prints nothing

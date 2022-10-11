@@ -10,6 +10,7 @@ Feature: detect Git branches
       has branch feature
       """
     Then it succeeds
+    And it prints nothing
 
   Scenario: wants branch, branch exists
     Given my Git workspace has a branch "feature"
@@ -19,6 +20,7 @@ Feature: detect Git branches
       has branch feature
       """
     Then it succeeds
+    And it prints nothing
 
   Scenario: wants branch, branch does not exist
     When running:
@@ -26,6 +28,7 @@ Feature: detect Git branches
       has branch feature
       """
     Then it fails
+    And it prints nothing
 
   Scenario: wants no branch, is on branch
     Given my Git workspace has a branch "feature"
@@ -34,6 +37,7 @@ Feature: detect Git branches
       has no branch feature
       """
     Then it fails
+    And it prints nothing
 
   Scenario: wants no branch, branch does exist
     Given my Git workspace has a branch "feature"
@@ -43,6 +47,7 @@ Feature: detect Git branches
       has no branch feature
       """
     Then it fails
+    And it prints nothing
 
   Scenario: wants no branch, branch does not exist
     When running:
@@ -50,3 +55,4 @@ Feature: detect Git branches
       has no branch feature
       """
     Then it succeeds
+    And it prints nothing

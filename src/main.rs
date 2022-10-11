@@ -25,7 +25,7 @@ fn inner() -> Result<ExitCode, UserError> {
         Target::Branch { name } => checks::git_branch::local(&name),
         Target::ActiveBranch { name } => checks::git_branch::local_active(&name)?,
         Target::InactiveBranch { name } => checks::git_branch::local_inactive(&name)?,
-        Target::EmptyOutput { cmd, args } => checks::empty_output(cmd, args)?,
+        Target::CommandOutput { cmd, args } => checks::command_output(cmd, args)?,
         Target::File { name } => checks::file::exists(name)?,
         Target::FileWithText { name, content } => checks::file::containing_text(name, &content)?,
         Target::FileWithRegex { name, content } => checks::file::matching_regex(name, content)?,
@@ -47,21 +47,31 @@ fn inner() -> Result<ExitCode, UserError> {
 fn help() {
     println!(
         r#"
-Usage: has [no] <target> <name>
+Usage: has [no] <condition>
 
-Query files and folders:
-> has [no] file <file name>
-> has [no] folder <folder name>
+The optional "no" argument inverts the given condition.
 
-Query Git repositories:
+Check for the existence of files by name and contents:
+> has [no] file <glob>
+> has [no] file <glob> --containing <text>
+> has [no] file <glob> --matching <regex>
+
+Check for the existence of folders:
+> has [no] folder <glob>
+
+Check for the existence and condition of Git branches:
 > has [no] branch <branch name>
+> has [no] active-branch <branch name>
+> has [no] inactive-branch <branch name>
+
+Check for the existence of changes that haven't been committed yet:
 > has [no] uncommitted-changes
+
+Check for the existence of commits that don't exist on the tracking branch:
 > has [no] unpushed-commits
 
-Query command output
-> has [no] empty-output <command> [args...]
-
-The "no" argument checks for absence of the given object.
+Check whether the given command produces no output:
+> has [no] command-output <command> [args...]  # runs the given command and matches if it produces no output
 "#
     );
 }

@@ -7,6 +7,7 @@ Feature: detect folders
       has folder node_modules
       """
     Then it succeeds
+    And it prints nothing
 
   Scenario: wants folder, folder does not exist
     When running:
@@ -14,6 +15,7 @@ Feature: detect folders
       has folder node_modules
       """
     Then it fails
+    And it prints nothing
 
   Scenario: wants no folder, folder does exist
     Given a folder "node_modules"
@@ -22,6 +24,7 @@ Feature: detect folders
       has no folder node_modules
       """
     Then it fails
+    And it prints nothing
 
   Scenario: wants no folder, folder does not exist
     When running:
@@ -29,3 +32,4 @@ Feature: detect folders
       has no folder node_modules
       """
     Then it succeeds
+    And it prints nothing

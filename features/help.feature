@@ -1,33 +1,5 @@
 Feature: help screen
 
-  Rule: providing no arguments shows usage instructions
-
-    Scenario: no arguments
-      When running:
-        """
-        has
-        """
-      Then it prints:
-        """
-        ERROR: no target provided
-
-        Usage: has [no] <target> <name>
-
-        Query files and folders:
-        > has [no] file <file name>
-        > has [no] folder <folder name>
-
-        Query Git repositories:
-        > has [no] branch <branch name>
-        > has [no] uncommitted-changes
-        > has [no] unpushed-commits
-
-        Query command output
-        > has [no] empty-output <command> [args...]
-
-        The "no" argument checks for absence of the given object.
-        """
-
   Rule: the "help" command displays usage instructions
 
     Scenario: asking for help
@@ -35,22 +7,71 @@ Feature: help screen
         """
         has help
         """
-      Then it prints:
+      Then it succeeds
+      And it prints:
         """
+        Usage: has [no] <condition>
 
-        Usage: has [no] <target> <name>
+        The optional "no" argument inverts the given condition.
 
-        Query files and folders:
-        > has [no] file <file name>
-        > has [no] folder <folder name>
+        Check for the existence of files by name and contents:
+        > has [no] file <glob>
+        > has [no] file <glob> --containing <text>
+        > has [no] file <glob> --matching <regex>
 
-        Query Git repositories:
+        Check for the existence of folders:
+        > has [no] folder <glob>
+
+        Check for the existence and condition of Git branches:
         > has [no] branch <branch name>
+        > has [no] active-branch <branch name>
+        > has [no] inactive-branch <branch name>
+
+        Check for the existence of changes that haven't been committed yet:
         > has [no] uncommitted-changes
+
+        Check for the existence of commits that don't exist on the tracking branch:
         > has [no] unpushed-commits
 
-        Query command output
-        > has [no] empty-output <command> [args...]
+        Check whether the given command produces no output:
+        > has [no] command-output <command> [args...]  # runs the given command and matches if it produces no output
+        """
 
-        The "no" argument checks for absence of the given object.
+  Rule: providing no arguments shows usage instructions
+
+    Scenario: no arguments
+      When running:
+        """
+        has
+        """
+      Then it fails
+      And it prints:
+        """
+        ERROR: no target provided
+
+        Usage: has [no] <condition>
+
+        The optional "no" argument inverts the given condition.
+
+        Check for the existence of files by name and contents:
+        > has [no] file <glob>
+        > has [no] file <glob> --containing <text>
+        > has [no] file <glob> --matching <regex>
+
+        Check for the existence of folders:
+        > has [no] folder <glob>
+
+        Check for the existence and condition of Git branches:
+        > has [no] branch <branch name>
+        > has [no] active-branch <branch name>
+        > has [no] inactive-branch <branch name>
+
+        Check for the existence of changes that haven't been committed yet:
+        > has [no] uncommitted-changes
+
+        Check for the existence of commits that don't exist on the tracking branch:
+        > has [no] unpushed-commits
+
+        Check whether the given command produces no output:
+        > has [no] command-output <command> [args...]  # runs the given command and matches if it produces no output
         """

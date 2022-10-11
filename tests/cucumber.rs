@@ -136,22 +136,37 @@ async fn when_running(world: &mut HasWorld, step: &Step) {
 
 #[then("it succeeds")]
 async fn it_succeeds(world: &mut HasWorld) {
-    let output = world.output.take().expect("no run recorded");
-    assert!(output.stdout.is_empty());
+    let output = world.output.as_ref().expect("no run recorded");
     assert!(output.status.success());
 }
 
 #[then("it fails")]
 async fn it_fails(world: &mut HasWorld) {
-    let output = world.output.take().expect("no run recorded");
+    let output = world.output.as_ref().expect("no run recorded");
     assert!(!output.status.success());
 }
 
 #[then("it prints:")]
 async fn it_prints(world: &mut HasWorld, step: &Step) {
     let want = step.docstring().expect("step has no docstring");
-    let output = world.output.take().expect("no run recorded");
-    assert_eq!(str::from_utf8(&output.stdout).unwrap().trim(), want.trim());
+    let output = world.output.as_ref().expect("no run recorded");
+    let have = str::from_utf8(&output.stdout).unwrap();
+    pretty::assert_eq!(have.trim(), want.trim());
+}
+
+#[then("it prints nothing")]
+async fn it_prints_nothing(world: &mut HasWorld) {
+    let output = world.output.as_ref().expect("no run recorded");
+    let have = str::from_utf8(&output.stdout).unwrap();
+    pretty::assert_eq!(have.trim(), "");
+}
+
+#[then("the output starts with:")]
+async fn output_contains(world: &mut HasWorld, step: &Step) {
+    let want = step.docstring().expect("step has no docstring");
+    let output = world.output.as_ref().expect("no run recorded");
+    let have = str::from_utf8(&output.stdout).unwrap();
+    assert!(have.trim().starts_with(want.trim()), "{}", have);
 }
 
 /// runs the given command in the given directory and returns whether it succeeded

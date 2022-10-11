@@ -10,6 +10,7 @@ Feature: detect active Git branches
       has active-branch feature
       """
     Then it succeeds
+    And it prints nothing
 
   Scenario: wants active branch, branch is inactive
     Given my Git workspace has a branch "feature"
@@ -19,6 +20,7 @@ Feature: detect active Git branches
       has active-branch feature
       """
     Then it fails
+    And it prints nothing
 
   Scenario: wants active branch, branch does not exist
     When running:
@@ -26,3 +28,4 @@ Feature: detect active Git branches
       has active-branch feature
       """
     Then it fails
+    And it prints nothing

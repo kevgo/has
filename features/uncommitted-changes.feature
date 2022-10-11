@@ -11,6 +11,7 @@ Feature: detect uncommitted changes
       has uncommitted-changes
       """
     Then it succeeds
+    And it prints nothing
 
   Scenario: wants uncommitted changes, has none
     When running:
@@ -18,6 +19,7 @@ Feature: detect uncommitted changes
       has uncommitted-changes
       """
     Then it fails
+    And it prints nothing
 
   Scenario: wants no uncommitted changes, has some
     Given a file "uncommitted.txt"
@@ -26,6 +28,7 @@ Feature: detect uncommitted changes
       has no uncommitted-changes
       """
     Then it fails
+    And it prints nothing
 
   Scenario: wants no uncommitted changes, has none
     When running:
@@ -33,3 +36,4 @@ Feature: detect uncommitted changes
       has no uncommitted-changes
       """
     Then it succeeds
+    And it prints nothing
