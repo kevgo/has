@@ -4,7 +4,8 @@
 
 `has` is a modern replacement for the traditional `test` tool. It allows
 querying properties of the local filesystem and Git repositories and indicates
-success through its exit code.
+success through its exit code. Has is supposed to be used to filter folders in
+[mrt](https://github.com/kevgo/mrt).
 
 The general usage is:
 
