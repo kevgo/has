@@ -8,18 +8,28 @@ success through its exit code.
 
 ### files and folders
 
-Check file existence:
+Check existence of file using globs:
 
 ```
 has [no] file <glob>
+```
+
+Check existence of folder using glob:
+
+```
 has [no] folder <glob>
 ```
 
-Check file content:
+Check for part of file content:
 
 ```
-has [no] file <glob> --containing <text>   # check file content
-has [no] file <glob> --matching <regex>    # check file content
+has [no] file <glob> --containing <text>
+```
+
+Check for part of file content using regex:
+
+```
+has [no] file <glob> --matching <regex>
 ```
 
 ### Git repositories

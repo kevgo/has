@@ -151,7 +151,8 @@ async fn it_fails(world: &mut HasWorld) {
 async fn it_prints(world: &mut HasWorld, step: &Step) {
     let want = step.docstring().expect("step has no docstring");
     let output = world.output.take().expect("no run recorded");
-    pretty::assert_eq!(str::from_utf8(&output.stdout).unwrap().trim(), want.trim());
+    let have = str::from_utf8(&output.stdout).unwrap();
+    assert!(have.contains(want.trim()), "{}", have);
 }
 
 /// runs the given command in the given directory and returns whether it succeeded
