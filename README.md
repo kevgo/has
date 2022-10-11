@@ -6,6 +6,15 @@
 querying properties of the local filesystem and Git repositories and indicates
 success through its exit code.
 
+The general usage is:
+
+```
+has [no] <condition>
+```
+
+The optional `no` argument inverts the condition, i.e. checks for absence of the
+condition.
+
 ### files and folders
 
 Check existence of file using globs ([example](features/file-name.feature)):
@@ -34,11 +43,19 @@ has [no] file <glob> --matching <regex>
 
 ### Git repositories
 
-Check Git branches:
+Check whether a Git branch exists:
 
 ```
 has [no] branch <branch name>           # matches if the given branch exists
+```
+
+Check the currently checked out Git branch:
+
+```
 has [no] active-branch <branch name>    # matches if the given branch is checked out
+```
+
+```
 has [no] inactive-branch <branch name>  # matches if the given branch exists but is not checked out
 ```
 
