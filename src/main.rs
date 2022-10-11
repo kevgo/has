@@ -25,7 +25,7 @@ fn inner() -> Result<ExitCode, UserError> {
         Target::Branch { name } => checks::git_branch::local(&name),
         Target::ActiveBranch { name } => checks::git_branch::local_active(&name)?,
         Target::InactiveBranch { name } => checks::git_branch::local_inactive(&name)?,
-        Target::EmptyOutput { cmd, args } => checks::empty_output(cmd, args)?,
+        Target::CommandOutput { cmd, args } => checks::command_output(cmd, args)?,
         Target::File { name } => checks::file::exists(name)?,
         Target::FileWithText { name, content } => checks::file::containing_text(name, &content)?,
         Target::FileWithRegex { name, content } => checks::file::matching_regex(name, content)?,
@@ -49,6 +49,8 @@ fn help() {
         r#"
 Usage: has [no] <condition>
 
+The optional "no" argument inverts the given condition.
+
 Check for the existence of files by name and contents:
 > has [no] file <glob>
 > has [no] file <glob> --containing <text>
@@ -70,8 +72,6 @@ Check for the existence of commits that don't exist on the tracking branch:
 
 Check whether the given command produces no output:
 > has [no] command-output <command> [args...]  # runs the given command and matches if it produces no output
-
-The optional "no" argument inverts the given condition.
 "#
     );
 }

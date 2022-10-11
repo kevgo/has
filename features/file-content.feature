@@ -16,6 +16,7 @@ Feature: detect files by name and content
       has file package.json --containing "prettier":
       """
     Then it succeeds
+    And it prints nothing
 
   Scenario: wants file with content, file exists but content mismatch
     When running:
@@ -23,3 +24,4 @@ Feature: detect files by name and content
       has file package.json --containing "zonk":
       """
     Then it fails
+    And it prints nothing

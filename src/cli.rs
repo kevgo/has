@@ -14,7 +14,7 @@ pub enum Target {
     Branch { name: String },
     ActiveBranch { name: String },
     InactiveBranch { name: String },
-    EmptyOutput { cmd: String, args: Vec<String> },
+    CommandOutput { cmd: String, args: Vec<String> },
     File { name: String },
     FileWithText { name: String, content: String },
     FileWithRegex { name: String, content: String },
@@ -41,7 +41,7 @@ pub fn parse(mut args: env::Args) -> Result<Args, UserError> {
         "inactive-branch" => Target::InactiveBranch {
             name: args.next().ok_or(UserError::MissingName)?,
         },
-        "command-output" => Target::EmptyOutput {
+        "command-output" => Target::CommandOutput {
             cmd: args.next().ok_or(UserError::MissingCommand)?,
             args: args.by_ref().collect(),
         },

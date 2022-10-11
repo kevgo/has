@@ -11,6 +11,7 @@ Feature: detect inactive Git branches
       has inactive-branch feature
       """
     Then it succeeds
+    And it prints nothing
 
   Scenario: wants inactive branch, branch is active
     Given my Git workspace is on the "feature" branch
@@ -19,6 +20,7 @@ Feature: detect inactive Git branches
       has inactive-branch feature
       """
     Then it fails
+    And it prints nothing
 
   Scenario: wants inactive branch, branch does not exist
     When running:
@@ -26,3 +28,4 @@ Feature: detect inactive Git branches
       has inactive-branch feature
       """
     Then it fails
+    And it prints nothing

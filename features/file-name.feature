@@ -1,27 +1,5 @@
 Feature: detect files by name
 
-  Rule: filename is required
-
-    Scenario: no name provided
-      When running:
-        """
-        has file
-        """
-      Then it prints:
-        """
-        ERROR: no name provided
-        """
-
-    Scenario: duplicate name argument
-      When running:
-        """
-        has file foo bar
-        """
-      Then it prints:
-        """
-        ERROR: too many arguments
-        """
-
   Rule: searching by filename finds the given files
 
     Scenario: wants file, file exists
@@ -31,6 +9,7 @@ Feature: detect files by name
         has file package.json
         """
       Then it succeeds
+      And it prints nothing
 
     Scenario: wants file, file does not exist
       When running:
@@ -38,6 +17,7 @@ Feature: detect files by name
         has file package.json
         """
       Then it fails
+      And it prints nothing
 
     Scenario: wants no file, file does exist
       Given a file "package.json"
@@ -46,6 +26,7 @@ Feature: detect files by name
         has no file package.json
         """
       Then it fails
+      And it prints nothing
 
     Scenario: wants no file, file does not exist
       When running:
@@ -53,3 +34,28 @@ Feature: detect files by name
         has no file package.json
         """
       Then it succeeds
+      And it prints nothing
+
+  Rule: filename is required
+
+    Scenario: no name provided
+      When running:
+        """
+        has file
+        """
+      Then it fails
+      And the output starts with:
+        """
+        ERROR: no name provided
+        """
+
+    Scenario: duplicate name argument
+      When running:
+        """
+        has file foo bar
+        """
+      Then it fails
+      And the output starts with:
+        """
+        ERROR: too many arguments
+        """

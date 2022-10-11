@@ -16,6 +16,7 @@ Feature: searching for content via regex
       has file package.json --matching prettier.*1.2.3"
       """
     Then it succeeds
+    And it prints nothing
 
   Scenario: wants file with content, file exists but content mismatch
     When running:
@@ -23,3 +24,4 @@ Feature: searching for content via regex
       has file package.json --matching prettier.*1.2.4"
       """
     Then it fails
+    And it prints nothing
