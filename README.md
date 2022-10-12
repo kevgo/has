@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/kevgo/has/actions/workflows/ci.yml/badge.svg)](https://github.com/kevgo/has/actions/workflows/ci.yml)
 
-`has` is a modern replacement for the traditional `test` tool. It allows
+`has` is a modern replacement for the traditional Unix `test` tool. It allows
 querying properties of the local filesystem and Git repositories. One of its
 intended use cases is within [mrt](https://github.com/kevgo/mrt).
 
