@@ -3,7 +3,10 @@ use crate::fs::file_content;
 use regex::Regex;
 
 pub fn target(name: &str) -> Result<bool, UserError> {
-    Ok(Makefile::load()?.has_target(name))
+    match file_content("Makefile".as_ref()) {
+        Ok(text) => Ok(Makefile::parse(&text)?.has_target(name)),
+        Err(_) => Ok(false),
+    }
 }
 
 #[derive(Debug, PartialEq)]
@@ -14,10 +17,6 @@ struct Makefile {
 impl Makefile {
     fn has_target(&self, name: &str) -> bool {
         self.targets.iter().any(|target| target.name == name)
-    }
-
-    fn load() -> Result<Makefile, UserError> {
-        Makefile::parse(&file_content("Makefile".as_ref())?)
     }
 
     fn parse(text: &str) -> Result<Makefile, UserError> {

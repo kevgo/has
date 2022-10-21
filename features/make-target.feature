@@ -24,3 +24,11 @@ Feature: detect Make targets
       """
     Then it fails
     And it prints nothing
+
+  Scenario: has no Makefile
+    When running:
+      """
+      has make-target foo
+      """
+    Then it fails
+    And it prints nothing
