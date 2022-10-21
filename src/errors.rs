@@ -1,12 +1,14 @@
 use std::fmt::Display;
 use std::path::PathBuf;
 
+#[derive(Debug)]
 pub enum UserError {
     CannotReadPath { path: PathBuf, guidance: String },
     GitBranchNameInvalidUnicode,
     InvalidGlob { pattern: String, guidance: String },
     InvalidRegex { pattern: String, guidance: String },
     MissingCommand,
+    MissingMakeTarget,
     MissingName,
     MissingTarget,
     MissingValueForFileContent,
@@ -39,6 +41,7 @@ impl Display for UserError {
                 write!(f, "the \"{}\" executable is not in the path", cmd)
             }
             UserError::MissingCommand => f.write_str("missing command to run"),
+            UserError::MissingMakeTarget => f.write_str("missing Make target"),
             UserError::MissingName => f.write_str("no name provided"),
             UserError::MissingValueForFileContent => {
                 f.write_str("missing value for expected file content")

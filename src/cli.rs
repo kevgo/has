@@ -20,6 +20,7 @@ pub enum Target {
     FileWithRegex { name: String, content: String },
     Folder { name: String },
     Help,
+    MakeTarget { name: String },
     UncommittedChanges,
     UnpushedChanges,
 }
@@ -71,6 +72,9 @@ pub fn parse(mut args: env::Args) -> Result<Args, UserError> {
             name: args.next().ok_or(UserError::MissingName)?,
         },
         "help" => Target::Help,
+        "make-target" => Target::MakeTarget {
+            name: args.next().ok_or(UserError::MissingMakeTarget)?,
+        },
         "uncommitted-changes" => Target::UncommittedChanges,
         "unpushed-commits" => Target::UnpushedChanges,
         unknown => return Err(UserError::UnknownTarget(unknown.into())),

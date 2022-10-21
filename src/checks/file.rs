@@ -1,8 +1,9 @@
 use crate::errors::UserError;
+use crate::fs::file_content;
 use glob::{glob, Paths};
 use regex::Regex;
 use std::fs;
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 
 /// indicates whether a file with the given name exists
 pub fn exists(glob: String) -> Result<bool, UserError> {
@@ -75,11 +76,4 @@ impl Iterator for FilesMatchingGlob {
         }
         None
     }
-}
-
-fn file_content(path: &Path) -> Result<String, UserError> {
-    fs::read_to_string(path).map_err(|err| UserError::CannotReadPath {
-        path: path.into(),
-        guidance: err.to_string(),
-    })
 }

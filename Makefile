@@ -11,7 +11,7 @@ fix:  # auto-corrects issues
 	cargo fix
 
 help:  # prints all make targets
-	cat Makefile | grep '^[^ ]*:' | grep -v '.SILENT' | grep -v help | sed 's/:.*#/#/' | column -s "#" -t
+	cat Makefile | grep '^[^ ]*:' | grep -v '.SILENT' | grep -v help | grep -v '^tools\/' | grep -v '^target/debug' | sed 's/:.*#/#/' | column -s "#" -t
 
 install:  # installs the binary on the current machine
 	cargo install --path .
@@ -23,7 +23,7 @@ lint: tools/actionlint  # checks formatting
 	git diff --check
 	tools/actionlint
 
-ps: fix test
+ps: fix test  # pitstop
 
 test: lint cuke  # runs all tests
 
