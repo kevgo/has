@@ -2,7 +2,7 @@ use crate::errors::UserError;
 use crate::fs::file_content;
 use regex::Regex;
 
-pub fn target(name: &str) -> Result<bool, UserError> {
+pub fn has_target(name: &str) -> Result<bool, UserError> {
     match file_content("Makefile".as_ref()) {
         Ok(text) => Ok(Makefile::parse(&text)?.has_target(name)),
         Err(_) => Ok(false),

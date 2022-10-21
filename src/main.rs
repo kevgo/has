@@ -35,7 +35,7 @@ fn inner() -> Result<ExitCode, UserError> {
             help();
             return Ok(ExitCode::SUCCESS);
         }
-        Target::MakeTarget { name } => checks::makefile::target(&name)?,
+        Target::MakeTarget { name } => checks::makefile::has_target(&name)?,
         Target::UncommittedChanges => checks::uncommitted_changes(),
         Target::UnpushedChanges => checks::unpushed_commits()?,
     };
