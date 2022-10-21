@@ -38,6 +38,13 @@ Check whether file content matches the given regex
 has [no] file <glob> --matching <regex>
 ```
 
+Check whether a given [Make](https://www.gnu.org/software/make) target exists
+([examples](features/make-target.feature)):
+
+```
+has [no] make-target <name>
+```
+
 ### folders
 
 Check whether a folder exists ([examples](features/folder.feature)):
