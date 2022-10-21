@@ -23,7 +23,7 @@ impl Makefile {
     fn parse(text: &str) -> Result<Makefile, UserError> {
         let pattern = &"^[a-z]+:";
         let regex = Regex::new(pattern).map_err(|err| UserError::InvalidRegex {
-            pattern: pattern.to_string(),
+            pattern: (*pattern).to_string(),
             guidance: err.to_string(),
         })?;
         let mut result = Makefile { targets: vec![] };

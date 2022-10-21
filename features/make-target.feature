@@ -1,6 +1,5 @@
 Feature: detect Make targets
 
-  @this
   Scenario: has Make target
     Given a file "Makefile" with content:
       """
