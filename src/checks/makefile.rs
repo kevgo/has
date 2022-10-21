@@ -25,15 +25,15 @@ impl Makefile {
             pattern: (*pattern).to_string(),
             guidance: err.to_string(),
         })?;
-        let mut result = Makefile { targets: vec![] };
+        let mut targets = vec![];
         for line in text.lines() {
             for hit in regex.find_iter(line) {
-                result.targets.push(Target {
+                targets.push(Target {
                     name: hit.as_str()[0..hit.end() - 1].into(),
                 });
             }
         }
-        Ok(result)
+        Ok(Makefile { targets })
     }
 }
 
