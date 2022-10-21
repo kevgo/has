@@ -12,7 +12,6 @@ Feature: detect Make targets
     Then it prints nothing
     And it succeeds
 
-
   Scenario: doesn't have Make target
     Given a file "Makefile" with content:
       """
