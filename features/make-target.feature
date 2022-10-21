@@ -1,0 +1,27 @@
+Feature: detect Make targets
+
+  @this
+  Scenario: has Make target
+    Given a file "Makefile" with content:
+      """
+      foo:
+      """
+    When running:
+      """
+      has make-target foo
+      """
+    Then it prints nothing
+    And it succeeds
+
+
+  Scenario: doesn't have Make target
+    Given a file "Makefile" with content:
+      """
+      foo:
+      """
+    When running:
+      """
+      has make-target bar
+      """
+    Then it fails
+    And it prints nothing
