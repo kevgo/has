@@ -21,13 +21,13 @@ Feature: detect Make targets
       """
       has make-target bar
       """
-    Then it fails
-    And it prints nothing
+    Then it prints nothing
+    And it fails
 
   Scenario: has no Makefile
     When running:
       """
       has make-target foo
       """
-    Then it fails
-    And it prints nothing
+    Then it prints nothing
+    And it fails
