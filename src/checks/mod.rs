@@ -2,6 +2,7 @@ mod empty_output;
 pub mod file;
 mod folder;
 pub mod git_branch;
+pub mod makefile;
 mod uncommitted_changes;
 mod unpushed_commits;
 

@@ -1,6 +1,7 @@
 mod checks;
 mod cli;
 mod errors;
+mod fs;
 mod git;
 
 use cli::Target;
@@ -34,6 +35,7 @@ fn inner() -> Result<ExitCode, UserError> {
             help();
             return Ok(ExitCode::SUCCESS);
         }
+        Target::MakeTarget { name } => checks::makefile::target(&name)?,
         Target::UncommittedChanges => checks::uncommitted_changes(),
         Target::UnpushedChanges => checks::unpushed_commits()?,
     };
