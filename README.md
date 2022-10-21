@@ -38,6 +38,8 @@ Check whether file content matches the given regex
 has [no] file <glob> --matching <regex>
 ```
 
+### Makefile
+
 Check whether a given [Make](https://www.gnu.org/software/make) target exists
 ([examples](features/make-target.feature)):
 
