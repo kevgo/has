@@ -20,7 +20,7 @@ pub fn has_dev_dependency(name: &str) -> Result<bool, UserError> {
 #[derive(Debug, Deserialize, PartialEq)]
 struct PackageJson {
     dependencies: Option<HashMap<String, String>>,
-    #[serde(rename(deserialize = "devDependencies"))]
+    #[serde(rename = "devDependencies")]
     dev_dependencies: Option<HashMap<String, String>>,
 }
 
