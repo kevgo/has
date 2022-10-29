@@ -49,13 +49,13 @@ mod tests {
             #[test]
             fn valid() {
                 let give = r#"
-{
-    "name": "foo",
-    "dependencies": {
-        "alpha": "1.0.0",
-        "beta": "2.0.0"
-    }
-}"#;
+                    {
+                        "name": "foo",
+                        "dependencies": {
+                            "alpha": "1.0.0",
+                            "beta": "2.0.0"
+                        }
+                    }"#;
                 let want = Ok(PackageJson {
                     dependencies: HashMap::from([
                         ("alpha".into(), "1.0.0".into()),
@@ -69,9 +69,9 @@ mod tests {
             #[test]
             fn invalid() {
                 let give = r#"
-{
-    "name": "foo
-"#;
+                    {
+                        "name": "foo
+                    "#;
                 let have = PackageJson::parse(give);
                 assert!(have.is_err());
             }
