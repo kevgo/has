@@ -25,15 +25,19 @@ lint: tools/actionlint  # checks formatting
 
 ps: fix test  # pitstop
 
-test: lint cuke  # runs all tests
+test: lint unit cuke  # runs all tests
 
 tools/actionlint:
 	curl -s https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash | bash
 	mkdir -p tools
 	mv actionlint tools
 
-target/debug/has: $(shell find src)  Cargo.toml Cargo.lock
+.PHONY: target/debug/has
+target/debug/has:
 	cargo build
+
+unit:  # runs the unit tests
+	cargo test
 
 update:  # updates dependencies
 	cargo upgrade

@@ -21,6 +21,7 @@ pub enum Target {
     Folder { name: String },
     Help,
     MakeTarget { name: String },
+    NodeDependency { name: String },
     UncommittedChanges,
     UnpushedChanges,
 }
@@ -74,6 +75,9 @@ pub fn parse(mut args: env::Args) -> Result<Args, UserError> {
         "help" => Target::Help,
         "make-target" => Target::MakeTarget {
             name: args.next().ok_or(UserError::MissingMakeTarget)?,
+        },
+        "node-dependency" => Target::NodeDependency {
+            name: args.next().ok_or(UserError::MissingNodeDependency)?,
         },
         "uncommitted-changes" => Target::UncommittedChanges,
         "unpushed-commits" => Target::UnpushedChanges,

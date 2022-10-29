@@ -1,15 +1,17 @@
 use std::fmt::Display;
 use std::path::PathBuf;
 
-#[derive(Debug)]
+#[derive(Debug, Eq, PartialEq)]
 pub enum UserError {
     CannotReadPath { path: PathBuf, guidance: String },
     GitBranchNameInvalidUnicode,
     InvalidGlob { pattern: String, guidance: String },
     InvalidRegex { pattern: String, guidance: String },
+    InvalidPackageJsonStructure { guidance: String },
     MissingCommand,
     MissingMakeTarget,
     MissingName,
+    MissingNodeDependency,
     MissingTarget,
     MissingValueForFileContent,
     NonUnicodeAppOutput,
@@ -37,12 +39,22 @@ impl Display for UserError {
             UserError::InvalidRegex { pattern, guidance } => {
                 write!(f, "invalid regex /{}/: {}", pattern, guidance)
             }
+            UserError::InvalidPackageJsonStructure { guidance } => {
+                write!(
+                    f,
+                    "file \"package.json\" contains invalid JSON: {}",
+                    guidance
+                )
+            }
             UserError::UnknownCommand(cmd) => {
                 write!(f, "the \"{}\" executable is not in the path", cmd)
             }
             UserError::MissingCommand => f.write_str("missing command to run"),
             UserError::MissingMakeTarget => f.write_str("missing Make target"),
             UserError::MissingName => f.write_str("no name provided"),
+            UserError::MissingNodeDependency => {
+                f.write_str("please provide the name of the Node dependency to look for")
+            }
             UserError::MissingValueForFileContent => {
                 f.write_str("missing value for expected file content")
             }

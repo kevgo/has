@@ -36,6 +36,7 @@ fn inner() -> Result<ExitCode, UserError> {
             return Ok(ExitCode::SUCCESS);
         }
         Target::MakeTarget { name } => checks::makefile::has_target(&name)?,
+        Target::NodeDependency { name } => checks::node_js::has_dependency(&name)?,
         Target::UncommittedChanges => checks::uncommitted_changes(),
         Target::UnpushedChanges => checks::unpushed_commits()?,
     };
@@ -51,29 +52,32 @@ fn help() {
         r#"
 Usage: has [no] <condition>
 
-The optional "no" argument inverts the given condition.
+The optional "no" argument inverts the condition.
 
-Check for the existence of files by name and contents:
+Check files by name and contents:
 > has [no] file <glob>
 > has [no] file <glob> --containing <text>
 > has [no] file <glob> --matching <regex>
 
-Check for the existence of folders:
+Check folders:
 > has [no] folder <glob>
 
-Check for the existence and condition of Git branches:
+Check Git branches:
 > has [no] branch <branch name>
 > has [no] active-branch <branch name>
 > has [no] inactive-branch <branch name>
 
-Check for the existence of changes that haven't been committed yet:
+Check uncommitted changes in a Git workspace:
 > has [no] uncommitted-changes
 
-Check for the existence of commits that don't exist on the tracking branch:
+Check Git commits:
 > has [no] unpushed-commits
 
-Check whether the given command produces no output:
+Check command output:
 > has [no] command-output <command> [args...]  # runs the given command and matches if it produces no output
+
+Check Node.JS dependencies:
+> has [no] nodejs-dependency <name>
 "#
     );
 }
