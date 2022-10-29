@@ -7,7 +7,7 @@ pub enum UserError {
     GitBranchNameInvalidUnicode,
     InvalidGlob { pattern: String, guidance: String },
     InvalidRegex { pattern: String, guidance: String },
-    InvalidePackageJsonStructure { guidance: String },
+    InvalidPackageJsonStructure { guidance: String },
     MissingCommand,
     MissingMakeTarget,
     MissingName,
@@ -39,7 +39,7 @@ impl Display for UserError {
             UserError::InvalidRegex { pattern, guidance } => {
                 write!(f, "invalid regex /{}/: {}", pattern, guidance)
             }
-            UserError::InvalidePackageJsonStructure { guidance } => {
+            UserError::InvalidPackageJsonStructure { guidance } => {
                 write!(
                     f,
                     "file \"package.json\" contains invalid JSON: {}",

@@ -21,7 +21,7 @@ impl PackageJson {
     }
 
     fn parse(text: &str) -> Result<PackageJson, UserError> {
-        serde_json::from_str(text).map_err(|err| UserError::InvalidePackageJsonStructure {
+        serde_json::from_str(text).map_err(|err| UserError::InvalidPackageJsonStructure {
             guidance: err.to_string(),
         })
     }
