@@ -33,6 +33,15 @@ mod tests {
         use crate::checks::node_js::PackageJson;
         use std::collections::HashMap;
 
+        #[test]
+        fn has_dependency() {
+            let package_json = PackageJson {
+                dependencies: HashMap::from([("alpha".into(), "1.0.0".into())]),
+            };
+            assert!(package_json.has_dependency("alpha"));
+            assert!(!package_json.has_dependency("zonk"));
+        }
+
         mod parse {
             use crate::checks::node_js::PackageJson;
             use std::collections::HashMap;
@@ -73,15 +82,6 @@ mod tests {
                 let have = PackageJson::parse(give);
                 assert!(have.is_err());
             }
-        }
-
-        #[test]
-        fn has_dependency() {
-            let package_json = PackageJson {
-                dependencies: HashMap::from([("alpha".into(), "1.0.0".into())]),
-            };
-            assert!(package_json.has_dependency("alpha"));
-            assert!(!package_json.has_dependency("zonk"));
         }
     }
 }
