@@ -36,6 +36,9 @@ Feature: help screen
         Check command output:
         > has [no] command-output <command> [args...]  # runs the given command and matches if it produces no output
 
+        Check targets in Makefiles:
+        > has [no] make-target <name>
+
         Check Node.JS dependencies:
         > has [no] nodejs-dependency <name>
         > has [no] nodejs-dev-dependency <name>
@@ -78,6 +81,9 @@ Feature: help screen
 
         Check command output:
         > has [no] command-output <command> [args...]  # runs the given command and matches if it produces no output
+
+        Check targets in Makefiles:
+        > has [no] make-target <name>
 
         Check Node.JS dependencies:
         > has [no] nodejs-dependency <name>

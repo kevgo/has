@@ -26,7 +26,7 @@ Check whether a file exists ([examples](features/file-name.feature)):
 has [no] file <glob>
 ```
 
-Check whether a file includes the given text
+Check whether file content includes the given text
 ([examples](features/file-content.feature)):
 
 ```
@@ -70,16 +70,18 @@ Check that a branch exists but is not checked out
 has [no] inactive-branch <branch name>
 ```
 
-### Git commits
+### uncommitted changes
 
-Check whether a Git repo contains uncommitted changes
+Check whether a Git workspace contains uncommitted changes
 ([examples](features/uncommitted-changes.feature)):
 
 ```
 has [no] uncommitted-changes
 ```
 
-Check for Git commits not on the remote branch
+### Git commits
+
+Check for Git commits that haven't been pushed to the remote branch
 ([examples](features/unpushed-commits.feature)):
 
 ```
@@ -102,4 +104,20 @@ Check whether a given [Make](https://www.gnu.org/software/make) target exists
 
 ```
 has [no] make-target <name>
+```
+
+### Node.JS
+
+Check whether the given Node.JS codebase contains a production dependency
+([examples](features/node-dependency.feature)):
+
+```
+has [no] nodejs-dependency <name>
+```
+
+Check whether the given Node.JS codebase contains a development dependency
+([examples](features/node-dependency.feature)):
+
+```
+has [no] nodejs-dev-dependency <name>
 ```
