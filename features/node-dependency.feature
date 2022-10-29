@@ -13,7 +13,7 @@ Feature: detect Node depenndencies
       """
     When running:
       """
-      has node-dependency beta
+      has nodejs-dependency beta
       """
     Then it prints nothing
     And it succeeds
@@ -30,7 +30,7 @@ Feature: detect Node depenndencies
       """
     When running:
       """
-      has node-dependency beta
+      has nodejs-dependency beta
       """
     Then it prints nothing
     And it fails
@@ -38,7 +38,7 @@ Feature: detect Node depenndencies
   Scenario: no Node codebase
     When running:
       """
-      has node-dependency alpha
+      has nodejs-dependency alpha
       """
     Then it prints nothing
     And it fails

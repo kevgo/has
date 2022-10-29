@@ -77,10 +77,10 @@ pub fn parse(mut args: env::Args) -> Result<Args, UserError> {
         "make-target" => Target::MakeTarget {
             name: args.next().ok_or(UserError::MissingMakeTarget)?,
         },
-        "node-dependency" => Target::NodeDependency {
+        "nodejs-dependency" => Target::NodeDependency {
             name: args.next().ok_or(UserError::MissingNodeDependency)?,
         },
-        "node-dev-dependency" => Target::NodeDevDependency {
+        "nodejs-dev-dependency" => Target::NodeDevDependency {
             name: args.next().ok_or(UserError::MissingNodeDevDependency)?,
         },
         "uncommitted-changes" => Target::UncommittedChanges,

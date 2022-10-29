@@ -7,13 +7,13 @@ Feature: detect Node dev-depenndencies
         "name": "foo",
         "devDependencies": {
           "alpha": "1.0.0.",
-          "beta": "2.0.0"
+          "license-checker": "2.0.0"
         }
       }
       """
     When running:
       """
-      has node-dev-dependency beta
+      has nodejs-dev-dependency license-checker
       """
     Then it prints nothing
     And it succeeds
@@ -31,7 +31,7 @@ Feature: detect Node dev-depenndencies
       """
     When running:
       """
-      has no node-dev-dependency beta
+      has no nodejs-dev-dependency beta
       """
     Then it prints nothing
     And it fails
@@ -48,7 +48,7 @@ Feature: detect Node dev-depenndencies
       """
     When running:
       """
-      has node-dev-dependency beta
+      has nodejs-dev-dependency beta
       """
     Then it prints nothing
     And it fails
@@ -65,7 +65,7 @@ Feature: detect Node dev-depenndencies
       """
     When running:
       """
-      has no node-dev-dependency beta
+      has no nodejs-dev-dependency beta
       """
     Then it prints nothing
     And it succeeds
@@ -73,7 +73,7 @@ Feature: detect Node dev-depenndencies
   Scenario: no Node codebase
     When running:
       """
-      has node-dev-dependency alpha
+      has nodejs-dev-dependency alpha
       """
     Then it prints nothing
     And it fails
