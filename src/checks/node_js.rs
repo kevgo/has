@@ -47,7 +47,7 @@ mod tests {
             use std::collections::HashMap;
 
             #[test]
-            fn valid() {
+            fn valid_package_json_file() {
                 let give = r#"
                     {
                         "name": "foo",
@@ -67,7 +67,7 @@ mod tests {
             }
 
             #[test]
-            fn invalid() {
+            fn invalid_json() {
                 let give = r#"
                     {
                         "name": "foo
@@ -77,7 +77,7 @@ mod tests {
             }
 
             #[test]
-            fn empty() {
+            fn empty_file() {
                 let give = r#""#;
                 let have = PackageJson::parse(give);
                 assert!(have.is_err());
