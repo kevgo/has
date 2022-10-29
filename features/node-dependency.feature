@@ -23,12 +23,14 @@ Feature: detect Node depenndencies
       """
       {
         "name": "foo",
-        "dependencies": {}
+        "dependencies": {
+          "alpha": "1.0.0."
+        }
       }
       """
     When running:
       """
-      has node-dependency alpha
+      has node-dependency beta
       """
     Then it prints nothing
     And it fails
