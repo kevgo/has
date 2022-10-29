@@ -1,4 +1,3 @@
-@this
 Feature: detect Node dev-depenndencies
 
   Scenario: has Node dev-dependency
