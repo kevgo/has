@@ -30,9 +30,8 @@ impl PackageJson {
 #[cfg(test)]
 mod tests {
     mod package_json {
-        use std::collections::HashMap;
-
         use crate::checks::node_js::PackageJson;
+        use std::collections::HashMap;
 
         mod parse {
             use crate::checks::node_js::PackageJson;
