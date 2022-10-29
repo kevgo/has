@@ -1,12 +1,11 @@
 Feature: detect Node depenndencies
 
-  @this
   Scenario: has Node dependency
     Given a file "package.json" with content:
       """
       {
         "name": "foo",
-        "depenndencies": {
+        "dependencies": {
           "alpha": "1.0.0.",
           "beta": "2.0.0"
         }
@@ -24,7 +23,7 @@ Feature: detect Node depenndencies
       """
       {
         "name": "foo",
-        "depenndencies": {
+        "dependencies": {
           "alpha": "1.0.0.",
           "beta": "2.0.0"
         }

@@ -1,7 +1,7 @@
 use std::fmt::Display;
 use std::path::PathBuf;
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, Eq, PartialEq)]
 pub enum UserError {
     CannotReadPath { path: PathBuf, guidance: String },
     GitBranchNameInvalidUnicode,
