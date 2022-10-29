@@ -2,9 +2,10 @@
 
 [![CI](https://github.com/kevgo/has/actions/workflows/ci.yml/badge.svg)](https://github.com/kevgo/has/actions/workflows/ci.yml)
 
-`has` is a modern replacement for the traditional Unix `test` tool. It allows
-querying properties of the local filesystem and Git repositories. One of its
-intended use cases is within [mrt](https://github.com/kevgo/mrt).
+`has` is a higher-level alternative for the traditional Unix `test` tool. It
+allows querying a wide variety of properties of the local filesystem, source
+code management systems, codebases, and build systems. One of its intended use
+cases is within automation tooling like [mrt](https://github.com/kevgo/mrt).
 
 The general usage is:
 
@@ -12,9 +13,10 @@ The general usage is:
 has [no] <condition>
 ```
 
-`has` indicates the result of the check through its exit code, `0` meaning
-success. The optional `no` argument inverts the condition, i.e. checks for
-absence of the condition.
+`has` indicates the result of the check through its exit code: `0` means
+success, any non-zero exit code indicates the given condition is not met. The
+optional `no` argument inverts the condition, i.e. checks for absence of the
+condition.
 
 ### files
 
@@ -36,15 +38,6 @@ Check whether file content matches the given regex
 
 ```
 has [no] file <glob> --matching <regex>
-```
-
-### Makefile
-
-Check whether a given [Make](https://www.gnu.org/software/make) target exists
-([examples](features/make-target.feature)):
-
-```
-has [no] make-target <name>
 ```
 
 ### folders
@@ -100,4 +93,13 @@ Runs the given command and checks that it outputs something
 
 ```
 has [no] command-output <command> [args...]
+```
+
+### Makefile
+
+Check whether a given [Make](https://www.gnu.org/software/make) target exists
+([examples](features/make-target.feature)):
+
+```
+has [no] make-target <name>
 ```
