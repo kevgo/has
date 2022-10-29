@@ -79,6 +79,7 @@ Check command output:
 
 Check Node.JS dependencies:
 > has [no] nodejs-dependency <name>
+> has [no] nodejs-dev-dependency <name>
 "#
     );
 }
