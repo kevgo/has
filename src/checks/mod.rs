@@ -3,6 +3,7 @@ pub mod file;
 mod folder;
 pub mod git_branch;
 pub mod makefile;
+pub mod node_js;
 mod uncommitted_changes;
 mod unpushed_commits;
 

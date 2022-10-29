@@ -419,6 +419,8 @@ dependencies = [
  "glob",
  "pretty_assertions",
  "regex",
+ "serde",
+ "serde_json",
  "strip-ansi-escapes",
  "tempfile",
  "tokio",
