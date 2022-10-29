@@ -10,14 +10,33 @@ pub fn has_dependency(name: &str) -> Result<bool, UserError> {
     }
 }
 
+pub fn has_dev_dependency(name: &str) -> Result<bool, UserError> {
+    match file_content("package.json".as_ref()) {
+        Ok(text) => Ok(PackageJson::parse(&text)?.has_dev_dependency(name)),
+        Err(_) => Ok(false),
+    }
+}
+
 #[derive(Debug, Deserialize, PartialEq)]
 struct PackageJson {
-    dependencies: HashMap<String, String>,
+    dependencies: Option<HashMap<String, String>>,
+    #[serde(rename = "devDependencies")]
+    dev_dependencies: Option<HashMap<String, String>>,
 }
 
 impl PackageJson {
     fn has_dependency(&self, name: &str) -> bool {
-        self.dependencies.contains_key(name)
+        match &self.dependencies {
+            Some(dependencies) => dependencies.contains_key(name),
+            None => false,
+        }
+    }
+
+    fn has_dev_dependency(&self, name: &str) -> bool {
+        match &self.dev_dependencies {
+            Some(dev_dependencies) => dev_dependencies.contains_key(name),
+            None => false,
+        }
     }
 
     fn parse(text: &str) -> Result<PackageJson, UserError> {
@@ -36,10 +55,21 @@ mod tests {
         #[test]
         fn has_dependency() {
             let package_json = PackageJson {
-                dependencies: HashMap::from([("alpha".into(), "1.0.0".into())]),
+                dependencies: Some(HashMap::from([("alpha".into(), "1.0.0".into())])),
+                dev_dependencies: None,
             };
             assert!(package_json.has_dependency("alpha"));
             assert!(!package_json.has_dependency("zonk"));
+        }
+
+        #[test]
+        fn has_dev_dependency() {
+            let package_json = PackageJson {
+                dependencies: None,
+                dev_dependencies: Some(HashMap::from([("alpha".into(), "1.0.0".into())])),
+            };
+            assert!(package_json.has_dev_dependency("alpha"));
+            assert!(!package_json.has_dev_dependency("zonk"));
         }
 
         mod parse {
@@ -54,13 +84,21 @@ mod tests {
                         "dependencies": {
                             "alpha": "1.0.0",
                             "beta": "2.0.0"
+                        },
+                        "devDependencies": {
+                            "gamma": "3.0.0",
+                            "delta": "4.0.0"
                         }
                     }"#;
                 let want = Ok(PackageJson {
-                    dependencies: HashMap::from([
+                    dependencies: Some(HashMap::from([
                         ("alpha".into(), "1.0.0".into()),
                         ("beta".into(), "2.0.0".into()),
-                    ]),
+                    ])),
+                    dev_dependencies: Some(HashMap::from([
+                        ("gamma".into(), "3.0.0".into()),
+                        ("delta".into(), "4.0.0".into()),
+                    ])),
                 });
                 let have = PackageJson::parse(give);
                 assert_eq!(have, want);

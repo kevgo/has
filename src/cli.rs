@@ -22,6 +22,7 @@ pub enum Target {
     Help,
     MakeTarget { name: String },
     NodeDependency { name: String },
+    NodeDevDependency { name: String },
     UncommittedChanges,
     UnpushedChanges,
 }
@@ -78,6 +79,9 @@ pub fn parse(mut args: env::Args) -> Result<Args, UserError> {
         },
         "node-dependency" => Target::NodeDependency {
             name: args.next().ok_or(UserError::MissingNodeDependency)?,
+        },
+        "node-dev-dependency" => Target::NodeDevDependency {
+            name: args.next().ok_or(UserError::MissingNodeDevDependency)?,
         },
         "uncommitted-changes" => Target::UncommittedChanges,
         "unpushed-commits" => Target::UnpushedChanges,

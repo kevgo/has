@@ -12,6 +12,7 @@ pub enum UserError {
     MissingMakeTarget,
     MissingName,
     MissingNodeDependency,
+    MissingNodeDevDependency,
     MissingTarget,
     MissingValueForFileContent,
     NonUnicodeAppOutput,
@@ -54,6 +55,9 @@ impl Display for UserError {
             UserError::MissingName => f.write_str("no name provided"),
             UserError::MissingNodeDependency => {
                 f.write_str("please provide the name of the Node dependency to look for")
+            }
+            UserError::MissingNodeDevDependency => {
+                f.write_str("please provide the name of the Node dev-dependency to look for")
             }
             UserError::MissingValueForFileContent => {
                 f.write_str("missing value for expected file content")
