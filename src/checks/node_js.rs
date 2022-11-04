@@ -50,12 +50,13 @@ impl PackageJson {
 mod tests {
     mod package_json {
         use crate::checks::node_js::PackageJson;
+        use big_s::S;
         use std::collections::HashMap;
 
         #[test]
         fn has_dependency() {
             let package_json = PackageJson {
-                dependencies: Some(HashMap::from([("alpha".into(), "1.0.0".into())])),
+                dependencies: Some(HashMap::from([(S("alpha"), S("1.0.0"))])),
                 dev_dependencies: None,
             };
             assert!(package_json.has_dependency("alpha"));
@@ -66,7 +67,7 @@ mod tests {
         fn has_dev_dependency() {
             let package_json = PackageJson {
                 dependencies: None,
-                dev_dependencies: Some(HashMap::from([("alpha".into(), "1.0.0".into())])),
+                dev_dependencies: Some(HashMap::from([(S("alpha"), S("1.0.0"))])),
             };
             assert!(package_json.has_dev_dependency("alpha"));
             assert!(!package_json.has_dev_dependency("zonk"));
@@ -74,6 +75,7 @@ mod tests {
 
         mod parse {
             use crate::checks::node_js::PackageJson;
+            use big_s::S;
             use std::collections::HashMap;
 
             #[test]
@@ -92,12 +94,12 @@ mod tests {
                     }"#;
                 let want = Ok(PackageJson {
                     dependencies: Some(HashMap::from([
-                        ("alpha".into(), "1.0.0".into()),
-                        ("beta".into(), "2.0.0".into()),
+                        (S("alpha"), S("1.0.0")),
+                        (S("beta"), S("2.0.0")),
                     ])),
                     dev_dependencies: Some(HashMap::from([
-                        ("gamma".into(), "3.0.0".into()),
-                        ("delta".into(), "4.0.0".into()),
+                        (S("gamma"), S("3.0.0")),
+                        (S("delta"), S("4.0.0")),
                     ])),
                 });
                 let have = PackageJson::parse(give);

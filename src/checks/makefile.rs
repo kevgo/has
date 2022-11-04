@@ -46,6 +46,7 @@ struct Target {
 mod tests {
     mod parse {
         use crate::checks::makefile::{Makefile, Target};
+        use big_s::S;
 
         #[test]
         fn with_targets() {
@@ -56,7 +57,7 @@ bar: b
             "#
             .trim();
             let want = Makefile {
-                targets: vec![Target { name: "foo".into() }, Target { name: "bar".into() }],
+                targets: vec![Target { name: S("foo") }, Target { name: S("bar") }],
             };
             let have = Makefile::parse(give).unwrap();
             assert_eq!(have, want);
