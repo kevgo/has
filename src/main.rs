@@ -4,7 +4,7 @@ mod errors;
 mod fs;
 mod git;
 
-use cli::Target;
+use cli::Condition;
 use errors::UserError;
 use std::env;
 use std::process::ExitCode;
@@ -22,24 +22,24 @@ fn main() -> ExitCode {
 
 fn inner() -> Result<ExitCode, UserError> {
     let args = cli::parse(env::args())?;
-    let exists = match args.target {
-        Target::GitBranch { name } => checks::git_branch::local(&name),
-        Target::GitBranchActive { name } => checks::git_branch::local_active(&name)?,
-        Target::GitBranchInactive { name } => checks::git_branch::local_inactive(&name)?,
-        Target::CommandOutput { cmd, args } => checks::command_output(cmd, args)?,
-        Target::File { name } => checks::file::exists(name)?,
-        Target::FileWithText { name, content } => checks::file::containing_text(name, &content)?,
-        Target::FileWithRegex { name, content } => checks::file::matching_regex(name, content)?,
-        Target::Folder { name } => checks::folder(&name),
-        Target::Help => {
+    let exists = match args.condition {
+        Condition::GitBranch { name } => checks::git_branch::local(&name),
+        Condition::GitBranchActive { name } => checks::git_branch::local_active(&name)?,
+        Condition::GitBranchInactive { name } => checks::git_branch::local_inactive(&name)?,
+        Condition::CommandOutput { cmd, args } => checks::command_output(cmd, args)?,
+        Condition::File { name } => checks::file::exists(name)?,
+        Condition::FileWithText { name, content } => checks::file::containing_text(name, &content)?,
+        Condition::FileWithRegex { name, content } => checks::file::matching_regex(name, content)?,
+        Condition::Folder { name } => checks::folder(&name),
+        Condition::Help => {
             help();
             return Ok(ExitCode::SUCCESS);
         }
-        Target::MakeTarget { name } => checks::makefile::has_target(&name)?,
-        Target::NodeDependency { name } => checks::node_js::has_dependency(&name)?,
-        Target::NodeDevDependency { name } => checks::node_js::has_dev_dependency(&name)?,
-        Target::GitChangesUncommitted => checks::uncommitted_changes(),
-        Target::GitChangesUnpushed => checks::unpushed_commits()?,
+        Condition::MakeTarget { name } => checks::makefile::has_target(&name)?,
+        Condition::NodeDependency { name } => checks::node_js::has_dependency(&name)?,
+        Condition::NodeDevDependency { name } => checks::node_js::has_dev_dependency(&name)?,
+        Condition::GitChangesUncommitted => checks::uncommitted_changes(),
+        Condition::GitChangesUnpushed => checks::unpushed_commits()?,
     };
     if exists == args.should_exist {
         Ok(ExitCode::SUCCESS)

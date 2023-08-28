@@ -6,11 +6,11 @@ pub struct Args {
     /// whether to look for presence or absence of the target
     pub should_exist: bool,
     /// the target to look for
-    pub target: Target,
+    pub condition: Condition,
 }
 
 /// things to check for
-pub enum Target {
+pub enum Condition {
     GitBranch { name: String },
     GitBranchActive { name: String },
     GitBranchInactive { name: String },
@@ -29,13 +29,13 @@ pub enum Target {
 
 pub fn parse(mut args: env::Args) -> Result<Args, UserError> {
     let _binary_name = args.next(); // skip the binary name
-    let next = args.next().ok_or(UserError::MissingTarget)?;
+    let next = args.next().ok_or(UserError::MissingCondition)?;
     let (should_exist, target_str) = match next.as_str() {
-        "no" => (false, args.next().ok_or(UserError::MissingTarget)?),
+        "no" => (false, args.next().ok_or(UserError::MissingCondition)?),
         _ => (true, next),
     };
     let target = match target_str.as_str() {
-        "command-output" => Target::CommandOutput {
+        "command-output" => Condition::CommandOutput {
             cmd: args.next().ok_or(UserError::MissingCommand)?,
             args: args.by_ref().collect(),
         },
@@ -47,42 +47,42 @@ pub fn parse(mut args: env::Args) -> Result<Args, UserError> {
                         return Err(UserError::TooManyArguments);
                     }
                     match switch.as_str() {
-                        "--containing" => Target::FileWithText {
+                        "--containing" => Condition::FileWithText {
                             name,
                             content: args.next().ok_or(UserError::MissingValueForFileContent)?,
                         },
-                        "--matching" => Target::FileWithRegex {
+                        "--matching" => Condition::FileWithRegex {
                             name,
                             content: args.next().ok_or(UserError::MissingValueForFileContent)?,
                         },
                         _ => return Err(UserError::UnknownSwitchForFileContent { switch }),
                     }
                 }
-                None => Target::File { name },
+                None => Condition::File { name },
             }
         }
-        "folder" => Target::Folder {
+        "folder" => Condition::Folder {
             name: args.next().ok_or(UserError::MissingName)?,
         },
-        "git-branch" => Target::GitBranch {
+        "git-branch" => Condition::GitBranch {
             name: args.next().ok_or(UserError::MissingName)?,
         },
-        "git-branch-active" => Target::GitBranchActive {
+        "git-branch-active" => Condition::GitBranchActive {
             name: args.next().ok_or(UserError::MissingName)?,
         },
-        "git-branch-inactive" => Target::GitBranchInactive {
+        "git-branch-inactive" => Condition::GitBranchInactive {
             name: args.next().ok_or(UserError::MissingName)?,
         },
-        "git-changes-uncommitted" => Target::GitChangesUncommitted,
-        "git-commits-unpushed" => Target::GitChangesUnpushed,
-        "help" => Target::Help,
-        "make-target" => Target::MakeTarget {
+        "git-changes-uncommitted" => Condition::GitChangesUncommitted,
+        "git-commits-unpushed" => Condition::GitChangesUnpushed,
+        "help" => Condition::Help,
+        "make-target" => Condition::MakeTarget {
             name: args.next().ok_or(UserError::MissingMakeTarget)?,
         },
-        "nodejs-dependency" => Target::NodeDependency {
+        "nodejs-dependency" => Condition::NodeDependency {
             name: args.next().ok_or(UserError::MissingNodeDependency)?,
         },
-        "nodejs-dev-dependency" => Target::NodeDevDependency {
+        "nodejs-dev-dependency" => Condition::NodeDevDependency {
             name: args.next().ok_or(UserError::MissingNodeDevDependency)?,
         },
         unknown => return Err(UserError::UnknownTarget(unknown.into())),
@@ -92,6 +92,6 @@ pub fn parse(mut args: env::Args) -> Result<Args, UserError> {
     }
     Ok(Args {
         should_exist,
-        target,
+        condition: target,
     })
 }
