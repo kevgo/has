@@ -13,5 +13,5 @@ pub fn has_author(name: &str) -> bool {
     if !output.status.success() {
         return false;
     }
-    output.stdout.len() > 0
+    !output.stdout.is_empty()
 }

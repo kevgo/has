@@ -11,6 +11,7 @@ pub struct Args {
 
 /// things to check for
 pub enum Condition {
+    GitAuthor { name: String },
     GitBranch { name: String },
     GitBranchActive { name: String },
     GitBranchInactive { name: String },
@@ -62,6 +63,9 @@ pub fn parse(mut args: env::Args) -> Result<Args, UserError> {
             }
         }
         "folder" => Condition::Folder {
+            name: args.next().ok_or(UserError::MissingName)?,
+        },
+        "git-author" => Condition::GitAuthor {
             name: args.next().ok_or(UserError::MissingName)?,
         },
         "git-branch" => Condition::GitBranch {
