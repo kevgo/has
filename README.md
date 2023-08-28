@@ -20,7 +20,7 @@ condition.
 ### conditions
 
 - [file \[glob\]](features/file-name.feature): a file with the given name exists
-- `file <glob> --containing <text>`: a file with given name and content exists ([examples](features/file-content.feature))
+- [`file <glob> --containing <text>`](features/file-content.feature): a file with given name and content exists
 - `file <glob> --matching <regex>`: a file with given name and content matching the given regex exists ([examples](features/file-content-regex.feature))
 
 ### folders
