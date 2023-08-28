@@ -64,10 +64,10 @@ pub fn parse(mut args: env::Args) -> Result<Args, UserError> {
         "folder" => Target::Folder {
             name: args.next().ok_or(UserError::MissingName)?,
         },
-        "git-branch-active" => Target::ActiveBranch {
+        "git-branch" => Target::Branch {
             name: args.next().ok_or(UserError::MissingName)?,
         },
-        "git-branch" => Target::Branch {
+        "git-branch-active" => Target::ActiveBranch {
             name: args.next().ok_or(UserError::MissingName)?,
         },
         "git-branch-inactive" => Target::InactiveBranch {
