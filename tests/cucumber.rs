@@ -91,6 +91,20 @@ async fn git_repo(world: &mut HasWorld) {
     .await;
 }
 
+#[given("a Git repo with the user {string} and email {string}")]
+async fn git_repo(world: &mut HasWorld, name: String, email: String) {
+    let dir = &world.code_dir;
+    git_init(dir).await;
+    run_chk(dir.path(), "git", vec!["config", "user.email", &email]).await;
+    run_chk(dir.path(), "git", vec!["config", "user.name", &name]).await;
+    run_chk(
+        dir.path(),
+        "git",
+        vec!["commit", "--allow-empty", "-m", "i"],
+    )
+    .await;
+}
+
 #[given("my Git repo has a remote")]
 async fn repo_has_git_remote(world: &mut HasWorld) {
     let remote_dir = TempDir::new().expect("cannot create temp dir");
