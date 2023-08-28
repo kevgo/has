@@ -55,7 +55,7 @@ Usage: has [no] <condition>
 
 The optional "no" argument inverts the condition.
 
-Check filesystem
+Check filesystem:
 > has [no] file <glob>
 > has [no] file <glob> --containing <text>
 > has [no] file <glob> --matching <regex>
