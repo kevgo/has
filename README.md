@@ -31,4 +31,4 @@ condition.
 - [`command-output <command> [args...]`](features/command-output.feature): the given shell command prints something to STDOUT
 - [`make-target <name>`](features/make-target.feature): a given [Make](https://www.gnu.org/software/make) target exists
 - [`nodejs-dependency <name>`](features/node-dependency.feature): the Node.JS codebase uses the the given production dependency
-- [`nodejs-dev-dependency <name>`](features/node-dependency.feature): the Node.JS codebase in the current folder contains the given development dependency
+- [`nodejs-dev-dependency <name>`](features/node-dependency.feature): the Node.JS codebase uses the given development dependency
