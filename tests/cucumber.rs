@@ -55,6 +55,20 @@ async fn a_folder(world: &mut HasWorld, name: String) -> io::Result<()> {
     fs::create_dir(folderpath).await
 }
 
+#[given("a Git repo")]
+async fn git_repo(world: &mut HasWorld) {
+    let dir = &world.code_dir;
+    git_init(dir).await;
+    run_chk(dir.path(), "git", vec!["config", "user.email", "a@b.com"]).await;
+    run_chk(dir.path(), "git", vec!["config", "user.name", "Your Name"]).await;
+    run_chk(
+        dir.path(),
+        "git",
+        vec!["commit", "--allow-empty", "-m", "i"],
+    )
+    .await;
+}
+
 #[given("a local commit")]
 async fn a_local_commit(world: &mut HasWorld) -> io::Result<()> {
     let filepath = &world.code_dir.path().join("committed_file");
@@ -74,20 +88,6 @@ async fn debug(world: &mut HasWorld) {
     println!("CODE DIR: {}", world.code_dir.path().to_string_lossy());
     let mut line = String::new();
     std::io::stdin().read_line(&mut line).unwrap();
-}
-
-#[given("a Git repo")]
-async fn git_repo(world: &mut HasWorld) {
-    let dir = &world.code_dir;
-    git_init(dir).await;
-    run_chk(dir.path(), "git", vec!["config", "user.email", "a@b.com"]).await;
-    run_chk(dir.path(), "git", vec!["config", "user.name", "Your Name"]).await;
-    run_chk(
-        dir.path(),
-        "git",
-        vec!["commit", "--allow-empty", "-m", "i"],
-    )
-    .await;
 }
 
 #[given("a Git repo with the user {string} and email {string}")]
