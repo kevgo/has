@@ -21,7 +21,7 @@ condition.
 
 - [`file [glob]`](features/file-name.feature): a file with the given name exists
 - [`file <glob> --containing <text>`](features/file-content.feature): a file with given name and content exists
-- `file <glob> --matching <regex>`: a file with given name and content matching the given regex exists ([examples](features/file-content-regex.feature))
+- [`file <glob> --matching <regex>`](features/file-content-regex.feature): a file with given name and content matching the given regex exists
 
 ### folders
 
