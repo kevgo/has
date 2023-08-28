@@ -20,7 +20,7 @@ Feature: searching for a file  via regex
       Then it succeeds
       And it prints nothing
 
-    Scenario: file with matching name and content
+    Scenario: file with name matchging the glob and matching content
       When running:
         """
       has file *.json --matching prettier.*1.2.3"
