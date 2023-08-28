@@ -77,7 +77,7 @@ async fn debug(world: &mut HasWorld) {
     std::io::stdin().read_line(&mut line).unwrap();
 }
 
-#[given("my code is managed by Git")]
+#[given("a Git repo")]
 async fn git_repo(world: &mut HasWorld) {
     let dir = &world.code_dir;
     git_init(dir).await;

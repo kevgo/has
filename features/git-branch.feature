@@ -1,7 +1,7 @@
 Feature: detect Git branches
 
   Background:
-    Given my code is managed by Git
+    Given a Git repo
 
   Scenario: is on branch
     Given my Git workspace is on the "feature" branch

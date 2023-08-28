@@ -1,7 +1,7 @@
 Feature: detect unpushed changes
 
   Background:
-    Given my code is managed by Git
+    Given a Git repo
     And my Git workspace is on the "feature" branch
     And my Git repo has a remote
 
