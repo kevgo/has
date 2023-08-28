@@ -1,7 +1,7 @@
 Feature: detect inactive Git branches
 
   Background:
-    Given my code is managed by Git
+    Given a Git repo
 
   Scenario: wants inactive branch, branch is inactive
     Given my Git workspace has a branch "feature"
