@@ -1,4 +1,5 @@
 mod current_branch;
+mod has_author;
 mod has_branch;
 mod has_unpushed_commits;
 
