@@ -26,8 +26,8 @@ condition.
 - [`git-branch <branch name>`](features/git-branch.feature): a Git branch with the given name exists
 - [`git-branch-active <branch name>`](features/git-branch-active.feature): the currently checked out Git branch has the given name
 - [`git-branch-inactive <branch name>`](features/git-branch-inactive.feature): a Git with the given name exists but is not checked out
-- [`git-changes-uncommitted`](features/uncommitted-changes.feature): the local Git workspace contains uncommitted changes
-- [`git-commits-unpushed`](features/unpushed-commits.feature): Git contains local commits that haven't been pushed to the tracking branch
+- [`git-changes-uncommitted`](features/git-changes-uncommitted.feature): the local Git workspace contains uncommitted changes
+- [`git-commits-unpushed`](features/git-commits-unpushed.feature): Git contains local commits that haven't been pushed to the tracking branch
 - [`command-output <command> [args...]`](features/command-output.feature): runs the given shell command and verifies that it prints something to STDOUT
 - [`make-target <name>`](features/make-target.feature): a given [Make](https://www.gnu.org/software/make) target exists
 - [`nodejs-dependency <name>`](features/node-dependency.feature): the Node.JS codebase in the current folder contains the given production dependency
