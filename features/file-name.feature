@@ -2,7 +2,7 @@ Feature: detect files by name
 
   Rule: searching by filename finds the given files
 
-    Scenario: as expected, a file with the given name exists
+    Scenario: a file with the expected name exists
       Given a file "package.json"
       When running:
         """
@@ -11,7 +11,7 @@ Feature: detect files by name
       Then it succeeds
       And it prints nothing
 
-    Scenario: unexpectedly, no file with the given name exists
+    Scenario: no file with the expected name exists
       When running:
         """
         has file package.json
@@ -19,7 +19,7 @@ Feature: detect files by name
       Then it fails
       And it prints nothing
 
-    Scenario: unexpectedly, a file with the given name exists
+    Scenario: a file with the given name unexpectedly exists
       Given a file "package.json"
       When running:
         """
