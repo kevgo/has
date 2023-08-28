@@ -1,5 +1,6 @@
 use cucumber::gherkin::Step;
 use cucumber::{given, then, when, World};
+use shell_words::ParseError;
 use std::env;
 use std::path::Path;
 use std::process::Output;
@@ -129,12 +130,11 @@ async fn checkout_branch(world: &mut HasWorld, name: String) {
 }
 
 #[when("running:")]
-async fn when_running(world: &mut HasWorld, step: &Step) {
-    let command = step.docstring().expect("no docstring");
-    let mut argv = command.split_ascii_whitespace();
-    match argv.next() {
-        Some("has") => {}
-        _ => panic!("The end-to-end tests can only run the 'has' command"),
+async fn when_running(world: &mut HasWorld, step: &Step) -> Result<(), ParseError> {
+    let command = step.docstring().expect("no docstring").trim();
+    let mut argv = shell_words::split(command)?.into_iter();
+    if argv.next().as_deref() != Some("has") {
+        panic!("The end-to-end tests can only run the 'has' command");
     }
     let cwd = env::current_dir().expect("cannot determine current dir");
     let has_path = cwd.join("target").join("debug").join("has");
@@ -145,6 +145,7 @@ async fn when_running(world: &mut HasWorld, step: &Step) {
         .await
         .expect("cannot find the 'has' executable");
     world.output = Some(output);
+    return Ok(());
 }
 
 #[then("it succeeds")]

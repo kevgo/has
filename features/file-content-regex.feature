@@ -10,10 +10,11 @@ Feature: searching for content via regex
       }
       """
 
+  @this
   Scenario: wants file with content, file with content exists
     When running:
       """
-      has file package.json --matching prettier.*1.2.3"
+      has file package.json --matching prettier.*1.2.3
       """
     Then it succeeds
     And it prints nothing
