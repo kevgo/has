@@ -20,8 +20,8 @@ condition.
 ### conditions
 
 - `file <glob>`: a file with the given name exists ([examples](features/file-name.feature))
-- `file <glob> --containing <text>`: a file with the given name and content exists ([examples](features/file-content.feature))
-- `file <glob> --matching <regex>`: a file with the given name and content matching the given regex exists ([examples](features/file-content-regex.feature))
+- `file <glob> --containing <text>`: a file with given name and content exists ([examples](features/file-content.feature))
+- `file <glob> --matching <regex>`: a file with given name and content matching the given regex exists ([examples](features/file-content-regex.feature))
 
 ### folders
 
