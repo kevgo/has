@@ -21,7 +21,7 @@ pub enum UserError {
     TooManyArguments,
     UnknownCommand(String),
     UnknownSwitchForFileContent { switch: String },
-    UnknownTarget(String),
+    UnknownCondition(String),
 }
 
 impl Display for UserError {
@@ -60,13 +60,13 @@ impl Display for UserError {
             UserError::MissingValueForFileContent => {
                 f.write_str("missing value for expected file content")
             }
-            UserError::MissingCondition => f.write_str("no target provided"),
+            UserError::MissingCondition => f.write_str("no condition provided"),
             UserError::NonUnicodeAppOutput => f.write_str("non-unicode application output"),
             UserError::TooManyArguments => f.write_str("too many arguments"),
             UserError::UnknownSwitchForFileContent { switch } => {
                 write!(f, "unknown switch for file check: {switch}")
             }
-            UserError::UnknownTarget(target) => write!(f, "unknown target: {target}"),
+            UserError::UnknownCondition(name) => write!(f, "unknown condition: {name}"),
         }
     }
 }

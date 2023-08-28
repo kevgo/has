@@ -3,9 +3,9 @@ use std::env;
 
 /// the CLI arguments
 pub struct Args {
-    /// whether to look for presence or absence of the target
+    /// whether to look for presence or absence of the condition
     pub should_exist: bool,
-    /// the target to look for
+    /// the condition to check
     pub condition: Condition,
 }
 
@@ -30,11 +30,11 @@ pub enum Condition {
 pub fn parse(mut args: env::Args) -> Result<Args, UserError> {
     let _binary_name = args.next(); // skip the binary name
     let next = args.next().ok_or(UserError::MissingCondition)?;
-    let (should_exist, target_str) = match next.as_str() {
+    let (should_exist, condition) = match next.as_str() {
         "no" => (false, args.next().ok_or(UserError::MissingCondition)?),
         _ => (true, next),
     };
-    let target = match target_str.as_str() {
+    let condition = match condition.as_str() {
         "command-output" => Condition::CommandOutput {
             cmd: args.next().ok_or(UserError::MissingCommand)?,
             args: args.by_ref().collect(),
@@ -85,13 +85,13 @@ pub fn parse(mut args: env::Args) -> Result<Args, UserError> {
         "nodejs-dev-dependency" => Condition::NodeDevDependency {
             name: args.next().ok_or(UserError::MissingNodeDevDependency)?,
         },
-        unknown => return Err(UserError::UnknownTarget(unknown.into())),
+        unknown => return Err(UserError::UnknownCondition(unknown.into())),
     };
     if args.next().is_some() {
         return Err(UserError::TooManyArguments);
     }
     Ok(Args {
         should_exist,
-        condition: target,
+        condition,
     })
 }

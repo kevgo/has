@@ -54,7 +54,7 @@ Feature: help screen
       Then it fails
       And it prints:
         """
-        ERROR: no target provided
+        ERROR: no condition provided
 
         Usage: has [no] <condition>
 
