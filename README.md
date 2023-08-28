@@ -2,10 +2,9 @@
 
 [![CI](https://github.com/kevgo/has/actions/workflows/ci.yml/badge.svg)](https://github.com/kevgo/has/actions/workflows/ci.yml)
 
-`has` is a higher-level alternative for the traditional Unix `test` tool. It
-allows querying a wide variety of properties of the local filesystem, source
-code management systems, codebases, and build systems. One of its intended use
-cases is within automation tooling like [mrt](https://github.com/kevgo/mrt).
+`has` is the programmer's version of the Unix `test` tool. It
+allows querying a wider variety of properties of the local computer system, source
+code management systems, codebases and their configurations, and build systems.
 
 The general usage is:
 
@@ -18,27 +17,11 @@ success, any non-zero exit code indicates the given condition is not met. The
 optional `no` argument inverts the condition, i.e. checks for absence of the
 condition.
 
-### files
+### conditions
 
-Check whether a file exists ([examples](features/file-name.feature)):
-
-```
-has [no] file <glob>
-```
-
-Check whether file content includes the given text
-([examples](features/file-content.feature)):
-
-```
-has [no] file <glob> --containing <text>
-```
-
-Check whether file content matches the given regex
-([examples](features/file-content-regex.feature)):
-
-```
-has [no] file <glob> --matching <regex>
-```
+- `file <glob>`: a file with the given name exists ([examples](features/file-name.feature))
+- `file <glob> --containing <text>`: a file with the given name and content exists ([examples](features/file-content.feature))
+- `file <glob> --matching <regex>`: a file with the given name and content matching the given regex exists ([examples](features/file-content-regex.feature))
 
 ### folders
 
