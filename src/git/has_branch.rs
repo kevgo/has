@@ -1,10 +1,11 @@
+use crate::errors;
 use std::process::Command;
 
 pub fn has_branch(name: &str) -> bool {
     Command::new("git")
         .args(vec!["show-ref", "--verify", &format!("refs/heads/{name}")])
         .output()
-        .expect("git not installed")
+        .expect(errors::GIT_NOT_INSTALLED)
         .status
         .success()
 }
