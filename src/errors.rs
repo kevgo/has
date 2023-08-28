@@ -1,6 +1,8 @@
 use std::fmt::Display;
 use std::path::PathBuf;
 
+pub const GIT_NOT_INSTALLED: &str = "Git not installed";
+
 #[derive(Debug, Eq, PartialEq)]
 pub enum UserError {
     CannotReadPath { path: PathBuf, guidance: String },
