@@ -1,7 +1,6 @@
 Feature: detect Git commit authors
 
-  Background:
-
+  @this
   Scenario: wants commit by author, has commit by author
     Given a Git repo with the user "John Doe" and email "jd@acme.com"
     When running:
