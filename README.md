@@ -35,6 +35,8 @@ condition.
   Git with the given name exists but is not checked out
 - [`git-changes-uncommitted`](features/git-changes-uncommitted.feature): the
   local Git workspace contains uncommitted changes
+- [`git-commits-by-author`](features/git-commits-by-author.feature): the local
+  Git workspace contains commits by the given person
 - [`git-commits-unpushed`](features/git-commits-unpushed.feature): Git contains
   local commits that haven't been pushed to the tracking branch
 - [`command-output <command> [args...]`](features/command-output.feature): the

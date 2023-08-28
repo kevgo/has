@@ -23,6 +23,7 @@ fn main() -> ExitCode {
 fn inner() -> Result<ExitCode, UserError> {
     let args = cli::parse(env::args())?;
     let exists = match args.condition {
+        Condition::GitCommitsByAuthor { name } => git::has_commits_by_author(&name),
         Condition::GitBranch { name } => checks::git_branch::local(&name),
         Condition::GitBranchActive { name } => checks::git_branch::local_active(&name)?,
         Condition::GitBranchInactive { name } => checks::git_branch::local_inactive(&name)?,
