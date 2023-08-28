@@ -72,12 +72,11 @@ async fn a_local_commit(world: &mut HasWorld) -> io::Result<()> {
 #[given("debug")]
 async fn debug(world: &mut HasWorld) {
     println!("CODE DIR: {}", world.code_dir.path().to_string_lossy());
-    println!("CODE DIR: {}", world.code_dir.path().to_string_lossy());
     let mut line = String::new();
     std::io::stdin().read_line(&mut line).unwrap();
 }
 
-#[given("my code is managed by Git")]
+#[given("a Git repo")]
 async fn git_repo(world: &mut HasWorld) {
     let dir = &world.code_dir;
     git_init(dir).await;
