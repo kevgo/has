@@ -7,7 +7,7 @@ pub fn has_unpushed_commits(current_branch: &str) -> Result<bool, UserError> {
     let output = Command::new("git")
         .arg("log")
         .arg("--oneline")
-        .arg(format!("origin/{}..HEAD", current_branch))
+        .arg(format!("origin/{current_branch}..HEAD"))
         .output()
         .map_err(|_| UserError::UnknownCommand(S("git")))?;
     match str::from_utf8(&output.stdout) {

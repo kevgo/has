@@ -35,20 +35,16 @@ impl Display for UserError {
                 f.write_str("the current Git branch name contains invalid unicode")
             }
             UserError::InvalidGlob { pattern, guidance } => {
-                write!(f, "invalid glob \"{}\": {}", pattern, guidance)
+                write!(f, "invalid glob \"{pattern}\": {guidance}")
             }
             UserError::InvalidRegex { pattern, guidance } => {
-                write!(f, "invalid regex /{}/: {}", pattern, guidance)
+                write!(f, "invalid regex /{pattern}/: {guidance}")
             }
             UserError::InvalidPackageJsonStructure { guidance } => {
-                write!(
-                    f,
-                    "file \"package.json\" contains invalid JSON: {}",
-                    guidance
-                )
+                write!(f, "file \"package.json\" contains invalid JSON: {guidance}")
             }
             UserError::UnknownCommand(cmd) => {
-                write!(f, "the \"{}\" executable is not in the path", cmd)
+                write!(f, "the \"{cmd}\" executable is not in the path")
             }
             UserError::MissingCommand => f.write_str("missing command to run"),
             UserError::MissingMakeTarget => f.write_str("missing Make target"),
@@ -66,9 +62,9 @@ impl Display for UserError {
             UserError::NonUnicodeAppOutput => f.write_str("non-unicode application output"),
             UserError::TooManyArguments => f.write_str("too many arguments"),
             UserError::UnknownSwitchForFileContent { switch } => {
-                write!(f, "unknown switch for file check: {}", switch)
+                write!(f, "unknown switch for file check: {switch}")
             }
-            UserError::UnknownTarget(target) => write!(f, "unknown target: {}", target),
+            UserError::UnknownTarget(target) => write!(f, "unknown target: {target}"),
         }
     }
 }
