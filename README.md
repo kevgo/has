@@ -81,6 +81,13 @@ has [no] uncommitted-changes
 
 ### Git commits
 
+Check whether the Git repo contains commits of a particular author
+([examples](features/git-author.feature)):
+
+```
+has [no] git-commits-by-author <name or email>
+```
+
 Check for Git commits that haven't been pushed to the remote branch
 ([examples](features/unpushed-commits.feature)):
 

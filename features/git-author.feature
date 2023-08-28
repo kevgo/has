@@ -6,7 +6,7 @@ Feature: detect Git commit authors
     And a local commit
     When running:
       """
-      has git-author jd@acme.com
+      has git-commits-by-author jd@acme.com
       """
     Then it succeeds
     And it prints nothing
@@ -16,7 +16,7 @@ Feature: detect Git commit authors
     And a local commit
     When running:
       """
-      has git-author jd@acme.com
+      has git-commits-by-author jd@acme.com
       """
     Then it fails
     And it prints nothing
@@ -26,7 +26,7 @@ Feature: detect Git commit authors
     And a local commit
     When running:
       """
-      has no git-author jd@acme.com
+      has no git-commits-by-author jd@acme.com
       """
     Then it fails
     And it prints nothing
@@ -37,7 +37,7 @@ Feature: detect Git commit authors
     And my Git workspace is on the "main" branch
     When running:
       """
-      has no git-author jd@acme.com
+      has no git-commits-by-author jd@acme.com
       """
     Then it succeeds
     And it prints nothing

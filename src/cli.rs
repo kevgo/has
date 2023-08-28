@@ -11,12 +11,12 @@ pub struct Args {
 
 /// things to check for
 pub enum Condition {
-    GitAuthor { name: String },
     GitBranch { name: String },
     GitBranchActive { name: String },
     GitBranchInactive { name: String },
     GitChangesUncommitted,
     GitChangesUnpushed,
+    GitCommitsByAuthor { name: String },
     CommandOutput { cmd: String, args: Vec<String> },
     File { name: String },
     FileWithText { name: String, content: String },
@@ -65,7 +65,7 @@ pub fn parse(mut args: env::Args) -> Result<Args, UserError> {
         "folder" => Condition::Folder {
             name: args.next().ok_or(UserError::MissingName)?,
         },
-        "git-author" => Condition::GitAuthor {
+        "git-commits-by-author" => Condition::GitCommitsByAuthor {
             name: args.next().ok_or(UserError::MissingName)?,
         },
         "git-branch" => Condition::GitBranch {

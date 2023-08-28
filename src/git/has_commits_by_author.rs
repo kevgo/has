@@ -1,7 +1,7 @@
 use crate::errors::GIT_NOT_INSTALLED;
 use std::process::Command;
 
-pub fn has_author(name: &str) -> bool {
+pub fn has_commits_by_author(name: &str) -> bool {
     let output = Command::new("git")
         .args(vec![
             "log",
