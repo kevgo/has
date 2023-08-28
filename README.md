@@ -20,30 +20,30 @@ condition.
 
 ### conditions
 
-- [`file <glob>`](features/filesystem/file-name.feature): checks for a file with a matching name
-- [`file <glob> --containing <text>`](features/filesystem/features/file-content.feature): checks for a file
+- [`has file <glob>`](features/filesystem/file-name.feature): file with a matching name
+- [`has file <glob> --containing <text>`](features/filesystem/features/file-content.feature): file
   with matching name and content
-- [`file <glob> --matching <regex>`](features/filesystem/features/file-content-regex.feature): checks for a
+- [`has file <glob> --matching <regex>`](features/filesystem/features/file-content-regex.feature): checks for a
   file with matching name and content matching the given regex
-- [`folder <glob>`](features/folder.feature): a folder with the given name
+- [`has folder <glob>`](features/folder.feature): a folder with the given name
   exists
-- [`git-branch <branch name>`](features/git-branch.feature): a Git branch with
+- [`has git-branch <branch name>`](features/git-branch.feature): a Git branch with
   the given name exists
-- [`git-branch-active <branch name>`](features/git-branch-active.feature): the
+- [`has git-branch-active <branch name>`](features/git-branch-active.feature): the
   currently checked out Git branch has the given name
-- [`git-branch-inactive <branch name>`](features/git-branch-inactive.feature): a
+- [`has git-branch-inactive <branch name>`](features/git-branch-inactive.feature): a
   Git with the given name exists but is not checked out
-- [`git-changes-uncommitted`](features/git-changes-uncommitted.feature): the
+- [`has git-changes-uncommitted`](features/git-changes-uncommitted.feature): the
   local Git workspace contains uncommitted changes
-- [`git-commits-by-author`](features/git-commits-by-author.feature): the local
+- [`has git-commits-by-author`](features/git-commits-by-author.feature): the local
   Git workspace contains commits by the given person
-- [`git-commits-unpushed`](features/git-commits-unpushed.feature): Git contains
+- [`has git-commits-unpushed`](features/git-commits-unpushed.feature): Git contains
   local commits that haven't been pushed to the tracking branch
-- [`command-output <command> [args...]`](features/command-output.feature): the
+- [`has command-output <command> [args...]`](features/command-output.feature): the
   given shell command prints something to STDOUT
-- [`make-target <name>`](features/make-target.feature): a given
+- [`has make-target <name>`](features/make-target.feature): a given
   [Make](https://www.gnu.org/software/make) target exists
-- [`nodejs-dependency <name>`](features/node-dependency.feature): the Node.JS
+- [`has nodejs-dependency <name>`](features/node-dependency.feature): the Node.JS
   codebase uses the the given production dependency
-- [`nodejs-dev-dependency <name>`](features/node-dependency.feature): the
+- [`has nodejs-dev-dependency <name>`](features/node-dependency.feature): the
   Node.JS codebase uses the given development dependency
