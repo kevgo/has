@@ -8,7 +8,7 @@ Feature: detect uncommitted changes
     Given a file "uncommitted.txt"
     When running:
       """
-      has uncommitted-changes
+      has git-changes-uncommitted
       """
     Then it succeeds
     And it prints nothing
@@ -16,7 +16,7 @@ Feature: detect uncommitted changes
   Scenario: wants uncommitted changes, has none
     When running:
       """
-      has uncommitted-changes
+      has git-changes-uncommitted
       """
     Then it fails
     And it prints nothing
@@ -25,7 +25,7 @@ Feature: detect uncommitted changes
     Given a file "uncommitted.txt"
     When running:
       """
-      has no uncommitted-changes
+      has no git-changes-uncommitted
       """
     Then it fails
     And it prints nothing
@@ -33,7 +33,7 @@ Feature: detect uncommitted changes
   Scenario: wants no uncommitted changes, has none
     When running:
       """
-      has no uncommitted-changes
+      has no git-changes-uncommitted
       """
     Then it succeeds
     And it prints nothing
