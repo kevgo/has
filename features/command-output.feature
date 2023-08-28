@@ -2,7 +2,7 @@ Feature: detect existence of command output
 
   Rule: if output is expected, the given command must print something
 
-    Scenario: the given command prints output as expected
+    Scenario: the given command prints something
       When running:
         """
         has command-output echo Hello world!
@@ -10,7 +10,7 @@ Feature: detect existence of command output
       Then it succeeds
       And it prints nothing
 
-    Scenario: the given command unexpectedly prints no output
+    Scenario: the given command prints no output
       When running:
         """
         has command-output echo
@@ -18,7 +18,7 @@ Feature: detect existence of command output
       Then it fails
       And it prints nothing
 
-    Scenario: the given command unexpectedly prints only newlines
+    Scenario: the given command prints only newlines
       When running:
         """
         has command-output printf \n\n
@@ -28,7 +28,7 @@ Feature: detect existence of command output
 
   Rule: if no output is expected, the given command must not print anything
 
-    Scenario: the given command prints nothing as expected
+    Scenario: the given command prints nothing
       When running:
         """
         has no command-output echo
@@ -44,7 +44,7 @@ Feature: detect existence of command output
       Then it succeeds
       And it prints nothing
 
-    Scenario: the given command unexpectedly prints something
+    Scenario: the given command prints something
       When running:
         """
         has no command-output echo Hello world!

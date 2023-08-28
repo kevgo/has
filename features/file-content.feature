@@ -10,18 +10,20 @@ Feature: detect files by name and content
       }
       """
 
-  Scenario: wants file with content, file with content exists
-    When running:
-      """
-      has file package.json --containing "prettier":
-      """
-    Then it succeeds
-    And it prints nothing
+  Rule: if a "containing" clause is given, both the file name and content must match
 
-  Scenario: wants file with content, file exists but content mismatch
-    When running:
-      """
+    Scenario: wants file with content, file with content exists
+      When running:
+        """
+      has file package.json --containing "prettier":
+        """
+      Then it succeeds
+      And it prints nothing
+
+    Scenario: wants file with content, file exists but content mismatch
+      When running:
+        """
       has file package.json --containing "zonk":
-      """
-    Then it fails
-    And it prints nothing
+        """
+      Then it fails
+      And it prints nothing
