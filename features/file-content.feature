@@ -13,7 +13,7 @@ Feature: detect files by name and content
   Scenario: wants file with content, file with content exists
     When running:
       """
-      has file package.json --containing "prettier":
+      has file package.json --containing '"prettier":'
       """
     Then it succeeds
     And it prints nothing
@@ -21,7 +21,7 @@ Feature: detect files by name and content
   Scenario: wants file with content, file exists but content mismatch
     When running:
       """
-      has file package.json --containing "zonk":
+      has file package.json --containing "zonk"
       """
     Then it fails
     And it prints nothing

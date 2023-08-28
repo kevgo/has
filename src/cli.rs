@@ -16,6 +16,7 @@ pub enum Condition {
     GitBranchInactive { name: String },
     GitChangesUncommitted,
     GitChangesUnpushed,
+    GitCommitsByAuthor { name: String },
     CommandOutput { cmd: String, args: Vec<String> },
     File { name: String },
     FileWithText { name: String, content: String },
@@ -74,6 +75,9 @@ pub fn parse(mut args: env::Args) -> Result<Args, UserError> {
             name: args.next().ok_or(UserError::MissingName)?,
         },
         "git-changes-uncommitted" => Condition::GitChangesUncommitted,
+        "git-commits-by-author" => Condition::GitCommitsByAuthor {
+            name: args.next().ok_or(UserError::MissingName)?,
+        },
         "git-commits-unpushed" => Condition::GitChangesUnpushed,
         "help" => Condition::Help,
         "make-target" => Condition::MakeTarget {

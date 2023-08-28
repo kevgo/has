@@ -19,7 +19,7 @@ Feature: detect empty command output
   Scenario: wants output, gets output containing only newlines
     When running:
       """
-      has command-output printf \n\n
+      has command-output printf "\n\n"
       """
     Then it fails
     And it prints nothing
@@ -35,7 +35,7 @@ Feature: detect empty command output
   Scenario: wants no output, gets output containing only newlines
     When running:
       """
-      has no command-output printf \n\n
+      has no command-output printf "\n\n"
       """
     Then it succeeds
     And it prints nothing
