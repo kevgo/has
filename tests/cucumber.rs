@@ -69,6 +69,20 @@ async fn git_repo(world: &mut HasWorld) {
     .await;
 }
 
+#[given(expr = "a Git repo with the user {string} and email {string}")]
+async fn git_repo_with_user_and_email(world: &mut HasWorld, name: String, email: String) {
+    let dir = &world.code_dir;
+    git_init(dir).await;
+    run_chk(dir.path(), "git", vec!["config", "user.email", &email]).await;
+    run_chk(dir.path(), "git", vec!["config", "user.name", &name]).await;
+    run_chk(
+        dir.path(),
+        "git",
+        vec!["commit", "--allow-empty", "-m", "i"],
+    )
+    .await;
+}
+
 #[given("a local commit")]
 async fn a_local_commit(world: &mut HasWorld) -> io::Result<()> {
     let filepath = &world.code_dir.path().join("committed_file");
@@ -88,20 +102,6 @@ async fn debug(world: &mut HasWorld) {
     println!("CODE DIR: {}", world.code_dir.path().to_string_lossy());
     let mut line = String::new();
     std::io::stdin().read_line(&mut line).unwrap();
-}
-
-#[given("a Git repo with the user {string} and email {string}")]
-async fn git_repo(world: &mut HasWorld, name: String, email: String) {
-    let dir = &world.code_dir;
-    git_init(dir).await;
-    run_chk(dir.path(), "git", vec!["config", "user.email", &email]).await;
-    run_chk(dir.path(), "git", vec!["config", "user.name", &name]).await;
-    run_chk(
-        dir.path(),
-        "git",
-        vec!["commit", "--allow-empty", "-m", "i"],
-    )
-    .await;
 }
 
 #[given("my Git repo has a remote")]
