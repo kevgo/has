@@ -13,7 +13,7 @@ fn main() -> ExitCode {
     match inner() {
         Ok(exit_code) => exit_code,
         Err(err) => {
-            println!("ERROR: {}", err);
+            println!("ERROR: {err}");
             help();
             ExitCode::FAILURE
         }
