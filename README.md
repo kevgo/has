@@ -20,11 +20,11 @@ condition.
 
 ### conditions
 
-- [`file <glob>`](features/file-name.feature): a file with the given name exists
-- [`file <glob> --containing <text>`](features/file-content.feature): a file
-  with the given name and content exists
-- [`file <glob> --matching <regex>`](features/file-content-regex.feature): a
-  file with given name and content matching the given regex exists
+- [`file <glob>`](features/filesystem/file-name.feature): checks for a file with a matching name
+- [`file <glob> --containing <text>`](features/filesystem/features/file-content.feature): checks for a file
+  with matching name and content
+- [`file <glob> --matching <regex>`](features/filesystem/features/file-content-regex.feature): checks for a
+  file with matching name and content matching the given regex
 - [`folder <glob>`](features/folder.feature): a folder with the given name
   exists
 - [`git-branch <branch name>`](features/git-branch.feature): a Git branch with

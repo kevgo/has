@@ -10,7 +10,7 @@ Feature: detect files by name and content
       }
       """
 
-  Rule: if a "containing" clause is given, both the file name and content must match
+  Rule: if a "containing" clause is given, the file name and content must match
 
     Scenario: file with matching name and content
       When running:
@@ -20,7 +20,7 @@ Feature: detect files by name and content
       Then it succeeds
       And it prints nothing
 
-    Scenario: wants file with content, file exists but content mismatch
+    Scenario: file with matching name but mismatching content
       When running:
         """
         has file package.json --containing "zonk"

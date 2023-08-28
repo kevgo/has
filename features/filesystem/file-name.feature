@@ -1,8 +1,8 @@
 Feature: detect files by name
 
-  Rule: searching by filename finds the given files
+  Rule: the given file name must match
 
-    Scenario: a file with the expected name exists
+    Scenario: file with exact name
       Given a file "package.json"
       When running:
         """
@@ -11,7 +11,7 @@ Feature: detect files by name
       Then it succeeds
       And it prints nothing
 
-    Scenario: no file with the expected name exists
+    Scenario: no file with matching name
       When running:
         """
         has file package.json
@@ -19,7 +19,17 @@ Feature: detect files by name
       Then it fails
       And it prints nothing
 
-    Scenario: a file with the given name unexpectedly exists
+  Rule: if negated, there must be no file with a matching name
+
+    Scenario: no file with matching name
+      When running:
+        """
+        has no file package.json
+        """
+      Then it succeeds
+      And it prints nothing
+
+    Scenario: a file with matching name exists
       Given a file "package.json"
       When running:
         """
@@ -28,17 +38,9 @@ Feature: detect files by name
       Then it fails
       And it prints nothing
 
-    Scenario: as expected, no file with the given name exists
-      When running:
-        """
-        has no file package.json
-        """
-      Then it succeeds
-      And it prints nothing
+  Rule: simple globs match only files in the current directory
 
-  Rule: searching by simple glob finds files only in the current directory
-
-    Scenario: as expected, a file matching the given glob exists
+    Scenario: file with matching name
       Given a file "package.json"
       When running:
         """
@@ -47,7 +49,7 @@ Feature: detect files by name
       Then it succeeds
       And it prints nothing
 
-    Scenario: unexpectedly, no file matching the given glob exists
+    Scenario: no file with matching names
       When running:
         """
         has file *.json
@@ -55,7 +57,7 @@ Feature: detect files by name
       Then it fails
       And it prints nothing
 
-    Scenario: as expected, no file matching the given glob exists
+    Scenario:
       Given a file "package.json"
       When running:
         """
