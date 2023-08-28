@@ -3,9 +3,9 @@
 [![CI](https://github.com/kevgo/has/actions/workflows/ci.yml/badge.svg)](https://github.com/kevgo/has/actions/workflows/ci.yml)
 
 `has` is the programmer's version of the Unix `test` tool. It allows querying a
-wider variety of properties of the local computer system, for example the status
-and configuration of source code management systems, codebases in the local
-folder and their configuration, or build systems.
+wide variety of properties of the local computer system. Examples are the status
+and configuration of source code management and build systems or the
+configuration of the codebases in the local folder.
 
 The general usage is:
 
