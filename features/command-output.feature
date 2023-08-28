@@ -1,4 +1,4 @@
-Feature: detect empty command output
+Feature: detect existence of command output
 
   Rule: if output is expected, the given command must print something
 
@@ -18,7 +18,7 @@ Feature: detect empty command output
       Then it fails
       And it prints nothing
 
-    Scenario: the given command prints only newlines
+    Scenario: the given command unexpectedly prints only newlines
       When running:
         """
         has command-output printf \n\n

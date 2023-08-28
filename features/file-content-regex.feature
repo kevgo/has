@@ -1,4 +1,4 @@
-Feature: searching for content via regex
+Feature: searching for a file  via regex
 
   Background:
     Given a file "package.json" with content:

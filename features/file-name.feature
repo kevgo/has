@@ -2,7 +2,7 @@ Feature: detect files by name
 
   Rule: searching by filename finds the given files
 
-    Scenario: wants file, file exists
+    Scenario: as expected, a file with the given name exists
       Given a file "package.json"
       When running:
         """
@@ -11,7 +11,7 @@ Feature: detect files by name
       Then it succeeds
       And it prints nothing
 
-    Scenario: wants file, file does not exist
+    Scenario: unexpectedly, no file with the given name exists
       When running:
         """
         has file package.json
@@ -19,7 +19,7 @@ Feature: detect files by name
       Then it fails
       And it prints nothing
 
-    Scenario: wants no file, file does exist
+    Scenario: unexpectedly, a file with the given name exists
       Given a file "package.json"
       When running:
         """
@@ -28,7 +28,7 @@ Feature: detect files by name
       Then it fails
       And it prints nothing
 
-    Scenario: wants no file, file does not exist
+    Scenario: as expected, no file with the given name exists
       When running:
         """
         has no file package.json
@@ -36,9 +36,9 @@ Feature: detect files by name
       Then it succeeds
       And it prints nothing
 
-  Rule: searching by simple glob finds files in the current directory
+  Rule: searching by simple glob finds files only in the current directory
 
-    Scenario: wants file, file exists
+    Scenario: as expected, a file matching the given glob exists
       Given a file "package.json"
       When running:
         """
@@ -47,7 +47,7 @@ Feature: detect files by name
       Then it succeeds
       And it prints nothing
 
-    Scenario: wants file, file does not exist
+    Scenario: unexpectedly, no file matching the given glob exists
       When running:
         """
         has file *.json
@@ -55,7 +55,7 @@ Feature: detect files by name
       Then it fails
       And it prints nothing
 
-    Scenario: wants no file, file does exist
+    Scenario: as expected, no file matching the given glob exists
       Given a file "package.json"
       When running:
         """
@@ -64,13 +64,23 @@ Feature: detect files by name
       Then it fails
       And it prints nothing
 
-    Scenario: wants no file, file does not exist
+    Scenario: as expected, no file matching the given glob exists
       When running:
         """
         has no file *.json
         """
       Then it succeeds
       And it prints nothing
+
+    Scenario: a file matching the given simple glob exists but in a subfolder
+      Given a file "alpha/beta/package.json"
+      When running:
+        """
+        has file *.json
+        """
+      Then it fails
+      And it prints nothing
+
 
   Rule: searching by nested glob finds nested files
 
@@ -157,7 +167,9 @@ Feature: detect files by name
         ERROR: no name provided
         """
 
-    Scenario: duplicate name argument
+  Rule: allows only one file glob
+
+    Scenario: multiple file globs given
       When running:
         """
         has file foo bar
