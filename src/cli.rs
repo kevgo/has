@@ -35,15 +35,6 @@ pub fn parse(mut args: env::Args) -> Result<Args, UserError> {
         _ => (true, next),
     };
     let target = match target_str.as_str() {
-        "active-branch" => Target::ActiveBranch {
-            name: args.next().ok_or(UserError::MissingName)?,
-        },
-        "branch" => Target::Branch {
-            name: args.next().ok_or(UserError::MissingName)?,
-        },
-        "inactive-branch" => Target::InactiveBranch {
-            name: args.next().ok_or(UserError::MissingName)?,
-        },
         "command-output" => Target::CommandOutput {
             cmd: args.next().ok_or(UserError::MissingCommand)?,
             args: args.by_ref().collect(),
@@ -73,6 +64,17 @@ pub fn parse(mut args: env::Args) -> Result<Args, UserError> {
         "folder" => Target::Folder {
             name: args.next().ok_or(UserError::MissingName)?,
         },
+        "git-branch" => Target::Branch {
+            name: args.next().ok_or(UserError::MissingName)?,
+        },
+        "git-branch-active" => Target::ActiveBranch {
+            name: args.next().ok_or(UserError::MissingName)?,
+        },
+        "git-branch-inactive" => Target::InactiveBranch {
+            name: args.next().ok_or(UserError::MissingName)?,
+        },
+        "git-changes-uncommitted" => Target::UncommittedChanges,
+        "git-commits-unpushed" => Target::UnpushedChanges,
         "help" => Target::Help,
         "make-target" => Target::MakeTarget {
             name: args.next().ok_or(UserError::MissingMakeTarget)?,
@@ -83,8 +85,6 @@ pub fn parse(mut args: env::Args) -> Result<Args, UserError> {
         "nodejs-dev-dependency" => Target::NodeDevDependency {
             name: args.next().ok_or(UserError::MissingNodeDevDependency)?,
         },
-        "uncommitted-changes" => Target::UncommittedChanges,
-        "unpushed-commits" => Target::UnpushedChanges,
         unknown => return Err(UserError::UnknownTarget(unknown.into())),
     };
     if args.next().is_some() {

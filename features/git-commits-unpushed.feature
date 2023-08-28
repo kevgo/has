@@ -9,7 +9,7 @@ Feature: detect unpushed changes
     Given a local commit
     When running:
       """
-      has unpushed-commits
+      has git-commits-unpushed
       """
     Then it succeeds
     And it prints nothing
@@ -17,7 +17,7 @@ Feature: detect unpushed changes
   Scenario: wants unpushed changes, has none
     When running:
       """
-      has unpushed-commits
+      has git-commits-unpushed
       """
     Then it fails
     And it prints nothing
@@ -26,7 +26,7 @@ Feature: detect unpushed changes
     Given a local commit
     When running:
       """
-      has no unpushed-commits
+      has no git-commits-unpushed
       """
     Then it fails
     And it prints nothing
@@ -34,7 +34,7 @@ Feature: detect unpushed changes
   Scenario: wants no unpushed changes, has none
     When running:
       """
-      has no unpushed-commits
+      has no git-commits-unpushed
       """
     Then it succeeds
     And it prints nothing

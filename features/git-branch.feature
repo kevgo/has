@@ -7,7 +7,7 @@ Feature: detect Git branches
     Given my Git workspace is on the "feature" branch
     When running:
       """
-      has branch feature
+      has git-branch feature
       """
     Then it succeeds
     And it prints nothing
@@ -17,7 +17,7 @@ Feature: detect Git branches
     And my Git workspace is on the "main" branch
     When running:
       """
-      has branch feature
+      has git-branch feature
       """
     Then it succeeds
     And it prints nothing
@@ -25,7 +25,7 @@ Feature: detect Git branches
   Scenario: wants branch, branch does not exist
     When running:
       """
-      has branch feature
+      has git-branch feature
       """
     Then it fails
     And it prints nothing
@@ -34,7 +34,7 @@ Feature: detect Git branches
     Given my Git workspace has a branch "feature"
     When running:
       """
-      has no branch feature
+      has no git-branch feature
       """
     Then it fails
     And it prints nothing
@@ -44,7 +44,7 @@ Feature: detect Git branches
     And my Git workspace is on the "main" branch
     When running:
       """
-      has no branch feature
+      has no git-branch feature
       """
     Then it fails
     And it prints nothing
@@ -52,7 +52,7 @@ Feature: detect Git branches
   Scenario: wants no branch, branch does not exist
     When running:
       """
-      has no branch feature
+      has no git-branch feature
       """
     Then it succeeds
     And it prints nothing

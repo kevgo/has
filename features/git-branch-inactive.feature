@@ -8,7 +8,7 @@ Feature: detect inactive Git branches
     And my Git workspace is on the "main" branch
     When running:
       """
-      has inactive-branch feature
+      has git-branch-inactive feature
       """
     Then it succeeds
     And it prints nothing
@@ -17,7 +17,7 @@ Feature: detect inactive Git branches
     Given my Git workspace is on the "feature" branch
     When running:
       """
-      has inactive-branch feature
+      has git-branch-inactive feature
       """
     Then it fails
     And it prints nothing
@@ -25,7 +25,7 @@ Feature: detect inactive Git branches
   Scenario: wants inactive branch, branch does not exist
     When running:
       """
-      has inactive-branch feature
+      has git-branch-inactive feature
       """
     Then it fails
     And it prints nothing

@@ -7,7 +7,7 @@ Feature: detect active Git branches
     Given my Git workspace is on the "feature" branch
     When running:
       """
-      has active-branch feature
+      has git-branch-active feature
       """
     Then it succeeds
     And it prints nothing
@@ -17,7 +17,7 @@ Feature: detect active Git branches
     And my Git workspace is on the "main" branch
     When running:
       """
-      has active-branch feature
+      has git-branch-active feature
       """
     Then it fails
     And it prints nothing
@@ -25,7 +25,7 @@ Feature: detect active Git branches
   Scenario: wants active branch, branch does not exist
     When running:
       """
-      has active-branch feature
+      has git-branch-active feature
       """
     Then it fails
     And it prints nothing
