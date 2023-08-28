@@ -11,9 +11,11 @@ pub struct Args {
 
 /// things to check for
 pub enum Target {
-    Branch { name: String },
-    ActiveBranch { name: String },
-    InactiveBranch { name: String },
+    GitBranch { name: String },
+    GitBranchActive { name: String },
+    GitBranchInactive { name: String },
+    GitChangesUncommitted,
+    GitChangesUnpushed,
     CommandOutput { cmd: String, args: Vec<String> },
     File { name: String },
     FileWithText { name: String, content: String },
@@ -23,8 +25,6 @@ pub enum Target {
     MakeTarget { name: String },
     NodeDependency { name: String },
     NodeDevDependency { name: String },
-    UncommittedChanges,
-    UnpushedChanges,
 }
 
 pub fn parse(mut args: env::Args) -> Result<Args, UserError> {
@@ -64,17 +64,17 @@ pub fn parse(mut args: env::Args) -> Result<Args, UserError> {
         "folder" => Target::Folder {
             name: args.next().ok_or(UserError::MissingName)?,
         },
-        "git-branch" => Target::Branch {
+        "git-branch" => Target::GitBranch {
             name: args.next().ok_or(UserError::MissingName)?,
         },
-        "git-branch-active" => Target::ActiveBranch {
+        "git-branch-active" => Target::GitBranchActive {
             name: args.next().ok_or(UserError::MissingName)?,
         },
-        "git-branch-inactive" => Target::InactiveBranch {
+        "git-branch-inactive" => Target::GitBranchInactive {
             name: args.next().ok_or(UserError::MissingName)?,
         },
-        "git-changes-uncommitted" => Target::UncommittedChanges,
-        "git-commits-unpushed" => Target::UnpushedChanges,
+        "git-changes-uncommitted" => Target::GitChangesUncommitted,
+        "git-commits-unpushed" => Target::GitChangesUnpushed,
         "help" => Target::Help,
         "make-target" => Target::MakeTarget {
             name: args.next().ok_or(UserError::MissingMakeTarget)?,

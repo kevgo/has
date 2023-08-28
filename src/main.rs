@@ -23,9 +23,9 @@ fn main() -> ExitCode {
 fn inner() -> Result<ExitCode, UserError> {
     let args = cli::parse(env::args())?;
     let exists = match args.target {
-        Target::Branch { name } => checks::git_branch::local(&name),
-        Target::ActiveBranch { name } => checks::git_branch::local_active(&name)?,
-        Target::InactiveBranch { name } => checks::git_branch::local_inactive(&name)?,
+        Target::GitBranch { name } => checks::git_branch::local(&name),
+        Target::GitBranchActive { name } => checks::git_branch::local_active(&name)?,
+        Target::GitBranchInactive { name } => checks::git_branch::local_inactive(&name)?,
         Target::CommandOutput { cmd, args } => checks::command_output(cmd, args)?,
         Target::File { name } => checks::file::exists(name)?,
         Target::FileWithText { name, content } => checks::file::containing_text(name, &content)?,
@@ -38,8 +38,8 @@ fn inner() -> Result<ExitCode, UserError> {
         Target::MakeTarget { name } => checks::makefile::has_target(&name)?,
         Target::NodeDependency { name } => checks::node_js::has_dependency(&name)?,
         Target::NodeDevDependency { name } => checks::node_js::has_dev_dependency(&name)?,
-        Target::UncommittedChanges => checks::uncommitted_changes(),
-        Target::UnpushedChanges => checks::unpushed_commits()?,
+        Target::GitChangesUncommitted => checks::uncommitted_changes(),
+        Target::GitChangesUnpushed => checks::unpushed_commits()?,
     };
     if exists == args.should_exist {
         Ok(ExitCode::SUCCESS)
