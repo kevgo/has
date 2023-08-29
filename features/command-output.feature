@@ -1,4 +1,4 @@
-Feature: detect existence of command output
+Feature: detect command output
 
   Rule: if output is expected, the given command must print something
 
