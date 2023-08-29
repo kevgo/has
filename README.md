@@ -6,9 +6,7 @@
 wider variety of properties from the local computer than just the file system.
 Examples are the configuration of the codebases in the local folder as well as
 the status and configuration of source code management and build systems for
-them.
-
-The general usage is:
+them. The general usage is:
 
 ```
 has [no] <condition>
