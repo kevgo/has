@@ -26,7 +26,7 @@ Feature: detect files by name
       | simple glob with partial match                         | has file *.js      | package.json            | no match |
       | double-asterisk glob with matching file in current dir | has file **/*.json | package.json            | match    |
       | double-asterisk glob with matching file in subfolder   | has file **/*.json | alpha/beta/package.json | match    |
-      | double-asterisk glob with partial match                | has file *.js      | package.json            | no match |
+      | double-asterisk glob with partial match                | has file **/*.js   | package.json            | no match |
 
   Scenario Outline: wrong arguments
     When running "<QUERY>"
