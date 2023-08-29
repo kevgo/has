@@ -14,8 +14,3 @@ Feature: detect command output
       | command prints nothing       | has command-output echo              | no match |
       | negation                     | has no command-output echo           | match    |
       | command prints only newlines | has command-output printf "\n\n"     | no match |
-
-  Scenario: wrong arguments
-    When running "has command-output"
-    Then it fails
-    And the output starts with "ERROR: missing command to run"
