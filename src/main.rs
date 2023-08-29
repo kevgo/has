@@ -67,6 +67,7 @@ Check Git:
 > has [no] git-branch-active <branch name>
 > has [no] git-branch-inactive <branch name>
 > has [no] git-changes-uncommitted
+> has [no] git-commits-by-author <name>
 > has [no] git-commits-unpushed
 
 Check shell commands:
