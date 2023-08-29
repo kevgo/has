@@ -1,6 +1,6 @@
 Feature: detect Node depenndencies
 
-  Scenario: has Node dependency
+  Scenario Outline:
     Given a file "package.json" with content:
       """
       {
@@ -8,37 +8,30 @@ Feature: detect Node depenndencies
         "dependencies": {
           "alpha": "1.0.0.",
           "beta": "2.0.0"
+        },
+        "devDependencies": {
+          "gamma": "2.0.0"
         }
       }
       """
-    When running:
-      """
-      has nodejs-dependency beta
-      """
-    Then it prints nothing
-    And it succeeds
+    When running "<QUERY>"
+    Then it signals <RESULT>
+    And it prints nothing
 
-  Scenario: doesn't have the given Node dependency
-    Given a file "package.json" with content:
-      """
-      {
-        "name": "foo",
-        "dependencies": {
-          "alpha": "1.0.0."
-        }
-      }
-      """
-    When running:
-      """
-      has nodejs-dependency beta
-      """
-    Then it prints nothing
-    And it fails
+    Examples:
+      | DESCRIPTION                                  | QUERY                           | RESULT   |
+      | matching dependency                          | has nodejs-dependency beta      | match    |
+      | matching dependency is a dev-dependency      | has nodejs-dependency gamma     | no match |
+      | dependency doesn't exist                     | has nodejs-dependency zonk      | no match |
+      | matching dev-dependency                      | has nodejs-dev-dependency gamma | match    |
+      | matching dev-dependency is a prod dependency | has nodejs-dev-dependency beta  | no match |
 
-  Scenario: no Node codebase
-    When running:
-      """
-      has nodejs-dependency alpha
-      """
-    Then it prints nothing
-    And it fails
+  Scenario Outline: no Node codebase
+    When running "<QUERY>"
+    Then it fails
+    And it prints nothing
+
+    Examples:
+      | QUERY                           |
+      | has nodejs-dependency alpha     |
+      | has nodejs-dev-dependency alpha |
