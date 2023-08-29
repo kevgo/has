@@ -40,7 +40,7 @@ condition.
 - [`has command-output <command> [args...]`](features/command-output.feature):
   the given shell command prints something to STDOUT
 - [`has make-target <name>`](features/make-target.feature): the
-  [Make](https://www.gnu.org/software/make) contains the given target
+  [Makefile](https://www.gnu.org/software/make) contains the given target
 - [`has nodejs-dependency <name>`](features/node-dependency.feature): a Node.JS
   codebase using the given production dependency
 - [`has nodejs-dev-dependency <name>`](features/node-dependency.feature): a
