@@ -1,58 +1,16 @@
 Feature: detect Git branches
 
-  Background:
+  Scenario Outline:
     Given a Git repo
-
-  Scenario: is on branch
-    Given my Git workspace is on the "feature" branch
-    When running:
-      """
-      has git-branch feature
-      """
-    Then it succeeds
+    And my Git workspace has a branch "<BRANCH>"
+    And my Git workspace is on the "<ACTIVE>" branch
+    When running "<QUERY>"
+    Then it signals <RESULT>
     And it prints nothing
 
-  Scenario: wants branch, branch exists
-    Given my Git workspace has a branch "feature"
-    And my Git workspace is on the "main" branch
-    When running:
-      """
-      has git-branch feature
-      """
-    Then it succeeds
-    And it prints nothing
-
-  Scenario: wants branch, branch does not exist
-    When running:
-      """
-      has git-branch feature
-      """
-    Then it fails
-    And it prints nothing
-
-  Scenario: wants no branch, is on branch
-    Given my Git workspace has a branch "feature"
-    When running:
-      """
-      has no git-branch feature
-      """
-    Then it fails
-    And it prints nothing
-
-  Scenario: wants no branch, branch does exist
-    Given my Git workspace has a branch "feature"
-    And my Git workspace is on the "main" branch
-    When running:
-      """
-      has no git-branch feature
-      """
-    Then it fails
-    And it prints nothing
-
-  Scenario: wants no branch, branch does not exist
-    When running:
-      """
-      has no git-branch feature
-      """
-    Then it succeeds
-    And it prints nothing
+    Examples:
+      | DESCRIPTION                        | QUERY                     | BRANCH  | ACTIVE  | RESULT   |
+      | matching branch is checked out     | has git-branch feature    | feature | feature | match    |
+      | negation                           | has no git-branch feature | feature | feature | no match |
+      | matching branch is not checked out | has git-branch feature    | feature | main    | match    |
+      | matching branch does not exist     | has git-branch other      | feature | main    | no match |
