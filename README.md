@@ -21,12 +21,12 @@ condition.
 
 - [`has command-output <command> [args...]`](features/command-output.feature):
   the given shell command prints something to STDOUT
-- [`has file <glob>`](features/file-name.feature): file with a matching name
-- [`has file <glob> --containing <text>`](features/file-name-and-content.feature):
+- [`has file <glob>`](features/filesystem/file-name.feature): file with a matching name
+- [`has file <glob> --containing <text>`](features/filesystem/file-name-and-content.feature):
   file with matching name and content
-- [`has file <glob> --matching <regex>`](features/file-name-and-content.feature):
+- [`has file <glob> --matching <regex>`](features/filesystem/file-name-and-content.feature):
   file with matching name and content matching the given regex
-- [`has folder <name>`](features/folder.feature): folder with the given name
+- [`has folder <name>`](features/filesystem/folder.feature): folder with the given name
 - [`has git-branch <branch name>`](features/git-branch.feature): a Git branch
   with the given name
 - [`has git-branch-active <branch name>`](features/git-branch-active.feature):
