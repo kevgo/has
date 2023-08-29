@@ -3,9 +3,9 @@
 [![CI](https://github.com/kevgo/has/actions/workflows/ci.yml/badge.svg)](https://github.com/kevgo/has/actions/workflows/ci.yml)
 
 `has` is the programmer's version of the Unix `test` tool. It allows querying a
-wide variety of properties of the local computer system. Examples are the status
-and configuration of source code management and build systems or the
-configuration of the codebases in the local folder.
+wide variety of properties of the local computer than just the file system.
+Examples are the status and configuration of source code management and build
+systems or the configuration of the codebases in the local folder.
 
 The general usage is:
 
@@ -21,23 +21,25 @@ condition.
 ### conditions
 
 - [`has file <glob>`](features/file-name.feature): file with a matching name
-- [`has file <glob> --containing <text>`](features/file-name-and-content.feature): file
-  with matching name and content
-- [`has file <glob> --matching <regex>`](features/file-name-and-content.feature): file with matching name and content matching the given regex
+- [`has file <glob> --containing <text>`](features/file-name-and-content.feature):
+  file with matching name and content
+- [`has file <glob> --matching <regex>`](features/file-name-and-content.feature):
+  file with matching name and content matching the given regex
 - [`has folder <glob>`](features/folder.feature): folder with the given name
-- [`has git-branch <branch name>`](features/git-branch.feature): a Git branch with
-  the given name
-- [`has git-branch-active <branch name>`](features/git-branch-active.feature): the
-  currently checked out Git branch has the given name
-- [`has git-branch-inactive <branch name>`](features/git-branch-inactive.feature): a
-  Git with the given name that is not checked out
+- [`has git-branch <branch name>`](features/git-branch.feature): a Git branch
+  with the given name
+- [`has git-branch-active <branch name>`](features/git-branch-active.feature):
+  the currently checked out Git branch has the given name
+- [`has git-branch-inactive <branch name>`](features/git-branch-inactive.feature):
+  a Git with the given name that is not checked out
 - [`has git-changes-uncommitted`](features/git-changes-uncommitted.feature): the
   local Git workspace contains uncommitted changes
-- [`has git-commits-by-author`](features/git-commits-by-author.feature): the local
-  Git workspace contains commits by the given person
-- [`has git-commits-unpushed`](features/git-commits-unpushed.feature): unpushed commits in the local Git workspace
-- [`has command-output <command> [args...]`](features/command-output.feature): the
-  given shell command prints something to STDOUT
+- [`has git-commits-by-author`](features/git-commits-by-author.feature): the
+  local Git workspace contains commits by the given person
+- [`has git-commits-unpushed`](features/git-commits-unpushed.feature): unpushed
+  commits in the local Git workspace
+- [`has command-output <command> [args...]`](features/command-output.feature):
+  the given shell command prints something to STDOUT
 - [`has make-target <name>`](features/make-target.feature): a given
   [Make](https://www.gnu.org/software/make) target
 - [`has nodejs-dependency <name>`](features/node-dependency.feature): a Node.JS
