@@ -21,7 +21,7 @@ Feature: detect existence of command output
     Scenario: the given command prints only newlines
       When running:
         """
-        has command-output printf \n\n
+        has command-output printf "\n\n"
         """
       Then it fails
       And it prints nothing
@@ -39,7 +39,7 @@ Feature: detect existence of command output
     Scenario: the given command prints only newlines
       When running:
         """
-        has no command-output printf \n\n
+        has no command-output printf "\n\n"
         """
       Then it succeeds
       And it prints nothing

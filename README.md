@@ -20,7 +20,7 @@ condition.
 
 ### conditions
 
-- [`has file <glob>`](features/filesystem/file-name.feature): file with a matching name
+- [`has file <glob>`](features/file-name.feature): file with a matching name
 - [`has file <glob> --containing <text>`](features/filesystem/features/file-content.feature): file
   with matching name and content
 - [`has file <glob> --matching <regex>`](features/filesystem/features/file-content-regex.feature): checks for a

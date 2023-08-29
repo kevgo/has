@@ -149,12 +149,14 @@ async fn when_running(world: &mut HasWorld, step: &Step) -> Result<(), ParseErro
 }
 
 #[then("it succeeds")]
+#[then("it is match")]
 async fn it_succeeds(world: &mut HasWorld) {
     let output = world.output.as_ref().expect("no run recorded");
     assert!(output.status.success());
 }
 
 #[then("it fails")]
+#[then("it is no match")]
 async fn it_fails(world: &mut HasWorld) {
     let output = world.output.as_ref().expect("no run recorded");
     assert!(!output.status.success());
