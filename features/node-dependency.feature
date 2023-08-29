@@ -25,6 +25,7 @@ Feature: detect Node depenndencies
       | dependency doesn't exist                     | has nodejs-dependency zonk      | no match |
       | matching dev-dependency                      | has nodejs-dev-dependency gamma | match    |
       | matching dev-dependency is a prod dependency | has nodejs-dev-dependency beta  | no match |
+      | dev-dependency doesn't exist                 | has nodejs-dev-dependency zonk  | no match |
 
   Scenario Outline: no Node codebase
     When running "<QUERY>"
