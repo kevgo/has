@@ -1,31 +1,16 @@
 Feature: detect inactive Git branches
 
-  Background:
+  Scenario Outline:
     Given a Git repo
-
-  Scenario: wants inactive branch, branch is inactive
-    Given my Git workspace has a branch "feature"
-    And my Git workspace is on the "main" branch
-    When running:
-      """
-      has git-branch-inactive feature
-      """
-    Then it succeeds
+    And my Git workspace has a branch "<BRANCH>"
+    And my Git workspace is on the "<ACTIVE>" branch
+    When running "<QUERY>"
+    Then it signals <RESULT>
     And it prints nothing
 
-  Scenario: wants inactive branch, branch is active
-    Given my Git workspace is on the "feature" branch
-    When running:
-      """
-      has git-branch-inactive feature
-      """
-    Then it fails
-    And it prints nothing
-
-  Scenario: wants inactive branch, branch does not exist
-    When running:
-      """
-      has git-branch-inactive feature
-      """
-    Then it fails
-    And it prints nothing
+    Examples:
+      | DESCRIPTION                        | QUERY                              | BRANCH  | ACTIVE  | RESULT   |
+      | matching branch is not checked out | has git-branch-inactive feature    | feature | main    | match    |
+      | negation                           | has no git-branch-inactive feature | feature | main    | no match |
+      | matching branch is checked out     | has git-branch-inactive feature    | feature | feature | no match |
+      | matching branch does not exist     | has git-branch-inactive other      | feature | feature | no match |
