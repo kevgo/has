@@ -30,7 +30,7 @@ condition.
 - [`has git-branch-active <branch name>`](features/git-branch-active.feature):
   the currently checked out Git branch has the given name
 - [`has git-branch-inactive <branch name>`](features/git-branch-inactive.feature):
-  a Git with the given name that is not checked out
+  a Git branch with the given name that is not checked out
 - [`has git-changes-uncommitted`](features/git-changes-uncommitted.feature): the
   local Git workspace contains uncommitted changes
 - [`has git-commits-by-author`](features/git-commits-by-author.feature): the
