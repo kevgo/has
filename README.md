@@ -19,6 +19,8 @@ condition.
 
 ### conditions
 
+- [`has command-output <command> [args...]`](features/command-output.feature):
+  the given shell command prints something to STDOUT
 - [`has file <glob>`](features/file-name.feature): file with a matching name
 - [`has file <glob> --containing <text>`](features/file-name-and-content.feature):
   file with matching name and content
@@ -37,8 +39,6 @@ condition.
   local Git workspace contains commits by the given person
 - [`has git-commits-unpushed`](features/git-commits-unpushed.feature): unpushed
   commits in the local Git workspace
-- [`has command-output <command> [args...]`](features/command-output.feature):
-  the given shell command prints something to STDOUT
 - [`has make-target <name>`](features/make-target.feature): the
   [Makefile](https://www.gnu.org/software/make) contains the given target
 - [`has nodejs-dependency <name>`](features/node-dependency.feature): a Node.JS
