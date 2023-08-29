@@ -2,52 +2,14 @@ Feature: detect existence of command output
 
   Rule: if output is expected, the given command must print something
 
-    Scenario: the given command prints something
-      When running:
-        """
-        has command-output echo Hello world!
-        """
-      Then it succeeds
+    Scenario Outline:
+      When running "<QUERY>"
+      Then it signals <RESULT>
       And it prints nothing
 
-    Scenario: the given command prints no output
-      When running:
-        """
-        has command-output echo
-        """
-      Then it fails
-      And it prints nothing
-
-    Scenario: the given command prints only newlines
-      When running:
-        """
-        has command-output printf "\n\n"
-        """
-      Then it fails
-      And it prints nothing
-
-  Rule: if no output is expected, the given command must not print anything
-
-    Scenario: the given command prints nothing
-      When running:
-        """
-        has no command-output echo
-        """
-      Then it succeeds
-      And it prints nothing
-
-    Scenario: the given command prints only newlines
-      When running:
-        """
-        has no command-output printf "\n\n"
-        """
-      Then it succeeds
-      And it prints nothing
-
-    Scenario: the given command prints something
-      When running:
-        """
-        has no command-output echo Hello world!
-        """
-      Then it fails
-      And it prints nothing
+      Examples:
+        | DESCRIPTION                  | QUERY                                | RESULT   |
+        | commands prints something    | has command-output echo Hello world! | match    |
+        | command prints nothing       | has command-output echo              | no match |
+        | negation                     | has no command-output echo           | match    |
+        | command prints only newlines | has command-output printf "\n\n"     | no match |

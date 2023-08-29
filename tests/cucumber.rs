@@ -53,6 +53,9 @@ async fn a_file_with_content(
 #[given(expr = "a folder {string}")]
 async fn a_folder(world: &mut HasWorld, name: String) -> io::Result<()> {
     let folderpath = world.code_dir.path().join(name);
+    if let Some(parent) = folderpath.parent() {
+        fs::create_dir_all(parent).await?;
+    }
     fs::create_dir(folderpath).await
 }
 
@@ -149,14 +152,14 @@ async fn when_running(world: &mut HasWorld, step: &Step) -> Result<(), ParseErro
 }
 
 #[then("it succeeds")]
-#[then("it is match")]
+#[then("it signals match")]
 async fn it_succeeds(world: &mut HasWorld) {
     let output = world.output.as_ref().expect("no run recorded");
     assert!(output.status.success());
 }
 
 #[then("it fails")]
-#[then("it is no match")]
+#[then("it signals no match")]
 async fn it_fails(world: &mut HasWorld) {
     let output = world.output.as_ref().expect("no run recorded");
     assert!(!output.status.success());

@@ -21,9 +21,9 @@ condition.
 ### conditions
 
 - [`has file <glob>`](features/file-name.feature): file with a matching name
-- [`has file <glob> --containing <text>`](features/filesystem/features/file-content.feature): file
+- [`has file <glob> --containing <text>`](features/file-name-and-content.feature): file
   with matching name and content
-- [`has file <glob> --matching <regex>`](features/filesystem/features/file-content-regex.feature): checks for a
+- `has file <glob> --matching <regex>`: checks for a
   file with matching name and content matching the given regex
 - [`has folder <glob>`](features/folder.feature): a folder with the given name
   exists
