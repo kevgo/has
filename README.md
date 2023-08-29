@@ -24,7 +24,7 @@ condition.
   file with matching name and content
 - [`has file <glob> --matching <regex>`](features/file-name-and-content.feature):
   file with matching name and content matching the given regex
-- [`has folder <glob>`](features/folder.feature): folder with the given name
+- [`has folder <name>`](features/folder.feature): folder with the given name
 - [`has git-branch <branch name>`](features/git-branch.feature): a Git branch
   with the given name
 - [`has git-branch-active <branch name>`](features/git-branch-active.feature):
