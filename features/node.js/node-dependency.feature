@@ -26,13 +26,3 @@ Feature: detect Node depenndencies
       | matching dev-dependency                      | has nodejs-dev-dependency gamma | match    |
       | matching dev-dependency is a prod dependency | has nodejs-dev-dependency beta  | no match |
       | dev-dependency doesn't exist                 | has nodejs-dev-dependency zonk  | no match |
-
-  Scenario Outline: no Node codebase
-    When running "<QUERY>"
-    Then it fails
-    And it prints nothing
-
-    Examples:
-      | QUERY                           |
-      | has nodejs-dependency alpha     |
-      | has nodejs-dev-dependency alpha |

@@ -15,3 +15,8 @@ Feature: display guidance when used wrong
       | has git-branch-inactive one two | ERROR: too many arguments |
       | has git-changes-uncommitted one | ERROR: too many arguments |
       | has git-commits-unpushed one    | ERROR: too many arguments |
+
+  Scenario: no Git repo
+    When running "has git-branch foo"
+    Then it fails
+    And it prints nothing
