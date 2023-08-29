@@ -1,13 +1,13 @@
 Feature: detect files by name
 
   Scenario Outline: search for an exact filename
-    Given a file "<FILE ON DISK>"
-    When running: "<QUERY>"
+    Given a file "<FILE>"
+    When running "<QUERY>"
     Then it signals <RESULT>
     And it prints nothing
 
     Examples:
-      | DESCRIPTION                                            | QUERY                    | FILE ON DISK            | RESULT   |
+      | DESCRIPTION                                            | QUERY                    | FILE                    | RESULT   |
       | matching file in current dir                           | has file package.json    | package.json            | match    |
       | negation                                               | has no file package.json | package.json            | no match |
       | matching file in subfolder                             | has file package.json    | alpha/beta/package.json | no match |

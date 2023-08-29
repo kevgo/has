@@ -13,7 +13,7 @@ Feature: detect files by name and content
   Rule: the "containing" clause additionally matches the file content verbatim
 
     Scenario Outline: queries using the "containing" clause
-      When running: "<QUERY>"
+      When running "<QUERY>"
       Then it signals <RESULT>
       And it prints nothing
 
@@ -25,7 +25,7 @@ Feature: detect files by name and content
   Rule: the "matching" clause additionally matches the file content via regex
 
     Scenario Outline: queries using the "matching" clause
-      When running: "<QUERY>"
+      When running "<QUERY>"
       Then it signals <RESULT>
       And it prints nothing
 

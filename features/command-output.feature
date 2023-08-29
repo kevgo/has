@@ -3,7 +3,10 @@ Feature: detect existence of command output
   Rule: if output is expected, the given command must print something
 
     Scenario Outline:
-      When running "<QUERY>"
+      When running:
+        """
+        <QUERY>
+        """
       Then it signals <RESULT>
       And it prints nothing
 
