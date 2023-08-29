@@ -22,3 +22,14 @@ Feature: detect folders
       | DESCRIPTION                    | QUERY            | FOLDER             | RESULT   |
       | matching folder in current dir | has folder node* | node_modules       | match    |
       | matching file in subfolder     | has folder node* | tools/node_modules | no match |
+
+  Scenario Outline: search using a simple glob
+    Given a folder "<FOLDER>"
+    When running: "<QUERY>"
+    Then it signals <RESULT>
+    And it prints nothing
+
+    Examples:
+      | DESCRIPTION                    | QUERY            | FOLDER             | RESULT   |
+      | matching folder in current dir | has folder node* | node_modules       | match    |
+      | matching file in subfolder     | has folder node* | tools/node_modules | no match |
