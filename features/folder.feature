@@ -15,4 +15,4 @@ Feature: detect folders
       | simple glob with matching folder in current dir          | has folder node*           | node_modules       | match    |
       | simple glob with matching folder in subfolder            | has folder node*           | tools/node_modules | no match |
       | double-asterisk glob with matching folder in current dir | has folder **/node*        | node_modules       | match    |
-      | double-asterisk glob with matching folder in subfolder   | has folder **/node*        | tools/node_modules | no match |
+      | double-asterisk glob with matching folder in subfolder   | has folder **/node*        | tools/node_modules | match    |
