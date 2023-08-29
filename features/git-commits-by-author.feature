@@ -41,7 +41,7 @@ Feature: detect Git commit authors
     And it prints nothing
 
   Scenario: wants no commits by author, has no commits by author
-    Given my Git workspace has a commit by "other"
+    Given a Git repo with the user "Somebody Else" and email "other@acme.com"
     And a local commit
     And my Git workspace is on the "main" branch
     When running:
