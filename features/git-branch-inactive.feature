@@ -13,4 +13,4 @@ Feature: detect inactive Git branches
       | matching branch is not checked out | has git-branch-inactive feature    | feature | main    | match    |
       | negation                           | has no git-branch-inactive feature | feature | main    | no match |
       | matching branch is checked out     | has git-branch-inactive feature    | feature | feature | no match |
-      | matching branch does not exist     | has git-branch-inactive other      | feature | feature | no match |
+      | no matching branch                 | has git-branch-inactive other      | feature | feature | no match |

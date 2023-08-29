@@ -13,4 +13,4 @@ Feature: detect Git branches
       | matching branch is checked out     | has git-branch feature    | feature | feature | match    |
       | negation                           | has no git-branch feature | feature | feature | no match |
       | matching branch is not checked out | has git-branch feature    | feature | main    | match    |
-      | matching branch does not exist     | has git-branch other      | feature | main    | no match |
+      | no matching branch                 | has git-branch other      | feature | main    | no match |

@@ -13,4 +13,4 @@ Feature: detect active Git branches
       | matching branch is checked out     | has git-branch-active feature    | feature | feature | match    |
       | negation                           | has no git-branch-active feature | feature | feature | no match |
       | matching branch is not checked out | has git-branch-active feature    | feature | main    | no match |
-      | matching branch does not exist     | has git-branch-active other      | feature | feature | no match |
+      | no matching branch                 | has git-branch-active other      | feature | feature | no match |
