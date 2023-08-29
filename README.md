@@ -41,7 +41,7 @@ condition.
   commits in the local Git workspace
 - [`has make-target <name>`](features/make/make-target.feature): the
   [Makefile](https://www.gnu.org/software/make) contains the given target
-- [`has nodejs-dependency <name>`](features/node-dependency.feature): a Node.JS
+- [`has nodejs-dependency <name>`](features/node.js/node-dependency.feature): a Node.JS
   codebase using the given production dependency
-- [`has nodejs-dev-dependency <name>`](features/node-dependency.feature): a
+- [`has nodejs-dev-dependency <name>`](features/node.js/node-dependency.feature): a
   Node.JS codebase using the given development dependency
