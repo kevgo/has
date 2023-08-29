@@ -21,19 +21,11 @@ Feature: detect uncommitted changes
     Then it fails
     And it prints nothing
 
-  Scenario: wants no uncommitted changes, has some
+  Scenario: negation
     Given a file "uncommitted.txt"
     When running:
       """
       has no git-changes-uncommitted
       """
     Then it fails
-    And it prints nothing
-
-  Scenario: wants no uncommitted changes, has none
-    When running:
-      """
-      has no git-changes-uncommitted
-      """
-    Then it succeeds
     And it prints nothing

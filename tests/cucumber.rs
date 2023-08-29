@@ -53,6 +53,9 @@ async fn a_file_with_content(
 #[given(expr = "a folder {string}")]
 async fn a_folder(world: &mut HasWorld, name: String) -> io::Result<()> {
     let folderpath = world.code_dir.path().join(name);
+    if let Some(parent) = folderpath.parent() {
+        fs::create_dir_all(parent).await?;
+    }
     fs::create_dir(folderpath).await
 }
 
@@ -130,9 +133,14 @@ async fn checkout_branch(world: &mut HasWorld, name: String) {
 }
 
 #[when("running:")]
-async fn when_running(world: &mut HasWorld, step: &Step) -> Result<(), ParseError> {
+async fn when_running_docstring(world: &mut HasWorld, step: &Step) -> Result<(), ParseError> {
     let command = step.docstring().expect("no docstring").trim();
-    let mut argv = shell_words::split(command)?.into_iter();
+    when_running(world, command.to_string()).await
+}
+
+#[when(expr = "running {string}")]
+async fn when_running(world: &mut HasWorld, command: String) -> Result<(), ParseError> {
+    let mut argv = shell_words::split(&command)?.into_iter();
     if argv.next().as_deref() != Some("has") {
         panic!("The end-to-end tests can only run the 'has' command");
     }
@@ -154,10 +162,20 @@ async fn it_succeeds(world: &mut HasWorld) {
     assert!(output.status.success());
 }
 
+#[then("it signals match")]
+async fn it_signals_match(world: &mut HasWorld) {
+    it_succeeds(world).await
+}
+
 #[then("it fails")]
 async fn it_fails(world: &mut HasWorld) {
     let output = world.output.as_ref().expect("no run recorded");
     assert!(!output.status.success());
+}
+
+#[then("it signals no match")]
+async fn it_signals_no_match(world: &mut HasWorld) {
+    it_fails(world).await
 }
 
 #[then("it prints:")]
@@ -176,8 +194,13 @@ async fn it_prints_nothing(world: &mut HasWorld) {
 }
 
 #[then("the output starts with:")]
-async fn output_contains(world: &mut HasWorld, step: &Step) {
+async fn output_contains_doc(world: &mut HasWorld, step: &Step) {
     let want = step.docstring().expect("step has no docstring");
+    output_contains(world, want.to_string()).await
+}
+
+#[then(expr = "the output starts with {string}")]
+async fn output_contains(world: &mut HasWorld, want: String) {
     let output = world.output.as_ref().expect("no run recorded");
     let have = str::from_utf8(&output.stdout).unwrap();
     assert!(have.trim().starts_with(want.trim()), "{}", have);

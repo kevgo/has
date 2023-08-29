@@ -22,19 +22,11 @@ Feature: detect unpushed changes
     Then it fails
     And it prints nothing
 
-  Scenario: wants no unpushed changes, has some
+  Scenario: negation
     Given a local commit
     When running:
       """
       has no git-commits-unpushed
       """
     Then it fails
-    And it prints nothing
-
-  Scenario: wants no unpushed changes, has none
-    When running:
-      """
-      has no git-commits-unpushed
-      """
-    Then it succeeds
     And it prints nothing
