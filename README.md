@@ -4,8 +4,9 @@
 
 `has` is the programmer's version of the Unix `test` tool. It allows querying a
 wider variety of properties from the local computer than just the file system.
-Examples are the status and configuration of source code management and build
-systems or the configuration of the codebases in the local folder.
+Examples are the configuration of the codebases in the local folder as well as
+the status and configuration of source code management and build systems for
+them.
 
 The general usage is:
 
