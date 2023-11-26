@@ -118,7 +118,7 @@ mod tests {
 
             #[test]
             fn empty_file() {
-                let give = r#""#;
+                let give = r"";
                 let have = PackageJson::parse(give);
                 assert!(have.is_err());
             }

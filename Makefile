@@ -18,7 +18,7 @@ install:  # installs the binary on the current machine
 
 lint: tools/actionlint  # checks formatting
 	dprint check
-	cargo clippy --all-targets --all-features -- -W clippy::pedantic
+	cargo clippy --all-targets --all-features -- --deny=warnings
 	cargo fmt -- --check
 	git diff --check
 	tools/actionlint
