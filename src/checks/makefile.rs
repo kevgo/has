@@ -50,11 +50,11 @@ mod tests {
 
         #[test]
         fn with_targets() {
-            let give = r#"
+            let give = r"
 foo: a  # the foo target
 \tcontent
 bar: b
-            "#
+            "
             .trim();
             let want = Makefile {
                 targets: vec![Target { name: S("foo") }, Target { name: S("bar") }],
