@@ -53,5 +53,5 @@ tools/run-that-app@${RUN_THAT_APP_VERSION}:
 	@ln -s run-that-app@${RUN_THAT_APP_VERSION} tools/rta
 
 
-.DEFAULT_GOAL := help
 .SILENT:
+.DEFAULT_GOAL := help
