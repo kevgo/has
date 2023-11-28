@@ -12,7 +12,7 @@ cukethis: target/debug/has  # runs only end-to-end tests with a @this tag
 	cargo test --test cucumber -- -t @this
 
 fix: tools/run-that-app@${RUN_THAT_APP_VERSION}  # auto-corrects issues
-	tools/rta dprint@${RUN_THAT_APP_VERSION} fmt
+	tools/rta dprint@${DPRINT_VERSION} fmt
 	cargo fmt
 	cargo fix
 
