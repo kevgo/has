@@ -46,7 +46,6 @@ update:  # updates dependencies
 # --- HELPER TARGETS --------------------------------------------------------------------------------------------------------------------------------
 
 tools/run-that-app@${RUN_THAT_APP_VERSION}:
-	@echo "Installing run-that-app ${RUN_THAT_APP_VERSION} ..."
 	@rm -f tools/run-that-app* tools/rta
 	@(cd tools && curl https://raw.githubusercontent.com/kevgo/run-that-app/main/download.sh | sh)
 	@mv tools/run-that-app tools/run-that-app@${RUN_THAT_APP_VERSION}
