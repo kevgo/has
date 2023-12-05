@@ -1,7 +1,5 @@
 # dev tooling and versions
-ACTIONLINT_VERSION = 1.6.26
-DPRINT_VERSION = 0.43.1
-RUN_THAT_APP_VERSION = 0.5.0
+RUN_THAT_APP_VERSION = 0.2.0
 
 
 cuke: target/debug/has  # runs the feature tests
@@ -12,7 +10,7 @@ cukethis: target/debug/has  # runs only end-to-end tests with a @this tag
 	cargo test --test cucumber -- -t @this
 
 fix: tools/run-that-app@${RUN_THAT_APP_VERSION}  # auto-corrects issues
-	tools/rta dprint@${DPRINT_VERSION} fmt
+	tools/rta dprint fmt
 	cargo fmt
 	cargo fix
 
@@ -23,8 +21,8 @@ install:  # installs the binary on the current machine
 	cargo install --path .
 
 lint: tools/run-that-app@${RUN_THAT_APP_VERSION}  # checks formatting
-	tools/rta dprint@${DPRINT_VERSION} check
-	tools/rta actionlint@${ACTIONLINT_VERSION}
+	tools/rta dprint check
+	tools/rta actionlint
 	cargo clippy --all-targets --all-features -- --deny=warnings
 	cargo fmt -- --check
 	git diff --check
@@ -40,8 +38,9 @@ target/debug/has:
 unit:  # runs the unit tests
 	cargo test
 
-update:  # updates dependencies
+update: tools/run-that-app@${RUN_THAT_APP_VERSION}  # updates dependencies
 	cargo upgrade
+	tools/rta --update
 
 # --- HELPER TARGETS --------------------------------------------------------------------------------------------------------------------------------
 
