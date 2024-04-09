@@ -29,6 +29,10 @@ lint: tools/run-that-app@${RUN_THAT_APP_VERSION}  # checks formatting
 
 ps: fix test  # pitstop
 
+setup:  # install development dependencies on this computer
+	rustup toolchain add nightly
+	rustup component add rustfmt --toolchain nightly
+
 test: lint unit cuke  # runs all tests
 
 .PHONY: target/debug/has
