@@ -1,15 +1,13 @@
 use cucumber::gherkin::Step;
 use cucumber::{given, then, when, World};
 use shell_words::ParseError;
-use std::env;
 use std::path::Path;
 use std::process::Output;
-use std::str;
+use std::{env, str};
 use tempfile::TempDir;
-use tokio::fs;
 use tokio::fs::File;
-use tokio::io;
 use tokio::process::Command;
+use tokio::{fs, io};
 
 #[derive(Debug, World)]
 pub struct HasWorld {
