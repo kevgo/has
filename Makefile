@@ -12,7 +12,7 @@ cukethis: target/debug/has  # runs only end-to-end tests with a @this tag
 fix: tools/rta@${RUN_THAT_APP_VERSION}  # auto-corrects issues
 	tools/rta dprint fmt
 	cargo +nightly fmt
-	cargo +nightly fix
+	cargo +nightly fix --allow-dirty
 
 help:  # prints all make targets
 	cat Makefile | grep '^[^ ]*:' | grep -v '.SILENT' | grep -v help | grep -v '^tools\/' | grep -v '^target/debug' | sed 's/:.*#/#/' | column -s "#" -t
