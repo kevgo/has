@@ -43,6 +43,8 @@ unit:  # runs the unit tests
 	cargo test
 
 update: tools/rta@${RUN_THAT_APP_VERSION}  # updates dependencies
+	cargo install cargo-edit cargo-machete
+	cargo machete
 	cargo upgrade
 	tools/rta --update
 

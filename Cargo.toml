@@ -5,19 +5,19 @@ edition = "2021"
 rust-version = "1.74"
 
 [dependencies]
-glob = "0.3.0"
-regex = { version = "1.6.0", default-features = false, features = ["std"] }
-serde = { version = "1.0.145", features = ["derive"] }
+glob = "0.3.1"
+regex = { version = "1.10.4", default-features = false, features = ["std"] }
+serde = { version = "1.0.197", features = ["derive"] }
 serde_json = "1.0"
 strip-ansi-escapes = "0.1.1"
 
 [dev-dependencies]
 big_s = "1.0.2"
 cucumber = "0.14"
-pretty = { package = "pretty_assertions", version = "1.3.0" }
+pretty = { package = "pretty_assertions", version = "1.4.0" }
 shell-words = "1.1.0"
 tempfile = "3"
-tokio = { version = "1.21.2", features = ["fs", "io-util", "macros", "process", "rt"] }
+tokio = { version = "1.37.0", features = ["fs", "io-util", "macros", "process", "rt"] }
 
 [[test]]
 name = "cucumber" # this should be the same as the filename of your test target
