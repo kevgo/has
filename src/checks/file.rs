@@ -72,7 +72,7 @@ impl Iterator for FilesMatchingGlob {
       };
       if metadata.is_file() {
         return Some(Ok(entry));
-      };
+      }
     }
     None
   }
