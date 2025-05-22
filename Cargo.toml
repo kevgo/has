@@ -25,9 +25,12 @@ harness = false # allows Cucumber to print output instead of libtest
 test = false # don't run this as part of "cargo test"
 
 [profile.release]
-strip = "symbols"
+codegen-units = 1
+debug = 0
 lto = true
-panic = 'abort'
+opt-level = "z"
+panic = "abort"
+strip = "symbols"
 
 [lints.rust]
 unsafe_code = "forbid"
